@@ -1,0 +1,9 @@
+{
+  "name": "Next.js",
+  "description": "Tortuga based on Next.js",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

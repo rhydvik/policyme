@@ -1,0 +1,40 @@
+@import '../../styles/utilities/breakpoints'
+@import '../../styles/utilities/variables'
+  
+section.points
+  position: relative
+  width: 100%
+  .heading
+    margin: 0 auto
+    text-align: center
+    padding: 0 2vw
+    +tablet
+      max-width: 25rem
+      padding: 0
+    h2
+      font-size: calc(.5rem + 3vw)
+      line-height: 1.7
+      +tablet
+        font-size: 1.75rem
+  .columns
+    justify-content: center
+    margin: 0 auto
+    .column
+      margin: 2rem 0
+  .content
+    max-width: 25rem
+    margin: 0 auto
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    text-align: center
+    +tablet
+      padding: 0 2vw
+    .visual
+      width: 100%
+    h3
+      margin: 1rem 0
+      +tablet
+        font-size: 1.25rem
+    .info
+      line-height: 1.7

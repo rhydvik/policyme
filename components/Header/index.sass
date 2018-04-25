@@ -1,0 +1,115 @@
+@import '../../styles/utilities/variables'
+@import '../../styles/utilities/breakpoints'
+    
+.btn
+  position: relative
+  display: inline-block
+  vertical-align: middle
+  zoom: 1
+  //display: inline
+  text-align: center
+  padding: 1rem 1.3rem
+  line-height: 1em
+  font-size: .7rem
+  font-weight: 700
+  letter-spacing: 1px
+  border-radius: 100px
+  outline: none
+  border: none
+  text-transform: uppercase
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06)
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+  +medium-phone
+    padding: 1rem 1.3rem
+    font-size: .9rem
+  &.fixed
+    font-size: .8rem
+    width: 10rem
+    +medium-phone
+      font-size: .9rem
+    //   padding: 1.1rem 1.3rem
+    +mobile
+      padding: .8rem 1.3rem
+  &.full
+    padding: 1rem 3rem
+    min-width: 12.5rem
+    +mobile
+      padding: .9rem 1.3rem
+      font-size: .9rem
+  &.ghost-primary
+    background: transparent
+    color: $primary-color
+    box-shadow: inset 0px 0px 0px 1px $primary-color
+  &.ghost-white
+    background: transparent
+    color: white
+    box-shadow: inset 0px 0px 0px 1px white
+    &:hover
+      background: transparent
+      color: white
+      box-shadow: inset 0px 0px 0px 1px white
+      text-decoration: none
+      cursor: pointer
+      transform: translateY(-1px)
+  &:hover
+    text-decoration: none
+    cursor: pointer
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
+    transform: translateY(-1px)
+    //color: initial !important
+  &.book
+    //margin-top: 10px
+    padding: 1.2rem 1.5rem
+    background: #fff
+    //color: $primary-color
+    font-weight: bold
+    letter-spacing: 0.03em
+    //+tablet
+      padding: 1.3rem 1.8rem
+  &.btn-subscribe
+    width: 100%
+    background: white
+    color: #585858
+    display: block
+    font-size: .75rem
+    padding: 1.2rem 1rem 1rem
+    +tablet
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0
+      border-top-right-radius: 100px
+      border-bottom-right-radius: 100px
+      display: inline
+      max-width: 8.125rem
+  &.nav
+    background: white
+    padding: .8rem 1.5rem
+    font-size: .6rem
+    span
+      color: #585858
+      margin-left: .625rem
+      &:before
+        position: absolute
+        content: ''
+        background: url(/static/images/primary-phone.svg)
+        height: .625rem
+        width: .625rem
+        left: .6rem
+        top: .8rem
+        margin-left: .625rem
+  &.bg-primary,
+  &.bg-secondary
+    &:hover
+      color: white
+  &.color-primary
+    color: $primary-color
+    &:hover
+      color: $primary-color
+  &.color-secondary
+    &:hover
+      color: $secondary-color
+
+
+
+
+    
+    

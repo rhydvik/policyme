@@ -1,0 +1,40 @@
+{
+  "name": "tortuga",
+  "version": "2.0.0",
+  "description": "Framework for Numie",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start -p $PORT",
+    "build-static": "next build && next export",
+    "heroku-postbuild": "npm run build"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@zeit/next-css": "^0.1.5",
+    "@zeit/next-sass": "^0.1.2",
+    "animate.css": "^3.5.2",
+    "autoprefixer": "7.2.3",
+    "babel-plugin-module-resolver": "3.0.0",
+    "babel-plugin-wrap-in-js": "^1.1.0",
+    "bulma": "^0.4.2",
+    "glob": "7.1.2",
+    "next": "5.1.0",
+    "node-sass": "^4.7.2",
+    "normalize.css": "7.0.0",
+    "postcss-css-variables": "^0.8.1",
+    "postcss-cssnext": "^2.11.0",
+    "postcss-easy-import": "3.0.0",
+    "postcss-import": "^9.1.0",
+    "postcss-loader": "2.0.9",
+    "raw-loader": "^0.5.1",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-ga": "^2.2.0",
+    "react-helmet": "^5.0.3",
+    "sass-loader": "^6.0.7",
+    "style-loader": "^0.20.3",
+    "styled-jsx": "2.2.5",
+    "styled-jsx-postcss": "^0.2.0"
+  }
+}

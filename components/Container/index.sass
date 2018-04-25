@@ -1,0 +1,21 @@
+@import '../../styles/utilities/breakpoints'
+@import '../../styles/utilities/variables' 
+@import '../../styles/utilities/mixins'
+
+.container
+  max-width: 37.5rem
+  margin: 0 auto
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  padding-left: 1.25rem
+  padding-right: 1.25rem
+  +ease(.5s)
+  +tablet
+    max-width: 88.125rem
+    padding-left: 4vw
+    padding-right: 4vw
+  +desktop
+    max-width: 93.75rem
+  +widescreen
+    max-width: 100rem
