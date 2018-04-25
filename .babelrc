@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    "styled-jsx/babel",
+    [
+      "module-resolver", {
+      "root": ["."],
+      "alias": {
+        "styles": "./styles"
+      },
+      "cwd": "babelrc"
+    }],
+    [
+      "wrap-in-js",
+      {
+        "extensions": ["css$", "sass$"]
+      }
+    ]
+  ],
+  "presets": [
+    "next/babel"
+  ],
+  "ignore": []
+}
