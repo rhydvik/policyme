@@ -15,10 +15,10 @@
 @import 'utilities/typography'
 
 @import '../components/Button/index'
-@import '../components/Container/index'
-@import '../components/CTA/index'
-@import '../components/DetailedCTA/index'
-@import '../components/Points/index'
+//@import '../components/Container/index'
+//@import '../components/CTA/index'
+//@import '../components/DetailedCTA/index'
+//@import '../components/Points/index'
 
 .undefined
   border: 1px solid red !important
@@ -50,6 +50,15 @@ body
   overflow-x: hidden
 
 
+::-webkit-input-placeholder
+  text-align: center
+
+
+
+
+::-moz-placeholder   /* Firefox 19+ */
+   text-align: center
+
 
 
 // @import 'utilities/keyframes'
@@ -67,7 +76,7 @@ body
   border: .1rem solid green
 
 .questionContainer
-  padding: 2rem
+  padding: 1.5rem
 
 .questionBox
   padding: 2rem
@@ -75,6 +84,12 @@ body
 
 .inputsContainer
   text-align: center
+
+.alignInputsInOneLine
+  text-align: center
+  button
+    width: 95%
+
 
 .selectedButton
   background-color: #1bb0db
@@ -89,5 +104,23 @@ body
   margin: 10px
   border: solid .1rem #1bb0db
 
-.buttonContainer
-  border: .1rem solid black
+
+.mainBox
+  text-align: center
+
+.nextDisabled
+  background-color: #dcdcdc
+  color: white
+  width: 85%
+
+.nextEnabled
+  background-color: #1bb0db
+  color: white
+  width: 80%
+
+.input
+  border: none
+  padding: .5rem
+  outline: none
+  text-align: center
+  border-bottom: .1rem solid #1bb0db

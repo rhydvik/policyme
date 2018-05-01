@@ -25,8 +25,17 @@ class Questions extends Component{
         this.setState({ currentQuestion:  temp });
     };
 
+    handleInputChange = (i, value) => {
+        const temp = Object.assign({}, question[0]);
+        console.log('temp', temp);
+        const currentButton = temp.inputs[i];
+        currentButton.value = value;
+        temp.inputs[i] = currentButton;
+        this.setState({ currentQuestion:  temp });
+    };
+
     next = () => {
-      console.log('next');
+      this.setState({ questionIndex : this.state.questionIndex+1 })
     };
 
     validate =(name) => {
@@ -40,7 +49,7 @@ class Questions extends Component{
         switch (data.type) {
             case 'BUTTON':
                 return(
-                    <div className={styles.buttonContainer}>
+                    <div className={data.alignInOnline ? styles.alignInputsInOneLine : styles.inputsContainer}>
                         {data.inputs.map((button, i) => (
                                 <Button
                                 label={button.label}
@@ -53,9 +62,9 @@ class Questions extends Component{
             case 'INPUT':
                 return (
                     <div className='columns'>
-                        {data.inputs.map(button => (
+                        {data.inputs.map((input, i) => (
                             <div className='column'>
-                               <Button label={button.label} onChange={() => this.handleChange(data.type, name)}
+                               <input className={styles.input} placeholder="Age" onChange={() => this.handleInputChange(i, name)}
                                />
                             </div>
                         ))}
@@ -94,11 +103,13 @@ class Questions extends Component{
         const temp = {...question[this.state.questionIndex]};
         console.log('temp', temp);
         let nextDisabled = this.validateQuestion();
+        console.log('asdas', nextDisabled);
         return(
-        <div>
+        <div className={styles.mainBox}>
             <Nav />
             {this.getCurrentQuestion(question[this.state.questionIndex])}
-            <Button label="NEXT" buttonStyle={nextDisabled ? styles.greenButton :  styles.redButton} disabled={nextDisabled} onClick={this.next} />
+
+            <Button label="NEXT" buttonStyle={nextDisabled ? styles.nextEnabled :  styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
         </div>
         )
     }

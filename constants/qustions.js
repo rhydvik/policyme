@@ -5,11 +5,11 @@ const questions = [
         type: 'BUTTON',
         inputs: [
             {
-                label: 'MALE',
+                label: 'Male',
                 value: null,
             },
             {
-                label: 'FEMALE',
+                label: 'Female',
                 value: null,
             }
         ],
@@ -27,21 +27,26 @@ const questions = [
         ]
     },
     {
-        question: 'second question',
-        type: 'INPUT',
-        name: 'age',
+        question: 'Who makes up your household?',
+        type: 'BUTTON',
+        name: 'makes-household',
+        alignInOnline: true,
         inputs: [
             {
-                name: 'age1'
+                label: 'Just Me',
+                value: null
             },
             {
-                name: 'age1'
+                label: 'Me and my kid(s)',
+                value: null
             },
             {
-                name: 'age1'
+                label: 'Me and my partner',
+                value: null
             },
             {
-                name: 'age1'
+                label: 'Me, my partner and kid(s)',
+                value: null
             }
         ]
     }
