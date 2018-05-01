@@ -1,15 +1,17 @@
 @import '../../styles/utilities/variables'
 @import '../../styles/utilities/breakpoints'
-  
+
 .hero-head
   &.secondary
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03)
 nav
   background-color: transparent !important
+  border: 1px solid black
   height: inherit !important
   visibility: visible !important
   &.nav > .container
     align-items: center
+    padding: 0 !important
     display: flex
     max-width: 100%
     +tablet

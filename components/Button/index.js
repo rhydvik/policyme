@@ -1,6 +1,6 @@
 // Libraries
 import React, { Component } from 'react'
-import Link from 'next/link'
+import cn from 'classnames';
 
 // Styles
 import styles from './index.sass'
@@ -15,19 +15,11 @@ export default class Button extends Component {
     }
 
     render() {
+        console.log(this.props.buttonStyle);
         return (
-            this.props.href
-                ? (
-                    <a className={`${styles.btn} ${this.props.className}`} target='_blank' href={this.props.href}>
-                        {this.props.text}
-                    </a>
-                ) : (
-                    <Link href={this.props.link}>
-                        <a className={`${styles.btn} ${this.props.className}`}>
-                            {this.props.text}
-                        </a>
-                    </Link>
-                )
+            <button className={cn(styles.btn, this.props.buttonStyle )} onClick={this.props.onClick}>
+                {this.props.label}
+            </button>
         )
     }
 }
