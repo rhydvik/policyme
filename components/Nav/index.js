@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-// import styles from './index.sass';
+import styles from './index.sass';
 
 export default class Nav extends Component {
     constructor(props) {
@@ -18,17 +18,9 @@ export default class Nav extends Component {
 
     render() {
         return (
-            <div className={'hero-head ' + this.props.theme}>
-                <nav className={'nav navbar is-relative ' + this.props.theme}>
-                    <div className='container'>
-                        <div className='navbar-brand'>
-                            <a className='navbar-item logo hide-nav hide-nav-mobile' onClick={() => this.changePage('/')}>
-                              policy-me
-                            </a>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+            <nav className={styles.navContainer}>
+                <span className={styles.logo} /> <span>Policyme</span>
+            </nav>
         )
     }
 }

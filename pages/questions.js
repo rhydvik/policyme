@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Nav from 'components/Nav';
 import Button from 'components/Button';
-
 import question from '../constants/qustions';
 import styles from '../styles/index.sass';
 
@@ -77,6 +76,7 @@ class Questions extends Component{
         return(
             <div className={styles.questionContainer}>
                 <div className={styles.questionBox}>
+                   <img src="../static/images/alex.png" />
                    {data.question}
                 </div>
                 <div className={styles.inputsContainer}>
@@ -108,8 +108,9 @@ class Questions extends Component{
         <div className={styles.mainBox}>
             <Nav />
             {this.getCurrentQuestion(question[this.state.questionIndex])}
-
-            <Button label="NEXT" buttonStyle={nextDisabled ? styles.nextEnabled :  styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
+            <div className={styles.questionContainer}>
+              <Button label="NEXT" buttonStyle={nextDisabled ? styles.nextEnabled :  styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
+            </div>
         </div>
         )
     }
