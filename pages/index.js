@@ -1,6 +1,6 @@
 // Libraries
-import React, {Component} from  'react'
-import Link from   'next/link'
+import React, {Component} from 'react'
+import Link from 'next/link'
 
 // Components
 
@@ -9,27 +9,234 @@ import DetailedCTA from 'components/DetailedCTA'
 import Points from 'components/Points'
 import Button from 'components/Button'
 
-import { PointsCircle } from 'components/SVG/PointsCircle'
+import {PointsCircle} from 'components/SVG/PointsCircle'
+import Nav from "../components/Nav";
+import styles from '../styles/index.sass'
 
 export default class Index extends Component {
-	constructor(props) {
-		super(props)
-	}
+    constructor(props) {
+        super(props)
+    }
 
-	componentDidMount() {
-		console.log("Index Component mounted.")
-	}
-	render() {
-		return (
-			<div>
+    componentDidMount() {
+        console.log("Index Component mounted.")
+    }
 
-					<main>
-						<h1>home page</h1>
-					</main>
-				</div>
+    render() {
+        return (
+            <div className='home-wrapper'>
+                <Nav/>
+                <div className="columns row-about-us">
+                    <div className="column">
+                        <div className='main-text'>
+                            We are on a mission to simplify life insurance.
+                        </div>
+                        <div className='hint-text'>
+                            We offer customized and automated advice on your life insurance needs.
+                        </div>
+                        <div className='action'>
+                            <button className="action-button button is-primary">GET ADVICE</button>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div>
+                            <img src="static/images/home/home-image-1.png"/>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div className="columns row-about-us second">
+                    <div className="column">
+                        <div>
+                            <img src="static/images/home/home-image-1.png"/>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className='main-text'>
+                            The guidance you need without the pressure you don’t.
+                        </div>
+                        <div className='hint-text'>
+                            You tell us a little about your family, health and financial situation and we recommend a
+                            life insurance policy customized for you.
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div className="columns row-about-us third">
+                    <div className="column">
+                        <img src="static/images/home/chat-icon.png"/>
+                        <div>
+                            You tell us a little about your family, health and financial situation.
+                        </div>
+                    </div>
+                    <div className="column">
+                        <img src="static/images/home/chat-icon.png"/>
+                        <div>
+                            You tell us a little about your family, health and financial situation.
+                        </div>
+                    </div>
+                    <div className="column">
+                        <img src="static/images/home/chat-icon.png"/>
+                        <div>
+                            You tell us a little about your family, health and financial situation.
+                        </div>
+                    </div>
+                </div>
 
+                <div className="row-about-us forth">
+                    <div className='columns'>
+                        <div className="column">
+                            <div className='main-text'>
+                                Real quotes from the insurers you know.
+                            </div>
+                            <div className='hint-text'>
+                                We have built a proprietary life insurance algorithm that assesses your needs and
+                                recommends the best product for you – regardless of commission structure. Life insurance
+                                is complicated, and our advice engine can help you find the the best protection in the
+                                most cost-effective way.
+                            </div>
+                            <div className='action'>
+                                <button className="action-button button invert">GET ADVICE</button>
+                            </div>
+                        </div>
+                        <div className="column image-column">
+                            <img src="static/images/home/image-tilt.png"/>
+                        </div>
+                    </div>
+                </div>
+                <div className="columns row-about-us second">
+                    <div className="column">
+                        <div>
+                            <img src="static/images/home/home-image-3.png"/>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className='main-text'>
+                            Not your typical insurance salesman.
+                        </div>
+                        <div className='hint-text'>
+                            We know that life insurance is fundamental to a sound financial plan. That is why we believe
+                            life insurance advice should be transparent, customized and most importantly, convenient.
 
-
-		)
-	}
+                            We are an experienced team trying to change the insurance industry with a customer first
+                            approach. We have built an advice engine that looks at your needs and recommends the best
+                            product for you – regardless of commission structure. Let us help you find the the best
+                            protection in the most cost-effective way.
+                        </div>
+                    </div>
+                </div>
+                <div className="row-about-us sixth">
+                    <div className='main-text'>
+                        Answers to all of your life insurance questions every step of the way.
+                    </div>
+                    <div className='action'>
+                        <button className="action-button button is-primary">LEARN MORE</button>
+                    </div>
+                </div>
+                <div className="row-about-us forth seventh">
+                    <div className='columns'>
+                        <div className="column">
+                            <div className="cards"></div>
+                        </div>
+                        <div className="column ">
+                            <div className="cards"></div>
+                        </div>
+                        <div className="column ">
+                            <div className="cards"></div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row-about-us eight">
+                    <div className='main-text'>
+                        <div>
+                            <img src="static/images/home/question-icon.png"/>
+                        </div>
+                        <div className='text'>
+                            Questions?<br/>
+                            Reach us here
+                        </div>
+                    </div>
+                    <div className='link-section columns'>
+                        <div className='links column'>
+                            <img src="static/images/home/phone-icon.png"/>
+                            <div>
+                                647-355-0909
+                            </div>
+                        </div>
+                        <div className='links column'>
+                            <img src="static/images/home/message-icon.png"/>
+                            <div>
+                                info@policyme.com
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row-about-us forth ninth">
+                    <div className='main-text'>
+                        Answers to all of your life insurance questions every step of the way.
+                    </div>
+                    <div className='action'>
+                        <button className="action-button button invert">GET ADVICE</button>
+                    </div>
+                </div>
+                <div className="row-about-us tenth">
+                    <div className='columns footer-links'>
+                        <div className="column link">
+                            <div className="header">
+                                POLICYME
+                            </div>
+                            <div className="item">
+                                Who We Are
+                            </div>
+                            <div className="item">
+                                Contact Us
+                            </div>
+                        </div>
+                        <div className="column link">
+                            <div className="header">
+                                LEARN MORE
+                            </div>
+                            <div className="item">
+                                Life Insurance 101
+                            </div>
+                            <div className="item">
+                                Blog
+                            </div>
+                        </div>
+                        <div className="column link">
+                            <div className="header">
+                                LEGAL
+                            </div>
+                            <div className="item">
+                                Terms of Use
+                            </div>
+                            <div className="item">
+                                Privacy
+                            </div>
+                            <div className="item">
+                                Disclosure
+                            </div>
+                            <div className="item">
+                                File a complaint
+                            </div>
+                        </div>
+                        <div className="column link">
+                            <div className="header">
+                                SOCIAL
+                            </div>
+                            <div className="item">
+                                <img src='static/images/home/fb-icon.png'/>
+                                <img src='static/images/home/linked-in-icon.png'/>
+                                <img src='static/images/home/instagram-icon.png'/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='copyright-links'>
+                        <div>© 2018 PolicyMe Corp</div>
+                        <div>60 Adelaide St E Toronto, ON, M5C 3E4</div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
