@@ -44,9 +44,9 @@ export default class Index extends Component {
                         </div>
                     </div>
                 </div>
-                <hr/>
+                <hr className='show-for-large-only'/>
                 <div className="columns row-about-us second">
-                    <div className="column">
+                    <div className="column show-for-large-only">
                         <div>
                             <img src="static/images/home/home-image-1.png"/>
                         </div>
@@ -61,7 +61,7 @@ export default class Index extends Component {
                         </div>
                     </div>
                 </div>
-                <hr/>
+                <hr className='show-for-large-only'/>
                 <div className="columns row-about-us third">
                     <div className="column">
                         <img src="static/images/home/chat-icon.svg"/>
@@ -99,8 +99,11 @@ export default class Index extends Component {
                                 <button className="action-button button invert">GET ADVICE</button>
                             </div>
                         </div>
-                        <div className="column image-column">
+                        <div className="column image-column show-for-large-only">
                             <img src="static/images/home/image-tilt.svg"/>
+                        </div>
+                        <div className="column image-column show-for-small-only">
+                            <img src="static/images/home/phone.svg"/>
                         </div>
                     </div>
                 </div>
@@ -115,13 +118,17 @@ export default class Index extends Component {
                             Not your typical insurance salesman.
                         </div>
                         <div className='hint-text'>
-                            We know that life insurance is fundamental to a sound financial plan. That is why we believe
-                            life insurance advice should be transparent, customized and most importantly, convenient.
+                            <p>We know that life insurance is fundamental to a sound financial plan. That is why we
+                                believe
+                                life insurance advice should be transparent, customized and most importantly,
+                                convenient.
+                            </p>
 
-                            We are an experienced team trying to change the insurance industry with a customer first
-                            approach. We have built an advice engine that looks at your needs and recommends the best
-                            product for you – regardless of commission structure. Let us help you find the the best
-                            protection in the most cost-effective way.
+                            <p>We are an experienced team trying to change the insurance industry with a customer first
+                                approach. We have built an advice engine that looks at your needs and recommends the
+                                best
+                                product for you – regardless of commission structure. Let us help you find the the best
+                                protection in the most cost-effective way.</p>
                         </div>
                     </div>
                 </div>

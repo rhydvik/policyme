@@ -4,7 +4,6 @@
 @import 'utilities/breakpoints'
 @import 'utilities/colors'
 
-
 @import '~bulma/sass/utilities/_all'
 @import '~bulma/sass/base/_all'
 @import '~bulma/sass/grid/columns'
@@ -50,28 +49,23 @@ body
   width: 100vw
   overflow-x: hidden
 
-
 ::-webkit-input-placeholder
   text-align: center
-
-
-
-
 
 button
   border: none
   cursor: pointer
 
-::-moz-placeholder   /* Firefox 19+ */
-   text-align: center
-
-
+::-moz-placeholder
+  /* Firefox 19+ */
+  text-align: center
 
 // @import 'utilities/keyframes'
 
 
 .columns:last-child
   margin-bottom: 0 !important
+
 .columns
   margin: 0
 
@@ -102,7 +96,6 @@ button
   button
     width: 95%
 
-
 .selectedButton
   background-color: #1bb0db
   width: 40%
@@ -115,7 +108,6 @@ button
   color: #004f78
   width: 40%
   margin: 10px
-
 
 .mainBox
   text-align: center
@@ -171,10 +163,10 @@ button
         background: white
         color: #1bb0db
     &.second
-        .hint-text
-          width: 31.25rem
-        .main-text
-          width: 31.25rem
+      .hint-text
+        width: 31.25rem
+      .main-text
+        width: 31.25rem
     &.third
       text-align: center
       font-size: 1.125rem
@@ -288,3 +280,138 @@ button
             line-height: 1.875rem
             img
               padding: 0 0.625rem
+
+@media screen and (min-width: 768px)
+  .show-for-small-only
+    display: none
+
+@media screen and (max-width: 768px)
+  .show-for-large-only
+    display: none
+  .home-wrapper
+    .row-about-us
+      padding: 1rem 0
+      .main-text
+        margin: auto
+        text-align: center
+        font-size: 1.875rem
+        line-height: 2.625rem
+        margin-bottom: 2rem
+        width: auto
+      .hint-text
+        margin: auto
+        width: auto
+        font-size: 1.25rem
+        line-height: 2.25rem
+        color: #595959
+        margin-bottom: 2rem
+      .action
+        width: 90%
+        margin: auto
+        .action-button
+          height: 4rem
+          width: 100%
+      &.second
+        p
+          padding: 0.5rem 0
+        .hint-text
+          width: 95%
+          text-align: left
+        .main-text
+          width: 95%
+          text-align: left
+      &.third
+        text-align: center
+        font-size: 1.125rem
+        color: #595959
+        img
+          margin-top: 1.5rem
+          margin-bottom: 1rem
+      &.forth
+        margin-top: 5rem
+        height: 54rem
+        margin-bottom: 21rem
+        .columns
+          margin: auto
+          font-size: 1.12rem
+        .image-column
+          text-align: center
+          img
+            margin: auto
+            float: none
+        .main-text
+          width: 100%
+          font-size: 1.875rem
+        .hint-text
+          width: 100%
+      &.sixth
+        text-align: left
+        padding: 1rem
+        .main-text
+          max-width: 37.5rem
+          width: auto
+          margin: auto
+          text-align: left
+        .action-button
+          margin-top: 2rem
+          width: 9.375rem
+          font-size: 1rem
+      &.seventh
+        margin-top: 7rem
+        height: 82rem
+        margin-bottom: 0
+        .columns
+          padding: 0 2rem
+          height: auto
+          margin-top: -5rem
+          .cards
+            background: white
+            height: 26rem
+            margin-top: auto
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1)
+      &.eight
+        text-align: center
+        padding: 1rem
+        margin-top: 5rem
+        .link-section
+          width: auto
+          max-width: 32rem
+          margin: auto
+          .links
+            display: block
+            font-size: 1.25rem
+            color: #1bb0db
+            font-weight: 600
+        .main-text
+          width: auto
+          div
+            display: block
+            font-size: 1.625rem
+            &.text
+              vertical-align: super
+              padding-left: 2rem
+              line-height: 2.3rem
+              color: #004f78
+      &.ninth
+        text-align: center
+        padding: 4rem 0
+        height: auto
+        margin-bottom: 0
+        .main-text
+          text-align: center
+          max-width: 31.25rem
+          margin: auto
+          font-size: 1.875rem
+          line-height: 2.5rem
+        .action
+          margin-top: 2rem
+      &.tenth
+        text-align: left
+        padding-top: 4rem
+        padding-left: 1.4rem
+        padding-bottom: 3rem
+        background: #004f78
+        max-width: initial
+        color: white
+        .copyright-links
+          text-align: left
