@@ -11,6 +11,7 @@
 @import '~bulma/sass/components/level'
 @import '~bulma/sass/components/navbar'
 @import '~bulma/sass/layout/_all'
+@import '~bulma/sass/grid/columns'
 
 @import 'utilities/typography'
 
@@ -55,6 +56,11 @@ body
 
 
 
+
+
+button
+  border: none
+  cursor: pointer
 
 ::-moz-placeholder   /* Firefox 19+ */
    text-align: center
@@ -130,3 +136,155 @@ body
   outline: none
   text-align: center
   border-bottom: .1rem solid #1bb0db
+
+.navbar
+  border-bottom: 1px solid #dbdbdb
+  padding: 1rem 0
+
+.home-wrapper
+  .row-about-us
+    padding: 4.6rem 0
+    max-width: 64rem
+    margin: auto
+    .main-text
+      width: 25rem
+      font-size: 2.75rem
+      line-height: 3.75rem
+      font-weight: 600
+      color: #363636
+      margin-bottom: 2rem
+    .hint-text
+      width: 25rem
+      font-size: 1.25rem
+      line-height: 2.25rem
+      color: #595959
+      margin-bottom: 2rem
+    .action
+      .action-button
+        width: 25rem
+        height: 4rem
+        font-size: 1.575rem
+        background: #1bb0db
+        color: white
+        font-weight: 600
+      .invert
+        background: white
+        color: #1bb0db
+    &.second
+        .hint-text
+          width: 31.25rem
+        .main-text
+          width: 31.25rem
+    &.third
+      text-align: center
+      font-size: 1.125rem
+      color: #595959
+      img
+        margin-bottom: 1rem
+    &.forth
+      height: 31rem
+      margin-top: 5rem
+      .columns
+        max-width: 64rem
+        margin: auto
+      font-size: 1.12rem
+      background: #1bb0db
+      max-width: initial
+      padding: 1rem 0
+      text-align: left
+      .image-column
+        img
+          margin-top: -7.5rem
+          float: right
+      .main-text
+        width: 31.25rem
+        font-size: 2.75rem
+        color: white
+      .hint-text
+        width: 31.25rem
+        color: white
+        font-size: 1.1rem
+    &.sixth
+      text-align: center
+      padding: 1rem
+      .main-text
+        max-width: 37.5rem
+        width: auto
+        margin: auto
+      .action-button
+        margin-top: 2rem
+        width: 9.375rem
+        font-size: 1rem
+    &.seventh
+      margin-top: 7rem
+      height: auto
+      .columns
+        height: 26rem
+        padding: 0 2rem
+        .cards
+          background: white
+          height: 26rem
+          margin-top: -5rem
+          box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1)
+    &.eight
+      text-align: center
+      padding: 1rem
+      margin-top: 5rem
+      .link-section
+        width: auto
+        max-width: 32rem
+        margin: auto
+        .links
+          display: inline-block
+          font-size: 1.25rem
+          color: #1bb0db
+          font-weight: 600
+      .main-text
+        width: auto
+        div
+          display: inline-block
+          font-size: 1.625rem
+          &.text
+            vertical-align: super
+            padding-left: 2rem
+            line-height: 2.3rem
+            color: #004f78
+    &.ninth
+      text-align: center
+      padding: 4rem 0
+      height: auto
+      .main-text
+        text-align: center
+        max-width: 31.25rem
+        margin: auto
+        font-size: 1.875rem
+        line-height: 2.5rem
+      .action
+        margin-top: 2rem
+    &.tenth
+      text-align: left
+      padding-top: 4rem
+      padding-bottom: 3rem
+      background: #004f78
+      max-width: initial
+      color: white
+      .copyright-links
+        padding-top: 2rem
+        font-size: 0.75rem
+        text-align: center
+        color: rgba(255, 255, 255, 0.8)
+      .footer-links
+        max-width: 64rem
+        margin: auto
+        .link
+          .header
+            font-size: 1rem
+            line-height: 1.875rem
+            font-weight: 700
+            margin-bottom: 1.2rem
+          .item
+            color: rgba(255, 255, 255, 0.8)
+            font-size: 1rem
+            line-height: 1.875rem
+            img
+              padding: 0 0.625rem

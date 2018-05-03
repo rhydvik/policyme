@@ -18,8 +18,12 @@ export default class Nav extends Component {
 
     render() {
         return (
-            <nav className={styles.navContainer}>
-                <span className={styles.logo} /> <span>Policyme</span>
+            <nav className="navbar" aria-label="main navigation">
+                <div className="navbar-brand">
+                    <a className="navbar-item" href="#">
+                        <img src="static/images/home/logo.svg"/>
+                    </a>
+                </div>
             </nav>
         )
     }
