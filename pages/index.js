@@ -64,19 +64,19 @@ export default class Index extends Component {
                 <hr/>
                 <div className="columns row-about-us third">
                     <div className="column">
-                        <img src="static/images/home/chat-icon.png"/>
+                        <img src="static/images/home/chat-icon.svg"/>
                         <div>
                             You tell us a little about your family, health and financial situation.
                         </div>
                     </div>
                     <div className="column">
-                        <img src="static/images/home/chat-icon.png"/>
+                        <img src="static/images/home/report-icon.svg"/>
                         <div>
                             You tell us a little about your family, health and financial situation.
                         </div>
                     </div>
                     <div className="column">
-                        <img src="static/images/home/chat-icon.png"/>
+                        <img src="static/images/home/shape-icon.svg"/>
                         <div>
                             You tell us a little about your family, health and financial situation.
                         </div>
@@ -100,7 +100,7 @@ export default class Index extends Component {
                             </div>
                         </div>
                         <div className="column image-column">
-                            <img src="static/images/home/image-tilt.png"/>
+                            <img src="static/images/home/image-tilt.svg"/>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,8 @@ export default class Index extends Component {
                 <div className="row-about-us forth seventh">
                     <div className='columns'>
                         <div className="column">
-                            <div className="cards"></div>
+                            <div className="cards">
+                            </div>
                         </div>
                         <div className="column ">
                             <div className="cards"></div>
@@ -149,7 +150,7 @@ export default class Index extends Component {
                 <div className="row-about-us eight">
                     <div className='main-text'>
                         <div>
-                            <img src="static/images/home/question-icon.png"/>
+                            <img src="static/images/home/question-icon.svg"/>
                         </div>
                         <div className='text'>
                             Questions?<br/>
@@ -158,13 +159,13 @@ export default class Index extends Component {
                     </div>
                     <div className='link-section columns'>
                         <div className='links column'>
-                            <img src="static/images/home/phone-icon.png"/>
+                            <img src="static/images/home/phone-icon.svg"/>
                             <div>
                                 647-355-0909
                             </div>
                         </div>
                         <div className='links column'>
-                            <img src="static/images/home/message-icon.png"/>
+                            <img src="static/images/home/message-icon.svg"/>
                             <div>
                                 info@policyme.com
                             </div>
@@ -225,9 +226,9 @@ export default class Index extends Component {
                                 SOCIAL
                             </div>
                             <div className="item">
-                                <img src='static/images/home/fb-icon.png'/>
-                                <img src='static/images/home/linked-in-icon.png'/>
-                                <img src='static/images/home/instagram-icon.png'/>
+                                <img src='static/images/home/fb.svg'/>
+                                <img src='static/images/home/linked-in.svg'/>
+                                <img src='static/images/home/instagram.svg'/>
                             </div>
                         </div>
                     </div>
