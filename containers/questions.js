@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Nav from 'components/Nav';
 import Button from 'components/Button';
 import renderIf from 'render-if';
+import cn from 'classnames';
 import question from '../constants/questions';
 import styles from '../styles/index.sass';
 import { connect } from 'react-redux';
@@ -98,12 +99,13 @@ class Questions extends Component {
                 );
             case 'INPUT':
                 return (
-                    <div className='columns'>
+                    <div className={cn('columns', data.inputs.length > 1 ? styles.inputBorderContainer : '')}>
                         {data.inputs.map((input, i) => (
-                            <div className='column'>
+                            <div className={cn('column', data.inputs.length > 1 ? styles.rightAlignedInputContainer: '')}>
+                                <span>{input.label}</span>
                                 <input
                                     className={styles.input}
-                                    type={input.type} placeholder="Age"
+                                    type={input.type} placeholder={input.placeholder}
                                     value={input.value}
                                     onChange={(e) => input.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(i) : this.handleInputChange(i, e)} />
                             </div>
@@ -212,14 +214,14 @@ class Questions extends Component {
         console.log('****', this.state.currentQuestion)
         return (
             <div className={styles.mainBox}>
-                <Nav />
+                <Nav showHeader={false} />
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}
                 {this.getCurrentQuestion(question[this.state.questionIndex])}
                 {this.getSubQuestion(question[this.state.questionIndex])}
                 <div className={styles.questionContainer}>
-                    <Button label="NEXT" buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
+                    <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
                 </div>
             </div>
         )

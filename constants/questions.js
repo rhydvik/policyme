@@ -13,6 +13,7 @@ const questions = [
                 label: 'AGE',
                 value: '',
                 type: 'number',
+                placeholder: 'Age',
                 validationRules: {
                     minimum: 18,
                     maximum: 60,
@@ -69,6 +70,7 @@ const questions = [
                 label: 'AGE',
                 value: '',
                 inputType: 'number',
+                placeholder: 'Age',
                 validationRules: {
                     minimum: 18,
                     maximum: 60,
@@ -136,13 +138,14 @@ const questions = [
         'or any othe major illness.'
     },
     {
-        question: 'How old are income?',
+        question: 'What is your income?',
         type: 'INPUT',
         name: 'income',
         inputs: [
             {
-                label: '$',
-                value: ''
+                label: 'You',
+                value: '',
+                placeholder: '$'
             }
         ]
     },
@@ -153,11 +156,13 @@ const questions = [
         inputs: [
             {
                 label: 'You',
-                value: ''
+                value: '',
+                placeholder: '$'
             },
             {
                 label: 'You partner',
-                value: ''
+                value: '',
+                placeholder: '$'
             }
         ]
     },
@@ -183,7 +188,8 @@ const questions = [
                 inputs: [
                     {
                         label: 'Monthly rent',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                 ]
             },
@@ -194,11 +200,13 @@ const questions = [
                 inputs: [
                     {
                         label: 'Current mortgage',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                     {
                         label: 'Monthly payment',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     }
                 ]
             },
@@ -226,11 +234,13 @@ const questions = [
                 inputs: [
                     {
                         label: 'Retirement savings (RRSPs, pension plans)',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                     {
                         label: 'Non-retirement savings (bank accounts, investments)',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                 ]
             },
@@ -259,23 +269,28 @@ const questions = [
                 inputs: [
                     {
                         label: 'Credit cards',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                     {
                         label: 'Student loans',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                     {
                         label: 'Home equity loans',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                     {
                         label: 'Lines of credit',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                     {
                         label: 'Other',
-                        value: ''
+                        value: '',
+                        placeholder: '$'
                     },
                 ],
                 isSubQuestion: true,
