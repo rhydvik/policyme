@@ -9,7 +9,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_QUESTION:
-      return { ...state, questions: state.questions.concat(action.payload) };
+    const { qi, question } = action.payload
+      state.questions[qi] = question
+      return { ...state };
     default:
       return state;
   }

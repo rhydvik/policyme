@@ -18,57 +18,57 @@ class Questions extends Component {
         };
     }
     componentWillMount() {
-        this.props.addQuestion(question[this.state.questionIndex]);
+        this.props.addQuestion({qi:this.state.questionIndex, question: question[this.state.questionIndex]});
         this.setState({ currentQuestion: question[this.state.questionIndex] })
     }
     handleButtonChange = (i) => {
         // debugger;
-         const temp = Object.assign({}, question[this.state.questionIndex]);
-        const inp = question[this.state.questionIndex].inputs.map((x) =>{
-         x.value = null
-         return x
-        })
-        temp.inputs = inp
-        console.log('ASJDHA',temp)
+        const temp = Object.assign({}, question[this.state.questionIndex]);
+        const inputs = this.resetButtonStatus(question[this.state.questionIndex].inputs)
+        temp.inputs = inputs
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
         this.setState({ currentQuestion: temp });
     };
-
     handleSubQuestionButtonChange = (i) => {
         // debugger;
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
+        const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs)
+        temp.inputs = inputs
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
         currentQuestionTemp.subQuestion[0] = temp;
         this.setState({ currentQuestion: currentQuestionTemp });
-        console.log('currentButton', currentButton);
         // debugger;
     };
+    resetButtonStatus = (inputs) => {
+        return inputs.map((x) =>{
+            x.value = null
+            return x
+           })
+    }
 
     handleInputChange = (i, e) => {
         const temp = this.state.currentQuestion;
-        const currentInput = temp.inputs[i];
-        currentInput.value = parseInt(e.target.value);
-        temp.inputs[i] = currentInput;
+        temp.inputs[i].value = parseInt(e.target.value);
         this.setState({ currentQuestion: temp });
     };
 
     handleSubQuestionInputChange = (i, e) => {
         const temp = this.state.currentQuestion.subQuestion[0];
-        const currentInput = temp.inputs[i];
-        currentInput.value = parseInt(e.target.value);
-        temp.inputs[i] = currentInput;
+        // const currentInput = temp.inputs[i];
+        temp.inputs[i].value = parseInt(e.target.value);
+        // temp.inputs[i] = currentInput;
         this.setState({ currentQuestion: temp });
     };
 
     next = () => {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
-        this.props.addQuestion(question[qi + 1]);
+        this.props.addQuestion({qi, question: question[qi + 1]});
     };
 
     goBack = () => {
@@ -154,7 +154,6 @@ class Questions extends Component {
         if (currentQuestion.overrideValidation !== undefined) return true
         switch (currentQuestion.type) {
             case 'BUTTON':
-                console.log('called hullululu again', currentQuestion.type);
                 // debugger;
                 for (let i = 0; i < currentQuestion.inputs.length; i++) {
                     if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
@@ -173,7 +172,6 @@ class Questions extends Component {
                     const value = currentQuestion.inputs[i].value;
                     const validationRules = currentQuestion.inputs[i].validationRules;
                     let validInput = false;
-                    console.log('validationRules', validationRules, value)
                     if (validationRules !== undefined) {
                         if (value < validationRules.maximum && value > validationRules.minimum) {
                             validInput = true;
@@ -186,14 +184,12 @@ class Questions extends Component {
                             // debugger;
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
-                                console.log('currentInput', currentInput);
                                 if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
                                     validInputCount = validInputCount + 1;
                                 } else if (currentInput.value !== null && currentQuestion.subQuestion[0].type === 'BUTTON') {
                                     validInputCount = currentQuestion.subQuestion[0].inputs.length;
                                 }
                             }
-                            console.log('validInputCount', validInputCount);
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
                             // debugger;
                         } else return false
@@ -202,6 +198,7 @@ class Questions extends Component {
                         console.log('returning true from hulululu');
                         return true
                     }
+                    return true
                     // debugger;
                 }
         }

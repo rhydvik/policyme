@@ -69,7 +69,7 @@ const questions = [
             {
                 label: 'AGE',
                 value: '',
-                inputType: 'number',
+                type: 'number',
                 placeholder: 'Age',
                 validationRules: {
                     minimum: 18,
