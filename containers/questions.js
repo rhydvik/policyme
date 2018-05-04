@@ -102,7 +102,7 @@ class Questions extends Component {
                     <div className={cn('columns', data.inputs.length > 1 ? styles.inputBorderContainer : '')}>
                         {data.inputs.map((input, i) => (
                             <div className={cn('column', data.inputs.length > 1 ? styles.rightAlignedInputContainer: '')}>
-                                <span>{input.label}</span>
+                                {data.inputs.length > 1 ? <span>{input.label}</span> : '' }
                                 <input
                                     className={styles.input}
                                     type={input.type} placeholder={input.placeholder}
@@ -211,7 +211,7 @@ class Questions extends Component {
         console.log('****', this.state.currentQuestion)
         return (
             <div className={styles.mainBox}>
-                <Nav showHeader={false} />
+                <Nav usedFor="questions" showHeader={false} />
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}

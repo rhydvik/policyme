@@ -21,7 +21,7 @@ export default class Nav extends Component {
             <nav className="navbar" aria-label="main navigation">
                 <div className="navbar-brand">
                     <a className="navbar-item" href="#">
-                        <img src="static/images/home/logo.svg"/>
+                        <img src={this.props.usedFor === "questions" ? "static/images/questions/logo_pm.svg" : "static/images/home/logo.svg" }/>
                     </a>
                 </div>
                 {renderHeader(
@@ -33,7 +33,7 @@ export default class Nav extends Component {
                         Blog
                     </div>
                 </div>
-                )} 
+                )}
             </nav>
         )
     }
