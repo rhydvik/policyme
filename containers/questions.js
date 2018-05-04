@@ -202,7 +202,7 @@ class Questions extends Component {
         console.log('****', this.state.currentQuestion)
         return (
             <div className={styles.mainBox}>
-                <Nav showHeader={false} />
+                <Nav usedFor="questions" showHeader={false} />
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}

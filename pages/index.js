@@ -38,7 +38,9 @@ export default class Index extends Component {
                             Get your customized advice on your life insurance needs.
                         </div>
                         <div className='action'>
-                            <button className="action-button button is-primary">GET ADVICE</button>
+                            <Link href={{ pathname: '/questions' }}>
+                               <button className="action-button button is-primary">GET ADVICE</button>
+                            </Link>
                         </div>
                     </div>
                     <div className="column">
@@ -101,7 +103,9 @@ export default class Index extends Component {
                                 most cost-effective way.
                             </div>
                             <div className='action'>
-                                <button className="action-button button invert">GET ADVICE</button>
+                                <Link href={{ pathname: '/questions' }}>
+                                 <button className="action-button button invert">GET ADVICE</button>
+                                </Link>
                             </div>
                         </div>
                         <div className="column image-column show-for-large-only">
@@ -204,7 +208,9 @@ export default class Index extends Component {
                         Answers to all of your life insurance questions every step of the way.
                     </div>
                     <div className='action'>
-                        <button className="action-button button invert">GET ADVICE</button>
+                        <Link href={{ pathname: '/questions' }}>
+                           <button className="action-button button invert">GET ADVICE</button>
+                        </Link>
                     </div>
                 </div>
                 <div className="row-about-us tenth">
