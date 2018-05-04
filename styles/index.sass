@@ -76,10 +76,10 @@ button
   border: .1rem solid green
 
 .questionContainer
-  padding-top: 1.5rem
+  padding-bottom: 1.5rem
 
 .questionBox
-  padding: 0 2rem 2rem 2rem
+  padding: 0 2rem 0rem 2rem
   text-align: center
   img
     height: 8rem
@@ -90,6 +90,8 @@ button
 
 .inputsContainer
   text-align: center
+  input
+    max-width: 8rem
 
 .alignInputsInOneLine
   text-align: center
@@ -111,7 +113,7 @@ button
 
 .mainBox
   text-align: center
-  
+
 .backArrow
     cursor: pointer
     height: 1.6rem
@@ -124,12 +126,12 @@ button
 .nextDisabled
   background-color: #dcdcdc
   color: white
-  width: 85%
+  width: 95%
 
 .nextEnabled
   background-color: #1bb0db
   color: white
-  width: 80%
+  width: 95%
 
 .input
   border: none
@@ -308,7 +310,7 @@ button
 @media screen and (max-width: 768px)
 
   .navbar
-    padding: 1rem 0
+    padding: 0
     .right-items
       position: absolute
       right: 0.5em
@@ -447,3 +449,22 @@ button
         color: white
         .copyright-links
           text-align: left
+
+.inputBorderContainer
+  border-top: solid 1px #eaeaea
+
+
+.rightAlignedInputContainer
+  border-bottom: solid 1px #eaeaea
+  height: 3rem
+  input
+    float: right
+  span
+    font-size: .9rem
+    font-weight: normal
+    font-style: normal
+    font-stretch: normal
+    line-height: 1.89
+    letter-spacing: normal
+    float: left
+    color: #004f78

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-
+import renderIf from 'render-if';
 import styles from './index.sass';
 
 export default class Nav extends Component {
@@ -16,6 +16,7 @@ export default class Nav extends Component {
     }
 
     render() {
+        const renderHeader = renderIf(this.props.showHeader);
         return (
             <nav className="navbar" aria-label="main navigation">
                 <div className="navbar-brand">
@@ -23,6 +24,7 @@ export default class Nav extends Component {
                         <img src="static/images/home/logo.svg"/>
                     </a>
                 </div>
+                {renderHeader(
                 <div className="right-items">
                     <div className='item'>
                         Insurance 101
@@ -31,6 +33,7 @@ export default class Nav extends Component {
                         Blog
                     </div>
                 </div>
+                )} 
             </nav>
         )
     }
