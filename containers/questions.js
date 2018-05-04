@@ -4,7 +4,10 @@ import Button from 'components/Button';
 import renderIf from 'render-if';
 import question from '../constants/questions';
 import styles from '../styles/index.sass';
-
+import { connect } from 'react-redux';
+import {
+    addQuestion
+} from '../Actions'
 class Questions extends Component {
     constructor(props) {
         super(props);
@@ -14,11 +17,18 @@ class Questions extends Component {
         };
     }
     componentWillMount() {
+        this.props.addQuestion(question[this.state.questionIndex]);
         this.setState({ currentQuestion: question[this.state.questionIndex] })
     }
     handleButtonChange = (i) => {
-        debugger;
-        const temp = Object.assign({}, question[this.state.questionIndex]);
+        // debugger;
+         const temp = Object.assign({}, question[this.state.questionIndex]);
+        const inp = question[this.state.questionIndex].inputs.map((x) =>{
+         x.value = null
+         return x
+        })
+        temp.inputs = inp
+        console.log('ASJDHA',temp)
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
@@ -26,7 +36,7 @@ class Questions extends Component {
     };
 
     handleSubQuestionButtonChange = (i) => {
-        debugger;
+        // debugger;
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
         const currentButton = temp.inputs[i];
@@ -35,7 +45,7 @@ class Questions extends Component {
         currentQuestionTemp.subQuestion[0] = temp;
         this.setState({ currentQuestion: currentQuestionTemp });
         console.log('currentButton', currentButton);
-        debugger;
+        // debugger;
     };
 
     handleInputChange = (i, e) => {
@@ -57,6 +67,7 @@ class Questions extends Component {
     next = () => {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
+        this.props.addQuestion(question[qi + 1]);
     };
 
     goBack = () => {
@@ -118,11 +129,11 @@ class Questions extends Component {
 
     getSubQuestion = (question) => {
         if (question.subQuestion === undefined) return;
-        debugger;
+        // debugger;
         const { currentQuestion } = this.state;
         const subQuestion = currentQuestion.subQuestion;
         for (let i = 0; i < currentQuestion.inputs.length; i++) {
-            debugger;
+            // debugger;
             const currentInputValue = currentQuestion.inputs[i].value;
             if (currentInputValue !== null && currentInputValue !== '') {
                 return (
@@ -142,7 +153,7 @@ class Questions extends Component {
         switch (currentQuestion.type) {
             case 'BUTTON':
                 console.log('called hullululu again', currentQuestion.type);
-                debugger;
+                // debugger;
                 for (let i = 0; i < currentQuestion.inputs.length; i++) {
                     if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from rupu dp hee hee hee');
@@ -166,11 +177,11 @@ class Questions extends Component {
                             validInput = true;
                         }
                         if (validInput && currentQuestion.subQuestion === undefined) {
-                            debugger;
+                            // debugger;
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            debugger;
+                            // debugger;
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
                                 console.log('currentInput', currentInput);
@@ -182,19 +193,20 @@ class Questions extends Component {
                             }
                             console.log('validInputCount', validInputCount);
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
-                            debugger;
+                            // debugger;
                         } else return false
                     }
                     if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from hulululu');
                         return true
                     }
-                    debugger;
+                    // debugger;
                 }
         }
     };
 
     render() {
+        console.log(this.props)
         const { questionIndex } = this.state;
         let nextDisabled = this.validateQuestion();
         console.log('****', this.state.currentQuestion)
@@ -213,5 +225,9 @@ class Questions extends Component {
         )
     }
 }
+const mapDispatchToProps = {
+    addQuestion
+};
 
-export default Questions;
+const mapStateToProps = state => state.questionReducer;
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
