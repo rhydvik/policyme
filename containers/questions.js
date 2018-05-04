@@ -5,6 +5,7 @@ import renderIf from 'render-if';
 import cn from 'classnames';
 import question from '../constants/questions';
 import styles from '../styles/index.sass';
+import Modal from '../components/Modal/index';
 
 class Questions extends Component {
     constructor(props) {
@@ -12,6 +13,7 @@ class Questions extends Component {
         this.state = {
             questionIndex: 0,
             currentQuestion: {},
+            modalIsOpen: false
         };
     }
     componentWillMount() {
@@ -71,6 +73,16 @@ class Questions extends Component {
     handleInputField = (type, name) => {
 
     };
+
+
+    openModal = () => {
+        this.setState({modalIsOpen: true});
+    }
+    
+    
+    closeModal = () => {
+        this.setState({modalIsOpen: false});
+    }
 
     getInputOptions = (data) => {
         switch (data.type) {
@@ -210,6 +222,11 @@ class Questions extends Component {
                 {this.getSubQuestion(question[this.state.questionIndex])}
                 <div className={styles.questionContainer}>
                     <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
+                    {renderIf(this.state.modalIsOpen)(
+                        <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
+                    )}
+                    <Button label="PopUp" onClick={this.openModal} buttonStyle={styles.nextEnabled} />
+                    
                 </div>
             </div>
         )
