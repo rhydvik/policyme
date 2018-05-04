@@ -33,10 +33,6 @@ class Popup extends  Component {
 
                     <Button   label='Submit' />
                 </div>
-                
-                
-                
-                
             </div>
 
         );
