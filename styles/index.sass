@@ -20,6 +20,7 @@
 //@import '../components/DetailedCTA/index'
 //@import '../components/Points/index'
 
+
 .undefined
   border: 1px solid red !important
 
@@ -41,7 +42,7 @@ html
 body
   margin: 0
   padding: 0
-  font-family: 'Open sans', BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+  font-family: 'Lato', sans-serif
   position: relative
   background: $white
   color: $black
@@ -160,6 +161,35 @@ button
     padding: 4.6rem 0
     max-width: 64rem
     margin: auto
+    .image
+      display: inline-flex
+      position: absolute
+      z-index: 2
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
+    .image-background
+      position: absolute
+      display: inline-flex
+      background: linear-gradient(to right, #1bb0db , #69d0ff)
+      box-shadow: 0 0 .625rem rgba(0, 0, 0, 0.15)
+    #image-1-background
+      width: 26.875rem
+      margin-top: 9.68rem
+      height: 15.43rem
+      margin-left: 6.25rem
+    #image-2
+      margin-left: -3.125rem
+    #image-2-background
+      width: 26.875rem
+      margin-left: -5.625rem
+      margin-top: -2.375rem
+      height: 18.75rem
+    #image-3
+      margin-left: -3.125rem
+    #image-3-background
+      width: 21.875rem
+      margin-left: -5.3125rem
+      margin-top: 8.125rem
+      height: 18.75rem
     .main-text
       width: 25rem
       font-size: 2.75rem
@@ -240,6 +270,13 @@ button
           height: 26rem
           margin-top: -5rem
           box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1)
+          .text
+            color: #004f78
+            font-size: 1.12rem
+            font-weight: 600
+            text-align: center
+            padding: 0 1rem
+            padding-top: 1rem
     &.eight
       text-align: center
       padding: 1rem
@@ -295,10 +332,12 @@ button
             font-size: 1rem
             line-height: 1.875rem
             font-weight: 700
+            cursor: pointer
             margin-bottom: 1.2rem
           .item
             color: rgba(255, 255, 255, 0.8)
             font-size: 1rem
+            cursor: pointer
             line-height: 1.875rem
             img
               padding: 0 0.625rem
@@ -307,8 +346,10 @@ button
   .show-for-small-only
     display: none
 
-@media screen and (max-width: 768px)
 
+@media screen and (max-width: 768px)
+  body
+    background: none
   .navbar
     padding: 0
     .right-items
@@ -325,6 +366,16 @@ button
   .home-wrapper
     .row-about-us
       padding: 1rem 0
+      .image
+        display: initial
+        position: initial
+      .image-background
+        z-index: -1
+        background: linear-gradient(to right, #1bb0db , #69d0ff)
+        box-shadow: 0 0 .625rem rgba(0, 0, 0, 0.15)
+        margin: auto
+      #image-1-background
+        margin-top: 4.6rem
       .main-text
         margin: auto
         text-align: center
@@ -338,6 +389,7 @@ button
         font-size: 1.25rem
         line-height: 2.25rem
         color: #595959
+        text-align: center
         margin-bottom: 2rem
       .action
         width: 90%
@@ -346,6 +398,17 @@ button
           height: 4rem
           width: 100%
       &.second
+        .image-column
+          text-align: center
+          margin-bottom: 3rem
+          margin-top: 3rem
+          #image-3
+            margin-left: auto
+          #image-3-background
+            width: 26.875rem
+            margin-top: 9.68rem
+            height: 15.83rem
+            margin-left: 6.25rem
         p
           padding: 0.5rem 0
         .hint-text
@@ -520,3 +583,12 @@ button
       border-radius: .1rem
 
 
+@media screen and (max-width: 360px)
+  .home-wrapper
+    .row-about-us
+      #image-1-background
+        height: 13.125rem
+      &.second
+        .image-column
+          #image-3-background
+            height: 13.33rem

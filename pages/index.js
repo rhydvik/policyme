@@ -31,8 +31,11 @@ export default class Index extends Component {
                         <div className='main-text'>
                             We are on a mission to simplify life insurance.
                         </div>
-                        <div className='hint-text'>
+                        <div className='hint-text show-for-large-only'>
                             We offer customized and automated advice on your life insurance needs.
+                        </div>
+                        <div className='hint-text show-for-small-only'>
+                            Get your customized advice on your life insurance needs.
                         </div>
                         <div className='action'>
                             <button className="action-button button is-primary">GET ADVICE</button>
@@ -40,7 +43,8 @@ export default class Index extends Component {
                     </div>
                     <div className="column">
                         <div>
-                            <img src="static/images/home/home-image-1.png"/>
+                            <div id='image-1-background' className='image-background'></div>
+                            <img id='image-1' src="static/images/home/home-image-1.jpg" className='image' />
                         </div>
                     </div>
                 </div>
@@ -48,7 +52,8 @@ export default class Index extends Component {
                 <div className="columns row-about-us second">
                     <div className="column show-for-large-only">
                         <div>
-                            <img src="static/images/home/home-image-1.png"/>
+                            <div id='image-2-background' className='image-background'></div>
+                            <img id='image-2' className='image' src="static/images/home/home-image-2.jpg"/>
                         </div>
                     </div>
                     <div className="column">
@@ -108,9 +113,10 @@ export default class Index extends Component {
                     </div>
                 </div>
                 <div className="columns row-about-us second">
-                    <div className="column">
+                    <div className="column image-column">
                         <div>
-                            <img src="static/images/home/home-image-3.png"/>
+                            <div id='image-3-background' className='image-background'></div>
+                            <img id='image-3' className='image' src="static/images/home/home-image-3.jpg"/>
                         </div>
                     </div>
                     <div className="column">
@@ -144,13 +150,27 @@ export default class Index extends Component {
                     <div className='columns'>
                         <div className="column">
                             <div className="cards">
+                                <img src="static/images/home/card-image3.jpg"/>
+                                <div className='text'>
+                                    Life Insurance 101
+                                </div>
                             </div>
                         </div>
                         <div className="column ">
-                            <div className="cards"></div>
+                            <div className="cards">
+                                <img src="static/images/home/card-image1.jpg"/>
+                                <div className='text'>
+                                    The truth about guaranteed issue life insurance
+                                </div>
+                            </div>
                         </div>
                         <div className="column ">
-                            <div className="cards"></div>
+                            <div className="cards">
+                                <img src="static/images/home/card-image2.jpg"/>
+                                <div className='text'>
+                                    Why term life insurance makes sense for most people
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
