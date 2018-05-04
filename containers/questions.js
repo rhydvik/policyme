@@ -91,7 +91,7 @@ class Questions extends Component {
                     <div className={cn('columns', data.inputs.length > 1 ? styles.inputBorderContainer : '')}>
                         {data.inputs.map((input, i) => (
                             <div className={cn('column', data.inputs.length > 1 ? styles.rightAlignedInputContainer: '')}>
-                                <span>{input.label}</span>
+                                {data.inputs.length > 1 ? <span>{input.label}</span> : '' }
                                 <input
                                     className={styles.input}
                                     type={input.type} placeholder={input.placeholder}
