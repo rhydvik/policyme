@@ -103,6 +103,9 @@ const questions = [
     },
     {
         question: 'How old are your kids?',
+        addOn: 'input',
+        subQuestion: [],
+        inputs: [],
         infoText: 'Only include kids that you are financially supporting (usually 25 and younger)',
         questionText: 'What if I\'m planning to have kids?',
     },

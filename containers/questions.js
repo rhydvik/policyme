@@ -106,7 +106,11 @@ class Questions extends Component {
     closeModal = () => {
         this.setState({modalIsOpen: false});
     };
-
+    getInputClass = (data) => {
+        if (data.inputs.length > 1 || !data.addon) {
+           return  styles.alignInputsInOneLine
+        } else return ''
+    }
     getInputOptions = (data) => {
         switch (data.type) {
             case 'BUTTON':
@@ -123,10 +127,10 @@ class Questions extends Component {
                 );
             case 'INPUT':
                 return (
-                    <div className={cn('columns', data.inputs.length > 1 ? styles.inputBorderContainer : '')}>
+                    <div className={cn('columns', (data.inputs.length > 1 || data.addon) ? styles.inputBorderContainer : '')}>
                         {data.inputs.map((input, i) => (
-                            <div className={cn('column', data.inputs.length > 1 ? styles.rightAlignedInputContainer: '')}>
-                                {data.inputs.length > 1 ? <span>{input.label}</span> : '' }
+                            <div className={cn('column', (data.inputs.length > 1 || data.addon) ? styles.rightAlignedInputContainer: '')}>
+                                {(data.inputs.length > 1 || data.addon) ? <span>{input.label}</span> : '' }
                                 <input
                                     className={styles.input}
                                     type={input.type}
@@ -157,7 +161,15 @@ class Questions extends Component {
     getSubQuestion = (question) => {
         if (question.subQuestion === undefined) return;
         // debugger;
+        console.log("YES I AM GETTING CONTROL")
         const { currentQuestion } = this.state;
+        if(currentQuestion.addOn && currentQuestion.subQuestion.length ) {
+            const subQuestion = currentQuestion.subQuestion;
+                 return subQuestion.map(x=> <div>
+                        {x.question}
+                        {this.getInputOptions(x)}
+                    </div>)
+        }
         const subQuestion = currentQuestion.subQuestion;
         for (let i = 0; i < currentQuestion.inputs.length; i++) {
             // debugger;
@@ -235,11 +247,42 @@ class Questions extends Component {
                 }
         }
     };
+    handleAddOn = () => {
+        const { questionIndex, currentQuestion } = this.state;
+        const q =             {
+            question: '',
+            type: 'INPUT',
+            name: 'child',
+            addon: true,
+            inputs: [
+                {
+                    label: `Child ${currentQuestion.subQuestion.length + 1}`,
+                    value: '',
+                    placeholder: ''
+                }
+            ],
+            isSubQuestion: true,
+        }
+        currentQuestion.subQuestion.push(q)
+        this.setState({currentQuestion})
+
+    }
+    addOn = (question) => {
+        return (
+            <div className="addOnBtn"  onClick={this.handleAddOn}>
+                <img className='plus' src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/add_blue.png" />
+                <button>Add Child</button>
+            </div>
+        )
+    }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
+        console.log('STATE',this.state)
         const { questionIndex, currentQuestion } = this.state;
         let nextDisabled = this.validateQuestion();
+        console.log('ASDAAD', question[this.state.questionIndex])
+
         console.log('****', this.state.currentQuestion);
         return (
             <div className={styles.mainBox}>
@@ -254,8 +297,10 @@ class Questions extends Component {
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}
-                {this.getCurrentQuestion(question[this.state.questionIndex])}
-                {this.getSubQuestion(question[this.state.questionIndex])}
+                {this.getCurrentQuestion(currentQuestion)}
+                {/* {question.subQuestion ? this.getSubQuestion(question[this.state.questionIndex]) : ''} */}
+                {this.getSubQuestion(currentQuestion)}
+                {currentQuestion.addOn ? this.addOn(currentQuestion) : ''}
                 <div className={styles.questionContainer}>
                     <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
                     {renderIf(this.state.modalIsOpen)(
