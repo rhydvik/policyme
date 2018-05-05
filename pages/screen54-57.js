@@ -20,7 +20,7 @@ export default class Navy extends Component {
                 >
                   <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
-                <div className={styles.questionContainer}>
+                <div className={styles.quoteContainer}>
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
 
                     <div className={styles.questionBox}>
@@ -53,14 +53,17 @@ export default class Navy extends Component {
                             <Button label="SUBMIT" buttonStyle={styles.selectedButton} />
                         </div>  
                         <p className={cn( styles.quoteMessage, styles.policyHeading)}>Your Quotes </p>
-                        <div className={styles.quoteBox}>
-                            <div>Empire Life</div>
-                            <p>$12.13 per Month </p>
+                        <div className={styles.quoteBoxContainer}>
+                            <div className={styles.quoteBox}>
+                                <div>Empire Life</div>
+                                <p>$12.13 per Month </p>
+                            </div>
+                            <div className={styles.quoteBox}>
+                                <p>Empire Life</p>
+                                <p>$12.13 per Month </p>
+                            </div>
                         </div>
-                        <div className={styles.quoteBox}>
-                            <p>Empire Life</p>
-                            <p>$12.13 per Month </p>
-                        </div>
+                        
                         <Button label="Next" buttonStyle={styles.nextEnabled} />
 
                     </div>
