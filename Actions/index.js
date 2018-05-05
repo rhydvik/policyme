@@ -8,9 +8,14 @@ export function addQuestion(payload) {
     };
 }
 export function setSessionId (payload) {
-  console.log(payload)
   return {
     type: actionTypes.SET_SESSION_ID,
+    payload
+  }
+}
+export function setSkeletonJson (payload) {
+  return {
+    type: actionTypes.SET_SKELETON_JSON,
     payload
   }
 }
@@ -26,8 +31,18 @@ export function setAdvice() {
     })
       .then(res => res.json())
       .then((fetchedData) => {
-        console.log(fetchedData)
         dispatch(setSessionId(fetchedData));
+        dispatch(getSkeletonJson(fetchedData.id))
+      });
+  };
+}
+
+export function getSkeletonJson (s_id)  {
+  return (dispatch) => {
+    fetch(`${ENDPOINT}inputs/${s_id}`)
+      .then(res => res.json())
+      .then((fetchedData) => {
+        dispatch(setSkeletonJson(fetchedData))
       });
   };
 }

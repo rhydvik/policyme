@@ -8,7 +8,7 @@ import styles from '../styles/index.sass';
 import { connect } from 'react-redux';
 import {
     addQuestion,
-    setAdvice
+    setAdvice,
 } from '../Actions'
 import Modal from '../components/Modal/index';
 
@@ -83,6 +83,7 @@ class Questions extends Component {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
         this.props.addQuestion({qi, question: question[qi + 1]});
+        console.log(this.props.questions)
     };
 
     goBack = () => {
@@ -193,7 +194,6 @@ class Questions extends Component {
     };
 
     validateQuestion = () => {
-        console.log('^^^^^^^', this.state.currentQuestion);
         const { currentQuestion } = this.state;
         if (currentQuestion.overrideValidation !== undefined) return true
         switch (currentQuestion.type) {
@@ -278,12 +278,9 @@ class Questions extends Component {
 
     render() {
         // console.log(this.props)
-        console.log('STATE',this.state)
         const { questionIndex, currentQuestion } = this.state;
         let nextDisabled = this.validateQuestion();
-        console.log('ASDAAD', question[this.state.questionIndex])
-
-        console.log('****', this.state.currentQuestion);
+        console.log(this.props)
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -318,7 +315,7 @@ class Questions extends Component {
 }
 const mapDispatchToProps = {
     addQuestion,
-    setAdvice
+    setAdvice,
 };
 
 const mapStateToProps = state => state.questionReducer;

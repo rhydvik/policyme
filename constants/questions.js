@@ -276,6 +276,7 @@ const questions = [
     {
         question: 'Do you have any debts?\n',
         name: 'debts',
+        last:true,
         type: 'BUTTON',
         inputs: [
             {
