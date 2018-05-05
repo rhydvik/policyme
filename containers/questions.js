@@ -68,7 +68,7 @@ class Questions extends Component {
         const temp1 = temp.subQuestion[0];
         temp1.inputs[i].value = parseInt(e.target.value);
 
-        temp.subQuestion = temp1;
+        temp.subQuestion[0] = temp1;
 
         this.setState({ currentQuestion: temp });
     };
@@ -82,7 +82,7 @@ class Questions extends Component {
     goBack = () => {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi - 1, currentQuestion: question[qi - 1] })
-    }
+    };
 
     validate = (name) => {
         if (this.state.name === undefined) return true;
@@ -186,6 +186,7 @@ class Questions extends Component {
                         console.log('3');
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
+                        console.log('**^^^**', currentQuestion.subQuestion);
                         for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                             console.log('4');
                             if (currentQuestion.subQuestion[0].inputs[i].value !== null) return true
@@ -208,6 +209,7 @@ class Questions extends Component {
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
                             debugger;
+                            console.log('*****', currentQuestion.subQuestion);
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
                                 if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
