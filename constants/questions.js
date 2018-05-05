@@ -36,6 +36,7 @@ const questions = [
             }
         ],
         requiredField: 'gender',
+        infoText: 'Men and woman have different life expectancies and therefore insurers take gender into account when pricing life insurance policies.'
     },
     {
         question: 'Who makes up your household?',
@@ -59,7 +60,9 @@ const questions = [
                 label: 'Me, my partner and kid(s)',
                 value: null
             }
-        ]
+        ],
+        infoText: 'Partner includes married or common-law\n' + '\n' + 'Only include kids that you are financially supporting (usually 25 and younger.',
+        questionText: 'What if I\'m planning to have kids?'
     },
     {
         question: 'How old is your partner?',
@@ -94,11 +97,14 @@ const questions = [
                 ],
                 requiredField: 'gender',
                 isSubQuestion: true,
+                infoText: 'Men and woman have different life expectancies and therefore insurers take gender into account when pricing life insurance policies.'
             },
         ],
     },
     {
-        question: 'How old are your kids?'
+        question: 'How old are your kids?',
+        infoText: 'Only include kids that you are financially supporting (usually 25 and younger)',
+        questionText: 'What if I\'m planning to have kids?',
     },
     {
         question: 'Do you smoke?',
@@ -113,6 +119,8 @@ const questions = [
                 value: null,
             }
         ],
+        questionText: 'What if I used to smoke?',
+        infoText: 'Select ‘yes’ if you’ve used any nicotine products in the past year'
     },
     {
         question: ' Have you ever been diagnosed with a serious health condition?',
@@ -147,7 +155,9 @@ const questions = [
                 value: '',
                 placeholder: '$'
             }
-        ]
+        ],
+        questionText: 'What about non-employment income?',
+        infoText: 'missing'
     },
     {
         question: 'What is your family income?',
@@ -164,7 +174,9 @@ const questions = [
                 value: '',
                 placeholder: '$'
             }
-        ]
+        ],
+        questionText: 'What about non-employment income?',
+        infoText: 'Give us a ballpark estimate of your pre-tax income – do not include investments, we’ll get to that soon',
     },
     {
         question: 'Do you rent or do you own?',
@@ -180,6 +192,7 @@ const questions = [
                 value: null,
             }
         ],
+        questionText: 'What if I\'m in the market to buy?',
         subQuestion: [
             {
                 question: 'What is your rent?',
@@ -226,6 +239,7 @@ const questions = [
                 value: null,
             }
         ],
+        questionText: 'What if my savings are in my corporation?',
         subQuestion: [
             {
                 question: 'What is your rent?',
@@ -245,7 +259,7 @@ const questions = [
                 ]
             },
         ],
-        popupText: 'Include both your personal retirement accounts (e.g. RRSPs) and your employer retirement accounts (e.g. pensions). Do not include TFSA accounts as they belong in the ‘non-retirement savings’ category below'
+        infoText: 'Include both your personal retirement accounts (e.g. RRSPs) and your employer retirement accounts (e.g. pensions). Do not include TFSA accounts as they belong in the ‘non-retirement savings’ category below'
     },
     {
         question: 'Do you have any debts?\n',
@@ -261,6 +275,7 @@ const questions = [
                 value: null,
             }
         ],
+        infoText: 'Not including a mortgage on your primary residence',
         subQuestion: [
             {
                 question: 'Add debts',
@@ -294,13 +309,10 @@ const questions = [
                     },
                 ],
                 isSubQuestion: true,
+                infoText: 'Only include if you typically carry a balance',
             },
         ],
-        popupText: 'Include both your personal retirement accounts (e.g. RRSPs) and your employer retirement accounts (e.g. pensions). Do not include TFSA accounts as they belong in the ‘non-retirement savings’ category below'
     },
-    {
-        question: 'Hi, I\'m Alex, and I\'ll be helping you with your life insurance checkup today.\n'
-    }
 ];
 
 export default questions;
