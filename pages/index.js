@@ -203,7 +203,8 @@ export default class Index extends Component {
                 </div>
                 <div className="row-about-us forth ninth">
                     <div className='main-text'>
-                        Answers to all of your life insurance questions every step of the way.
+                        Don’t wait.<br/>
+                        Get the advice you need.
                     </div>
                     <div className='action'>
                         <Link href={{ pathname: '/questions' }}>

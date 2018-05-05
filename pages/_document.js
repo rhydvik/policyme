@@ -86,8 +86,8 @@ export default class MyDocument extends Document {
 
                     {/*<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,800" rel="stylesheet" />*/}
                     <link href="https://fonts.googleapis.com/css?family=Lato:400,500,700,900" rel="stylesheet"/>
+                    <link href="https://fonts.googleapis.com/css?family=Karma:400,600,700,800" rel="stylesheet"/>
                     {/* <style dangerouslySetInnerHTML={{ __html: stylesheet }} /> */}
-                    
                     <link rel="stylesheet" href="/_next/static/style.css" />
 
                 </Head>
