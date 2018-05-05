@@ -30,7 +30,9 @@ class PopUp extends Component {
             <Modal style={modalStyle} isOpen={this.props.isOpen} onRequestClose={this.props.closeModal} >
               <div className={styles.mainBox}>
                   <div className={styles.modalNav}>
-                    <Nav usedFor="questions" showQuestionMark={true} showHeader={false} />
+                      <Nav usedFor="modal" showQuestionMark={true} showHeader={false} closeModal={this.props.closeModal} >
+                         <img src="/static/images/questions/close.svg" onClick={this.props.closeModal} />
+                      </Nav>
                   </div>
                     <div className={styles.popupContainer}>
                         <p>Questions? ... Leave them here. </p>

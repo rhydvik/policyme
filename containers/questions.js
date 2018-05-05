@@ -16,7 +16,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionIndex: 0,
+            questionIndex: 10,
             currentQuestion: {},
             modalIsOpen: false
         };
@@ -33,8 +33,8 @@ class Questions extends Component {
     handleButtonChange = (i) => {
         // debugger;
         const temp = Object.assign({}, question[this.state.questionIndex]);
-        const inputs = this.resetButtonStatus(question[this.state.questionIndex].inputs)
-        temp.inputs = inputs
+        const inputs = this.resetButtonStatus(question[this.state.questionIndex].inputs);
+        temp.inputs = inputs;
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
@@ -44,8 +44,8 @@ class Questions extends Component {
         // debugger;
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
-        const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs)
-        temp.inputs = inputs
+        const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs);
+        temp.inputs = inputs;
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
@@ -55,22 +55,27 @@ class Questions extends Component {
     };
     resetButtonStatus = (inputs) => {
         return inputs.map((x) =>{
-            x.value = null
-            return x
-           })
-    }
+            x.value = null;
+            return x;
+           });
+    };
 
     handleInputChange = (i, e) => {
+        debugger;
         const temp = this.state.currentQuestion;
         temp.inputs[i].value = parseInt(e.target.value);
         this.setState({ currentQuestion: temp });
     };
 
     handleSubQuestionInputChange = (i, e) => {
-        const temp = this.state.currentQuestion.subQuestion[0];
-        // const currentInput = temp.inputs[i];
-        temp.inputs[i].value = parseInt(e.target.value);
-        // temp.inputs[i] = currentInput;
+        debugger;
+        console.log('asdfgh', this.state.currentQuestion);
+        const temp = this.state.currentQuestion;
+        const temp1 = temp.subQuestion[0];
+        temp1.inputs[i].value = parseInt(e.target.value);
+
+        temp.subQuestion = temp1;
+
         this.setState({ currentQuestion: temp });
     };
 
@@ -95,12 +100,12 @@ class Questions extends Component {
 
     openModal = () => {
         this.setState({modalIsOpen: true});
-    }
+    };
 
 
     closeModal = () => {
         this.setState({modalIsOpen: false});
-    }
+    };
 
     getInputOptions = (data) => {
         switch (data.type) {
@@ -127,7 +132,7 @@ class Questions extends Component {
                                     type={input.type}
                                     placeholder={input.placeholder}
                                     value={input.value}
-                                    onChange={(e) => input.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(i) : this.handleInputChange(i, e)} />
+                                    onChange={(e) => data.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(i, e) : this.handleInputChange(i, e)} />
                             </div>
                         ))}
                     </div>
@@ -158,7 +163,7 @@ class Questions extends Component {
             // debugger;
             const currentInputValue = currentQuestion.inputs[i].value;
             if (currentInputValue !== null && currentInputValue !== '') {
-                let qindex = 0
+                let qindex = 0;
                 if(currentQuestion.type === 'BUTTON' && currentQuestion.subQuestion) {
                     if(currentQuestion.inputs[i].subQuestionIndex !== undefined) {
                         qindex = currentQuestion.inputs[i].subQuestionIndex
@@ -176,6 +181,7 @@ class Questions extends Component {
     };
 
     validateQuestion = () => {
+        console.log('^^^^^^^', this.state.currentQuestion);
         const { currentQuestion } = this.state;
         if (currentQuestion.overrideValidation !== undefined) return true
         switch (currentQuestion.type) {
@@ -183,11 +189,11 @@ class Questions extends Component {
                 // debugger;
                 for (let i = 0; i < currentQuestion.inputs.length; i++) {
                     if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
-                        console.log('returning true from rupu dp hee hee hee');
+                        console.log('3');
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
                         for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
-                            console.log('4 tarik dp, hee hee hee');
+                            console.log('4');
                             if (currentQuestion.subQuestion[0].inputs[i].value !== null) return true
                         }
                     }
@@ -203,11 +209,11 @@ class Questions extends Component {
                             validInput = true;
                         }
                         if (validInput && currentQuestion.subQuestion === undefined) {
-                            // debugger;
+                            debugger;
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            // debugger;
+                            debugger;
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
                                 if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
@@ -217,27 +223,34 @@ class Questions extends Component {
                                 }
                             }
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
-                            // debugger;
+                            debugger;
                         } else return false
                     }
                     if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from hulululu');
                         return true
                     }
-                    return true
-                    // debugger;
+                    debugger;
+                    return true;
                 }
         }
     };
 
     render() {
         console.log(this.props)
-        const { questionIndex } = this.state;
+        const { questionIndex, currentQuestion } = this.state;
         let nextDisabled = this.validateQuestion();
-        console.log('****', this.state.currentQuestion)
+        console.log('****', this.state.currentQuestion);
         return (
             <div className={styles.mainBox}>
-                <Nav usedFor="questions" showQuestionMark={true} showHeader={false} />
+                <Nav
+                    usedFor="questions"
+                    showQuestionMark={true}
+                    showHeader={false}
+                    openModal={this.openModal}
+                >
+                  <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                </Nav>
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}
@@ -246,10 +259,13 @@ class Questions extends Component {
                 <div className={styles.questionContainer}>
                     <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
                     {renderIf(this.state.modalIsOpen)(
-                        <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
+                      <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
                     )}
-                    <a onClick={this.openModal}>Ask questions!.</a>
-
+                    {renderIf(currentQuestion.questionText !== undefined)(
+                        <a className={styles.questionText} onClick={this.openModal}>
+                            {currentQuestion.questionText}
+                        </a>
+                    )}
                 </div>
             </div>
         )
