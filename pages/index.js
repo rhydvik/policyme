@@ -43,11 +43,9 @@ export default class Index extends Component {
                             </Link>
                         </div>
                     </div>
-                    <div className="column">
-                        <div>
+                    <div className="column" id='column-image-1'>
                             <div id='image-1-background' className='image-background'></div>
                             <img id='image-1' src="static/images/home/home-image-1.jpg" className='image' />
-                        </div>
                     </div>
                 </div>
                 <hr className='show-for-large-only'/>
@@ -151,8 +149,8 @@ export default class Index extends Component {
                     </div>
                 </div>
                 <div className="row-about-us forth seventh">
-                    <div className='columns'>
-                        <div className="column">
+                    <div className='columns text-center'>
+                        <div className="column cards-column">
                             <div className="cards">
                                 <img src="static/images/home/card-image3.jpg"/>
                                 <div className='text'>
@@ -160,7 +158,7 @@ export default class Index extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="column ">
+                        <div className="column cards-column">
                             <div className="cards">
                                 <img src="static/images/home/card-image1.jpg"/>
                                 <div className='text'>
@@ -168,7 +166,7 @@ export default class Index extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="column ">
+                        <div className="column cards-column">
                             <div className="cards">
                                 <img src="static/images/home/card-image2.jpg"/>
                                 <div className='text'>

@@ -44,7 +44,6 @@ body
   padding: 0
   font-family: 'Lato', sans-serif
   position: relative
-  background: $white
   color: $black
   line-height: 1.5
   width: 100vw
@@ -61,6 +60,8 @@ button
   /* Firefox 19+ */
   text-align: center
 
+.text-center
+  text-align: center
 // @import 'utilities/keyframes'
 
 
@@ -163,24 +164,32 @@ button
     margin: auto
     .image
       display: inline-flex
-      position: absolute
+      //position: absolute
       z-index: 2
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
     .image-background
       position: absolute
       display: inline-flex
+      z-index: -1
       background: linear-gradient(to right, #1bb0db , #69d0ff)
       box-shadow: 0 0 .625rem rgba(0, 0, 0, 0.15)
+    #column-image-1
+      padding-right: 2rem
+      text-align: center !important
+    #image-1
+      position: initial
     #image-1-background
       width: 26.875rem
-      margin-top: 9.68rem
+      //margin-top: 9.68rem
+      margin-top: calc(13vw)
       height: 15.43rem
-      margin-left: 6.25rem
+      margin-left: 5.25rem
     #image-2
-      margin-left: -3.125rem
+
     #image-2-background
       width: 26.875rem
-      margin-left: -5.625rem
+      max-width: 40vw
+      margin-left: -2.625rem
       margin-top: -2.375rem
       height: 18.75rem
     #image-3
@@ -191,14 +200,14 @@ button
       margin-top: 8.125rem
       height: 18.75rem
     .main-text
-      width: 25rem
+      max-width: 25rem
       font-size: 2.75rem
       line-height: 3.75rem
       font-weight: 600
       color: #363636
       margin-bottom: 2rem
     .hint-text
-      width: 25rem
+      max-width: 25rem
       font-size: 1.25rem
       line-height: 2.25rem
       color: #595959
@@ -216,9 +225,11 @@ button
         color: #1bb0db
     &.second
       .hint-text
-        width: 31.25rem
+        max-width: 31.25rem
+        padding-right: 1rem
       .main-text
-        width: 31.25rem
+        max-width: 31.25rem
+        padding-right: 1rem
     &.third
       text-align: center
       font-size: 1.125rem
@@ -226,8 +237,8 @@ button
       img
         margin-bottom: 1rem
     &.forth
-      height: 31rem
       margin-top: 5rem
+      height: 31.2rem
       .columns
         max-width: 64rem
         margin: auto
@@ -240,12 +251,13 @@ button
         img
           margin-top: -7.5rem
           float: right
+
       .main-text
-        width: 31.25rem
+        max-width: 31.25rem
         font-size: 2.75rem
         color: white
       .hint-text
-        width: 31.25rem
+        max-width: 31.25rem
         color: white
         font-size: 1.1rem
     &.sixth
@@ -262,6 +274,9 @@ button
     &.seventh
       margin-top: 7rem
       height: auto
+      .cards-column
+        max-width: 18.5rem
+        margin: 0 auto
       .columns
         height: 26rem
         padding: 0 2rem
@@ -292,6 +307,7 @@ button
           font-weight: 600
       .main-text
         width: auto
+        margin: auto
         div
           display: inline-block
           font-size: 1.625rem
@@ -347,6 +363,35 @@ button
     display: none
 
 
+@media screen and (max-width: 937px)
+  .home-wrapper
+    .row-about-us
+      &.forth
+        height: 33.2rem
+        .image-column
+          img
+            margin-top: -3.5rem
+      &.seventh
+        height: auto
+      &.ninth
+        height: auto
+
+
+@media screen and (max-width: 865px)
+  .home-wrapper
+    .row-about-us
+      &.forth
+        height: 36.2rem
+        .image-column
+          img
+            margin-top: -3.5rem
+      &.seventh
+        height: auto
+      &.ninth
+        height: auto
+
+
+
 @media screen and (max-width: 768px)
   body
     background: none
@@ -374,6 +419,9 @@ button
         background: linear-gradient(to right, #1bb0db , #69d0ff)
         box-shadow: 0 0 .625rem rgba(0, 0, 0, 0.15)
         margin: auto
+      #column-image-1
+        padding-right: 1rem
+        text-align: center !important
       #image-1-background
         margin-top: 4.6rem
       .main-text
