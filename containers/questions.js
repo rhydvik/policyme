@@ -15,7 +15,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionIndex: 10,
+            questionIndex: 0,
             currentQuestion: {},
             modalIsOpen: false
         };
@@ -25,7 +25,7 @@ class Questions extends Component {
         this.setState({ currentQuestion: question[this.state.questionIndex] })
     }
     handleButtonChange = (i) => {
-        // debugger;
+        // //debugger;
         const temp = Object.assign({}, question[this.state.questionIndex]);
         const inputs = this.resetButtonStatus(question[this.state.questionIndex].inputs);
         temp.inputs = inputs;
@@ -35,7 +35,7 @@ class Questions extends Component {
         this.setState({ currentQuestion: temp });
     };
     handleSubQuestionButtonChange = (i) => {
-        // debugger;
+        // //debugger;
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
         const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs);
@@ -45,7 +45,7 @@ class Questions extends Component {
         temp.inputs[i] = currentButton;
         currentQuestionTemp.subQuestion[0] = temp;
         this.setState({ currentQuestion: currentQuestionTemp });
-        // debugger;
+        // //debugger;
     };
     resetButtonStatus = (inputs) => {
         return inputs.map((x) =>{
@@ -55,14 +55,14 @@ class Questions extends Component {
     };
 
     handleInputChange = (i, e) => {
-        debugger;
+        //debugger;
         const temp = this.state.currentQuestion;
         temp.inputs[i].value = parseInt(e.target.value);
         this.setState({ currentQuestion: temp });
     };
 
     handleSubQuestionInputChange = (i, e) => {
-        debugger;
+        //debugger;
         console.log('asdfgh', this.state.currentQuestion);
         const temp = this.state.currentQuestion;
         const temp1 = temp.subQuestion[0];
@@ -150,11 +150,11 @@ class Questions extends Component {
 
     getSubQuestion = (question) => {
         if (question.subQuestion === undefined) return;
-        // debugger;
+        // //debugger;
         const { currentQuestion } = this.state;
         const subQuestion = currentQuestion.subQuestion;
         for (let i = 0; i < currentQuestion.inputs.length; i++) {
-            // debugger;
+            // //debugger;
             const currentInputValue = currentQuestion.inputs[i].value;
             if (currentInputValue !== null && currentInputValue !== '') {
                 let qindex = 0;
@@ -180,7 +180,7 @@ class Questions extends Component {
         if (currentQuestion.overrideValidation !== undefined) return true
         switch (currentQuestion.type) {
             case 'BUTTON':
-                // debugger;
+                // //debugger;
                 for (let i = 0; i < currentQuestion.inputs.length; i++) {
                     if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
                         console.log('3');
@@ -203,11 +203,11 @@ class Questions extends Component {
                             validInput = true;
                         }
                         if (validInput && currentQuestion.subQuestion === undefined) {
-                            debugger;
+                            //debugger;
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            debugger;
+                            //debugger;
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
                                 if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
@@ -217,14 +217,14 @@ class Questions extends Component {
                                 }
                             }
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
-                            debugger;
+                            //debugger;
                         } else return false
                     }
                     if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from hulululu');
                         return true
                     }
-                    debugger;
+                    //debugger;
                     return true;
                 }
         }

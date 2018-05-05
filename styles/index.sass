@@ -80,6 +80,7 @@ button
 .questionContainer
   padding-bottom: 1.5rem
   padding-top: 1.5rem
+  
 
 .questionBox
   padding: 0 2rem 0 2rem
@@ -658,6 +659,65 @@ button
   .show-for-small-only
     display: none
 
+  .alignInputsInOneLine
+    button
+      width: 50%
+ 
+  .questionContainer
+    width: 400px
+    margin: auto
+    .nextDisabled
+      width: 400px
+
+  .nextEnabled
+    width: 400px
+
+  .inputBorderContainer
+    display: flex
+    flex-direction: column
+    width: 100%
+
+  .inputsContainer 
+    display: flex
+    flex-direction: column
+    width: 400px
+    align-items: center
+    margin: auto
+    .disabledButton
+      width: 400px
+    .selectedButton
+      width: 400px
+    
+@media screen and (min-width: 567px) and (max-width: 768px)
+  .alignInputsInOneLine
+    button
+      width: 50%
+ 
+  .questionContainer
+    width: 300px
+    margin: auto
+    .nextDisabled
+      width: 300px
+
+  .nextEnabled
+    width: 300px
+
+  .inputBorderContainer
+    display: flex
+    flex-direction: column
+    width: 100%
+
+  .inputsContainer 
+    display: flex
+    flex-direction: column
+    width: 300px
+    align-items: center
+    margin: auto
+    .disabledButton
+      width: 300px
+    .selectedButton
+      width: 300px
+
 
 @media screen and (max-width: 360px)
   .home-wrapper
@@ -670,8 +730,11 @@ button
           #image-3-background
             height: 13.33rem
 
+  
+
+
 .questionText
-  width: 204px
+  width: 100%
   height: 16px
   opacity: 0.5
   font-size: 14px
@@ -683,3 +746,7 @@ button
   text-align: center
   color: #004f78
   text-decoration: underline
+  display: flex
+  align-items: center
+  justify-content: center
+ 
