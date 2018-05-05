@@ -44,7 +44,6 @@ body
   padding: 0
   font-family: 'Lato', sans-serif
   position: relative
-  background: $white
   color: $black
   line-height: 1.5
   width: 100vw
@@ -61,6 +60,8 @@ button
   /* Firefox 19+ */
   text-align: center
 
+.text-center
+  text-align: center
 // @import 'utilities/keyframes'
 
 
@@ -79,6 +80,7 @@ button
 .questionContainer
   padding-bottom: 1.5rem
   padding-top: 1.5rem
+
 .questionBox
   padding: 0 2rem 0 2rem
   text-align: center
@@ -120,13 +122,13 @@ button
   height: 10%
 
 .backArrow
-    cursor: pointer
-    height: 1.6rem
-    width: 1.6rem
-    float: left
-    margin: 10px
-    position: absolute
-    left: 10px
+  cursor: pointer
+  height: 1.6rem
+  width: 1.6rem
+  float: left
+  margin: 10px
+  position: absolute
+  left: 10px
 
 .nextDisabled
   background-color: #dcdcdc
@@ -160,6 +162,75 @@ button
       font-weight: 600
       display: inline-block
 
+.inputBorderContainer
+  border-top: solid 1px #eaeaea
+
+.rightAlignedInputContainer
+  border-bottom: solid 1px #eaeaea
+  height: 3rem
+  input
+    float: right
+  span
+    font-size: .9rem
+    font-weight: normal
+    font-style: normal
+    font-stretch: normal
+    line-height: 1.89
+    letter-spacing: normal
+    float: left
+    color: #004f78
+
+.popupContainer
+  display: flex
+  height: 90%
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  background-color: #1bb0db
+
+  p
+    color: white
+    font-size: 1rem
+    font-weight: bold
+    padding: 1.5rem
+    padding-top: 0
+
+  input
+    width: 90%
+    margin: .6rem
+    height: 3rem
+    border-radius: .1rem
+    padding: 1rem
+    color: white
+    font-size: 1.1rem
+    font-weight: bold
+    text-align: left
+    background-color: rgba(255, 255, 255, 0.12)
+
+  ::-webkit-input-placeholder
+    text-align: left
+    color: white
+
+  textarea
+    width: 90%
+    margin: 1rem
+    height: 10rem
+    border-radius: .1rem
+    padding: 1rem
+    color: white
+    font-size: 1.1rem
+    font-weight: bold
+    text-align: left
+    background-color: rgba(255, 255, 255, 0.12)
+  button
+    background-color: white
+    width: 90%
+    margin: 10px
+    color: #1bb0db
+    font-size: 1rem
+    border-radius: .1rem
+
+
 .home-wrapper
   .row-about-us
     padding: 4.6rem 0
@@ -167,42 +238,46 @@ button
     margin: auto
     .image
       display: inline-flex
-      position: absolute
+      //position: absolute
       z-index: 2
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.15)
     .image-background
       position: absolute
       display: inline-flex
-      background: linear-gradient(to right, #1bb0db , #69d0ff)
+      z-index: -1
+      background: linear-gradient(to right, #1bb0db, #69d0ff)
       box-shadow: 0 0 .625rem rgba(0, 0, 0, 0.15)
+    #column-image-1
+      padding-right: 2rem
+      text-align: center !important
+    #image-1
+      position: initial
     #image-1-background
       width: 26.875rem
-      margin-top: 9.68rem
+      margin-top: 8.7rem
       height: 15.43rem
-      margin-left: 6.25rem
-    #image-2
-      margin-left: -3.125rem
+      margin-left: 5.25rem
     #image-2-background
       width: 26.875rem
-      margin-left: -5.625rem
+      max-width: 40vw
+      margin-left: -2.625rem
       margin-top: -2.375rem
       height: 18.75rem
-    #image-3
-      margin-left: -3.125rem
     #image-3-background
       width: 21.875rem
-      margin-left: -5.3125rem
+      margin-left: -2.3125rem
       margin-top: 8.125rem
       height: 18.75rem
     .main-text
-      width: 25rem
+      max-width: 25rem
       font-size: 2.75rem
       line-height: 3.75rem
       font-weight: 600
       color: #363636
       margin-bottom: 2rem
+      font-family: 'Karma', sans-serif !important
     .hint-text
-      width: 25rem
+      max-width: 25rem
       font-size: 1.25rem
       line-height: 2.25rem
       color: #595959
@@ -212,7 +287,7 @@ button
         width: 25rem
         height: 4rem
         font-size: 1.575rem
-        background: #1bb0db
+        background: linear-gradient(to right, #1bb0db, #69d0ff)
         color: white
         font-weight: 600
       .invert
@@ -220,9 +295,11 @@ button
         color: #1bb0db
     &.second
       .hint-text
-        width: 31.25rem
+        max-width: 31.25rem
+        padding-right: 1rem
       .main-text
-        width: 31.25rem
+        max-width: 31.25rem
+        padding-right: 1rem
     &.third
       text-align: center
       font-size: 1.125rem
@@ -230,8 +307,9 @@ button
       img
         margin-bottom: 1rem
     &.forth
-      height: 31rem
       margin-top: 5rem
+      height: 31.2rem
+      background: linear-gradient(to bottom, #1bb0db, #69d0ff)
       .columns
         max-width: 64rem
         margin: auto
@@ -245,11 +323,11 @@ button
           margin-top: -7.5rem
           float: right
       .main-text
-        width: 31.25rem
+        max-width: 31.25rem
         font-size: 2.75rem
         color: white
       .hint-text
-        width: 31.25rem
+        max-width: 31.25rem
         color: white
         font-size: 1.1rem
     &.sixth
@@ -266,12 +344,17 @@ button
     &.seventh
       margin-top: 7rem
       height: auto
+      background: linear-gradient(to bottom, #1bb0db, #69d0ff)
+      .cards-column
+        max-width: 18.5rem
+        margin: 0 auto
       .columns
         height: 26rem
         padding: 0 2rem
         .cards
+          font-family: 'Karma', sans-serif !important
           background: white
-          height: 26rem
+          height: 22rem
           margin-top: -5rem
           box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1)
           .text
@@ -280,7 +363,6 @@ button
             font-weight: 600
             text-align: center
             padding: 0 1rem
-            padding-top: 1rem
     &.eight
       text-align: center
       padding: 1rem
@@ -293,9 +375,10 @@ button
           display: inline-block
           font-size: 1.25rem
           color: #1bb0db
-          font-weight: 600
+          font-weight: 400
       .main-text
         width: auto
+        margin: auto
         div
           display: inline-block
           font-size: 1.625rem
@@ -303,11 +386,13 @@ button
             vertical-align: super
             padding-left: 2rem
             line-height: 2.3rem
+            font-family: 'Lato', sans-serif
             color: #004f78
     &.ninth
       text-align: center
       padding: 4rem 0
       height: auto
+      background: linear-gradient(to right, #1bb0db, #69d0ff)
       .main-text
         text-align: center
         max-width: 31.25rem
@@ -346,9 +431,42 @@ button
             img
               padding: 0 0.625rem
 
-@media screen and (min-width: 768px)
-  .show-for-small-only
-    display: none
+
+@media screen and (max-width: 1200px)
+  .home-wrapper
+    .row-about-us
+      #image-1-background
+        margin-top: 13vw
+
+@media screen and (max-width: 937px)
+  .home-wrapper
+    .row-about-us
+      #image-1-background
+        margin-top: 12vw
+        height: 24vw
+      &.forth
+        height: 33.2rem
+        .image-column
+          img
+            margin-top: -3.5rem
+      &.seventh
+        height: auto
+      &.ninth
+        height: auto
+
+
+@media screen and (max-width: 865px)
+  .home-wrapper
+    .row-about-us
+      &.forth
+        height: 36.2rem
+        .image-column
+          img
+            margin-top: -3.5rem
+      &.seventh
+        height: auto
+      &.ninth
+        height: auto
 
 
 @media screen and (max-width: 768px)
@@ -375,17 +493,21 @@ button
         position: initial
       .image-background
         z-index: -1
-        background: linear-gradient(to right, #1bb0db , #69d0ff)
+        background: linear-gradient(to right, #1bb0db, #69d0ff)
         box-shadow: 0 0 .625rem rgba(0, 0, 0, 0.15)
         margin: auto
+      #column-image-1
+        padding-right: 1rem
+        text-align: center !important
       #image-1-background
-        margin-top: 4.6rem
+        margin-top: 8.6rem
+        height: 16rem
       .main-text
         margin: auto
         text-align: center
         font-size: 1.875rem
         line-height: 2.625rem
-        margin-bottom: 2rem
+        margin-bottom: 0.7rem
         width: auto
       .hint-text
         margin: auto
@@ -448,6 +570,8 @@ button
       &.sixth
         text-align: left
         padding: 1rem
+        .action
+          width: auto
         .main-text
           max-width: 37.5rem
           width: auto
@@ -467,7 +591,7 @@ button
           margin-top: -5rem
           .cards
             background: white
-            height: 26rem
+            height: 22rem
             margin-top: auto
             box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1)
       &.eight
@@ -482,7 +606,7 @@ button
             display: block
             font-size: 1.25rem
             color: #1bb0db
-            font-weight: 600
+            font-weight: 400
         .main-text
           width: auto
           div
@@ -517,81 +641,30 @@ button
         .copyright-links
           text-align: left
 
-.inputBorderContainer
-  border-top: solid 1px #eaeaea
 
+@media screen and (max-width: 567px)
+  .home-wrapper
+    .row-about-us
+      #image-1-background
+        height: 46vw
 
-.rightAlignedInputContainer
-  border-bottom: solid 1px #eaeaea
-  height: 3rem
-  input
-    float: right
-  span
-    font-size: .9rem
-    font-weight: normal
-    font-style: normal
-    font-stretch: normal
-    line-height: 1.89
-    letter-spacing: normal
-    float: left
-    color: #004f78
+@media screen and (max-width: 480px)
+  .home-wrapper
+    .row-about-us
+      #image-1-background
+        height: 43vw
 
-.popupContainer
-    display: flex
-    height: 90%
-    justify-content: center
-    align-items: center
-    flex-direction: column
-    background-color: #1bb0db
-
-    p
-      color: white
-      font-size: 1rem
-      font-weight: bold
-      padding: 1.5rem
-      padding-top: 0
-
-    input
-      width: 90%
-      margin: .6rem
-      height: 3rem
-      border-radius: .1rem
-      padding: 1rem
-      color: white
-      font-size: 1.1rem
-      font-weight: bold
-      text-align: left
-      background-color: rgba(255, 255, 255, 0.12)
-
-    ::-webkit-input-placeholder
-        text-align: left
-        color: white
-
-    textarea
-      width: 90%
-      margin: 1rem
-      height: 10rem
-      border-radius: .1rem
-      padding: 1rem
-      color: white
-      font-size: 1.1rem
-      font-weight: bold
-      text-align: left
-      background-color: rgba(255, 255, 255, 0.12)
-    button
-      background-color: white
-      width: 90%
-      margin: 10px
-      color: #1bb0db
-      font-size: 1rem
-      border-radius: .1rem
+@media screen and (min-width: 768px)
+  .show-for-small-only
+    display: none
 
 
 @media screen and (max-width: 360px)
   .home-wrapper
     .row-about-us
       #image-1-background
-        height: 13.125rem
+        height: 43vw
+        margin-top: 5.6rem
       &.second
         .image-column
           #image-3-background
