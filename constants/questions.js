@@ -207,9 +207,10 @@ const questions = [
                         value: '',
                         type: 'number',
                         placeholder: '$',
-                        
+
                     },
-                ]
+                ],
+                isSubQuestion: true,
             },
             {
                 question: 'What is your mortgage amount?',
@@ -226,7 +227,8 @@ const questions = [
                         value: '',
                         placeholder: '$'
                     }
-                ]
+                ],
+                isSubQuestion: true,
             },
         ]
     },
@@ -262,7 +264,8 @@ const questions = [
                         value: '',
                         placeholder: '$'
                     },
-                ]
+                ],
+                isSubQuestion: true,
             },
         ],
         infoText: 'Include both your personal retirement accounts (e.g. RRSPs) and your employer retirement accounts (e.g. pensions). Do not include TFSA accounts as they belong in the ‘non-retirement savings’ category below'
@@ -315,7 +318,6 @@ const questions = [
                         placeholder: '$'
                     },
                 ],
-                isSubQuestion: true,
                 infoText: 'Only include if you typically carry a balance',
             },
         ],

@@ -25,7 +25,14 @@ export default class Index extends Component {
     render() {
         return (
             <div className='home-wrapper'>
-                <Nav/>
+                <Nav>
+                    <div className='item'>
+                        Insurance 101
+                    </div>
+                    <div className='item'>
+                        Blog
+                    </div>
+                </Nav>
                 <div className="columns row-about-us">
                     <div className="column">
                         <div className='main-text'>
