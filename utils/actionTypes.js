@@ -1,1 +1,2 @@
 export const ADD_QUESTION = 'ADD_QUESTION';
+export const SET_SESSION_ID = 'SET_SESSION_ID'

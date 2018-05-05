@@ -7,7 +7,8 @@ import question from '../constants/questions';
 import styles from '../styles/index.sass';
 import { connect } from 'react-redux';
 import {
-    addQuestion
+    addQuestion,
+    setAdvice
 } from '../Actions'
 import Modal from '../components/Modal/index';
 
@@ -21,9 +22,14 @@ class Questions extends Component {
         };
     }
     componentWillMount() {
+        
         this.props.addQuestion({qi:this.state.questionIndex, question: question[this.state.questionIndex]});
         this.setState({ currentQuestion: question[this.state.questionIndex] })
     }
+    componentDidMount() {
+        this.props.setAdvice()
+    }
+
     handleButtonChange = (i) => {
         // debugger;
         const temp = Object.assign({}, question[this.state.questionIndex]);
@@ -250,7 +256,8 @@ class Questions extends Component {
     }
 }
 const mapDispatchToProps = {
-    addQuestion
+    addQuestion,
+    setAdvice
 };
 
 const mapStateToProps = state => state.questionReducer;
