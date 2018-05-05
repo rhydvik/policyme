@@ -154,6 +154,7 @@ const questions = [
                 label: 'You',
                 value: '',
                 placeholder: '$'
+
             }
         ],
         questionText: 'What about non-employment income?',
@@ -186,10 +187,12 @@ const questions = [
             {
                 label: 'Rent',
                 value: null,
+                subQuestionIndex: 0
             },
             {
                 label: 'Own',
                 value: null,
+                subQuestionIndex: 1
             }
         ],
         questionText: 'What if I\'m in the market to buy?',
@@ -202,7 +205,9 @@ const questions = [
                     {
                         label: 'Monthly rent',
                         value: '',
-                        placeholder: '$'
+                        type: 'number',
+                        placeholder: '$',
+                        
                     },
                 ]
             },
@@ -233,6 +238,7 @@ const questions = [
             {
                 label: 'Yes',
                 value: null,
+                subQuestionIndex: 0
             },
             {
                 label: 'No',
@@ -269,6 +275,7 @@ const questions = [
             {
                 label: 'Yes',
                 value: null,
+                subQuestionIndex: 0
             },
             {
                 label: 'No',

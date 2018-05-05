@@ -118,7 +118,8 @@ class Questions extends Component {
                                 {data.inputs.length > 1 ? <span>{input.label}</span> : '' }
                                 <input
                                     className={styles.input}
-                                    type={input.type} placeholder={input.placeholder}
+                                    type={input.type}
+                                    placeholder={input.placeholder}
                                     value={input.value}
                                     onChange={(e) => input.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(i) : this.handleInputChange(i, e)} />
                             </div>
@@ -151,11 +152,17 @@ class Questions extends Component {
             // debugger;
             const currentInputValue = currentQuestion.inputs[i].value;
             if (currentInputValue !== null && currentInputValue !== '') {
+                let qindex = 0
+                if(currentQuestion.type === 'BUTTON' && currentQuestion.subQuestion) {
+                    if(currentQuestion.inputs[i].subQuestionIndex !== undefined) {
+                        qindex = currentQuestion.inputs[i].subQuestionIndex
+                    } else { return false; }
+                }
                 return (
                     <div>
                         {console.log('subQuestion[i].question', subQuestion)}
-                        {subQuestion[0].question}
-                        {this.getInputOptions(subQuestion[0])}
+                        {subQuestion[qindex].question}
+                        {this.getInputOptions(subQuestion[qindex])}
                     </div>
                 )
             }
