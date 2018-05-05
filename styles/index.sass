@@ -119,8 +119,12 @@ button
   text-align: center
   height: 100vh
 
+.modalBox
+  height: 90%
+  width: 100%
+
 .modalNav
-  height: 10%
+ // height: 10%
 
 .backArrow
   cursor: pointer
@@ -183,7 +187,7 @@ button
 
 .popupContainer
   display: flex
-  height: 90%
+  height: 100%
   justify-content: center
   align-items: center
   flex-direction: column
@@ -677,6 +681,9 @@ button
     flex-direction: column
     width: 100%
 
+  .popupContainer input, .popupContainer textarea, .popupContainer button
+      width: 90%
+
   .inputsContainer 
     display: flex
     flex-direction: column
@@ -698,7 +705,9 @@ button
     margin: auto
     .nextDisabled
       width: 300px
-
+  .modalBox
+    height: 95%
+    width: 100%
   .nextEnabled
     width: 300px
 
@@ -706,6 +715,9 @@ button
     display: flex
     flex-direction: column
     width: 100%
+  
+  .popupContainer input, .popupContainer textarea, .popupContainer button
+      width: 90%
 
   .inputsContainer 
     display: flex

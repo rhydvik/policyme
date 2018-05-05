@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import Radium from 'radium';
 import Nav from '../Nav/index'
 import styles from '../../styles/index.sass';
 import Button from '../Button/index';
@@ -22,13 +23,18 @@ class PopUp extends Component {
           border: 'none',
           borderRadius: '30px',
           padding: '0',
-          width: '100%',
+          width: '60%',
+          height: '75%',
           overflow: 'initial',
+          '@media (max-width: 400px)': {
+            width: '80%',
+            height: '80%'
+          }
       },
   };
     return (
             <Modal style={modalStyle} isOpen={this.props.isOpen} onRequestClose={this.props.closeModal} >
-              <div className={styles.mainBox}>
+              <div className={styles.modalBox}>
                   <div className={styles.modalNav}>
                       <Nav usedFor="modal" showQuestionMark={true} showHeader={false} closeModal={this.props.closeModal} >
                          <img src="/static/images/questions/close.svg" onClick={this.props.closeModal} />
@@ -61,4 +67,4 @@ class PopUp extends Component {
 }
 
 
-export default PopUp
+export default Radium(PopUp);
