@@ -5,6 +5,11 @@ import renderIf from 'render-if';
 import cn from 'classnames';
 import question from '../constants/questions';
 import styles from '../styles/index.sass';
+import { connect } from 'react-redux';
+import {
+    addQuestion
+} from '../Actions'
+import Modal from '../components/Modal/index';
 
 class Questions extends Component {
     constructor(props) {
@@ -12,52 +17,61 @@ class Questions extends Component {
         this.state = {
             questionIndex: 0,
             currentQuestion: {},
+            modalIsOpen: false
         };
     }
     componentWillMount() {
+        this.props.addQuestion({qi:this.state.questionIndex, question: question[this.state.questionIndex]});
         this.setState({ currentQuestion: question[this.state.questionIndex] })
     }
     handleButtonChange = (i) => {
-        debugger;
+        // debugger;
         const temp = Object.assign({}, question[this.state.questionIndex]);
+        const inputs = this.resetButtonStatus(question[this.state.questionIndex].inputs)
+        temp.inputs = inputs
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
         this.setState({ currentQuestion: temp });
     };
-
     handleSubQuestionButtonChange = (i) => {
-        debugger;
+        // debugger;
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
+        const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs)
+        temp.inputs = inputs
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
         currentQuestionTemp.subQuestion[0] = temp;
         this.setState({ currentQuestion: currentQuestionTemp });
-        console.log('currentButton', currentButton);
-        debugger;
+        // debugger;
     };
+    resetButtonStatus = (inputs) => {
+        return inputs.map((x) =>{
+            x.value = null
+            return x
+           })
+    }
 
     handleInputChange = (i, e) => {
         const temp = this.state.currentQuestion;
-        const currentInput = temp.inputs[i];
-        currentInput.value = parseInt(e.target.value);
-        temp.inputs[i] = currentInput;
+        temp.inputs[i].value = parseInt(e.target.value);
         this.setState({ currentQuestion: temp });
     };
 
     handleSubQuestionInputChange = (i, e) => {
         const temp = this.state.currentQuestion.subQuestion[0];
-        const currentInput = temp.inputs[i];
-        currentInput.value = parseInt(e.target.value);
-        temp.inputs[i] = currentInput;
+        // const currentInput = temp.inputs[i];
+        temp.inputs[i].value = parseInt(e.target.value);
+        // temp.inputs[i] = currentInput;
         this.setState({ currentQuestion: temp });
     };
 
     next = () => {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
+        this.props.addQuestion({qi, question: question[qi + 1]});
     };
 
     goBack = () => {
@@ -71,6 +85,16 @@ class Questions extends Component {
     handleInputField = (type, name) => {
 
     };
+
+
+    openModal = () => {
+        this.setState({modalIsOpen: true});
+    }
+
+
+    closeModal = () => {
+        this.setState({modalIsOpen: false});
+    }
 
     getInputOptions = (data) => {
         switch (data.type) {
@@ -120,11 +144,11 @@ class Questions extends Component {
 
     getSubQuestion = (question) => {
         if (question.subQuestion === undefined) return;
-        debugger;
+        // debugger;
         const { currentQuestion } = this.state;
         const subQuestion = currentQuestion.subQuestion;
         for (let i = 0; i < currentQuestion.inputs.length; i++) {
-            debugger;
+            // debugger;
             const currentInputValue = currentQuestion.inputs[i].value;
             if (currentInputValue !== null && currentInputValue !== '') {
                 return (
@@ -143,8 +167,7 @@ class Questions extends Component {
         if (currentQuestion.overrideValidation !== undefined) return true
         switch (currentQuestion.type) {
             case 'BUTTON':
-                console.log('called hullululu again', currentQuestion.type);
-                debugger;
+                // debugger;
                 for (let i = 0; i < currentQuestion.inputs.length; i++) {
                     if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from rupu dp hee hee hee');
@@ -162,47 +185,46 @@ class Questions extends Component {
                     const value = currentQuestion.inputs[i].value;
                     const validationRules = currentQuestion.inputs[i].validationRules;
                     let validInput = false;
-                    console.log('validationRules', validationRules, value)
                     if (validationRules !== undefined) {
                         if (value < validationRules.maximum && value > validationRules.minimum) {
                             validInput = true;
                         }
                         if (validInput && currentQuestion.subQuestion === undefined) {
-                            debugger;
+                            // debugger;
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            debugger;
+                            // debugger;
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
-                                console.log('currentInput', currentInput);
                                 if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
                                     validInputCount = validInputCount + 1;
                                 } else if (currentInput.value !== null && currentQuestion.subQuestion[0].type === 'BUTTON') {
                                     validInputCount = currentQuestion.subQuestion[0].inputs.length;
                                 }
                             }
-                            console.log('validInputCount', validInputCount);
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
-                            debugger;
+                            // debugger;
                         } else return false
                     }
                     if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from hulululu');
                         return true
                     }
-                    debugger;
+                    return true
+                    // debugger;
                 }
         }
     };
 
     render() {
+        console.log(this.props)
         const { questionIndex } = this.state;
         let nextDisabled = this.validateQuestion();
         console.log('****', this.state.currentQuestion)
         return (
             <div className={styles.mainBox}>
-                <Nav usedFor="questions" showHeader={false} />
+                <Nav usedFor="questions" showQuestionMark={true} showHeader={false} />
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}
@@ -210,10 +232,19 @@ class Questions extends Component {
                 {this.getSubQuestion(question[this.state.questionIndex])}
                 <div className={styles.questionContainer}>
                     <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
+                    {renderIf(this.state.modalIsOpen)(
+                        <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
+                    )}
+                    <a onClick={this.openModal}>Ask questions!.</a>
+
                 </div>
             </div>
         )
     }
 }
+const mapDispatchToProps = {
+    addQuestion
+};
 
-export default Questions;
+const mapStateToProps = state => state.questionReducer;
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
