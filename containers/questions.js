@@ -9,12 +9,15 @@ import { connect } from 'react-redux';
 import {
     addQuestion
 } from '../Actions'
+import Modal from '../components/Modal/index';
+
 class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
             questionIndex: 0,
             currentQuestion: {},
+            modalIsOpen: false
         };
     }
     componentWillMount() {
@@ -82,6 +85,16 @@ class Questions extends Component {
     handleInputField = (type, name) => {
 
     };
+
+
+    openModal = () => {
+        this.setState({modalIsOpen: true});
+    }
+
+
+    closeModal = () => {
+        this.setState({modalIsOpen: false});
+    }
 
     getInputOptions = (data) => {
         switch (data.type) {
@@ -218,7 +231,7 @@ class Questions extends Component {
         console.log('****', this.state.currentQuestion)
         return (
             <div className={styles.mainBox}>
-                <Nav usedFor="questions" showHeader={false} />
+                <Nav usedFor="questions" showQuestionMark={true} showHeader={false} />
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}
@@ -226,6 +239,11 @@ class Questions extends Component {
                 {this.getSubQuestion(question[this.state.questionIndex])}
                 <div className={styles.questionContainer}>
                     <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
+                    {renderIf(this.state.modalIsOpen)(
+                        <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
+                    )}
+                    <a onClick={this.openModal}>Ask questions!.</a>
+
                 </div>
             </div>
         )
