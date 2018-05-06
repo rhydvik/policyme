@@ -2,12 +2,15 @@ const questions = [
     {
         question: 'Hi, I\'m Alex, and I\'ll be helping you with your life insurance checkup today.\n',
         inputs: [],
+        category: null,
         overrideValidation: true,
     },
     {
         question: 'How old are you?',
         type: 'INPUT',
         name: 'age',
+        category: 'family',
+        json_key: 'userAge',
         inputs: [
             {
                 label: 'AGE',
@@ -25,6 +28,8 @@ const questions = [
         question: 'What is your gender?',
         name: 'gender',
         type: 'BUTTON',
+        category: 'family',
+        json_key: 'userGender',
         inputs: [
             {
                 label: 'Male',
@@ -42,6 +47,7 @@ const questions = [
         question: 'Who makes up your household?',
         type: 'BUTTON',
         name: 'makes-household',
+        category: 'family',
         alignInOnline: true,
         inputs: [
             {
@@ -67,7 +73,9 @@ const questions = [
     {
         question: 'How old is your partner?',
         type: 'INPUT',
+        category: 'family',
         name: 'age',
+        json_key: 'spouse',
         inputs: [
             {
                 label: 'AGE',
@@ -104,14 +112,18 @@ const questions = [
     {
         question: 'How old are your kids?',
         addOn: 'input',
+        category: 'family',
         subQuestion: [],
         inputs: [],
+        json_key: 'children',
         infoText: 'Only include kids that you are financially supporting (usually 25 and younger)',
         questionText: 'What if I\'m planning to have kids?',
     },
     {
         question: 'Do you smoke?',
         type: 'BUTTON',
+        category: 'family',
+        json_key: 'smoke',
         inputs: [
             {
                 label: 'Yes',
@@ -128,6 +140,8 @@ const questions = [
     {
         question: ' Have you ever been diagnosed with a serious health condition?',
         type: 'BUTTON',
+        category: 'family',
+        json_key: 'healthIssue',
         inputs: [
             {
                 label: 'Yes',
@@ -151,7 +165,9 @@ const questions = [
     {
         question: 'What is your income?',
         type: 'INPUT',
+        category: 'family',
         name: 'income',
+        json_key: 'userIncome',
         inputs: [
             {
                 label: 'You',
@@ -166,6 +182,7 @@ const questions = [
     {
         question: 'What is your family income?',
         type: 'INPUT',
+        category: 'family',
         name: 'income',
         inputs: [
             {
@@ -186,6 +203,8 @@ const questions = [
         question: 'Do you rent or do you own?',
         name: 'gender',
         type: 'BUTTON',
+        category: 'finances',
+        json_key: 'mortage',
         inputs: [
             {
                 label: 'Rent',
@@ -243,6 +262,8 @@ const questions = [
         question: 'Do you have any family savings or investments?',
         name: 'savingsOrInvestment',
         type: 'BUTTON',
+        category: 'finances',
+        json_key: 'savings',
         inputs: [
             {
                 label: 'Yes',
@@ -281,6 +302,8 @@ const questions = [
         question: 'Do you have any debts?\n',
         name: 'debts',
         last:true,
+        category: 'finances',
+        json_key:'debts',
         type: 'BUTTON',
         inputs: [
             {

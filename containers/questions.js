@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import {
     addQuestion,
     setAdvice,
+    populateJson,
+    sendPopulatedJson
 } from '../Actions'
 import Modal from '../components/Modal/index';
 
@@ -71,10 +73,10 @@ class Questions extends Component {
         // debugger;
         console.log("ASDADSDA#EQ#@$", input)
         const temp = this.state.currentQuestion;
-
-        const temp1 = input.subQuestionIndex ? temp.subQuestion[input.subQuestionIndex] : temp.subQuestion[0]
+        const index = input.subQuestionIndex || 0
+        const temp1 = temp.subQuestion[index]
         temp1.inputs[e.target.id].value = parseInt(e.target.value);
-        temp.subQuestion[0] = temp1;
+        temp.subQuestion[index] = temp1;
         this.setState({ currentQuestion: temp }, () => console.log(this.state.currentQuestion));
     };
 
@@ -82,7 +84,10 @@ class Questions extends Component {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
         this.props.addQuestion({qi, question: question[qi + 1]});
-        console.log(this.props.questions)
+        if (this.state.currentQuestion.last) {
+            this.props.populateJson(this.props.questions)
+            this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
+        }
     };
 
     goBack = () => {
@@ -254,9 +259,10 @@ class Questions extends Component {
             isSubQuestion: true,
             inputs:[]
         }
-            const inputs =
+        const noOfChild = (currentQuestion.subQuestion.length) ? (currentQuestion.subQuestion[0].inputs.length + 1) : 1
+            const inputs = 
                 {
-                    label: `Child ${currentQuestion.subQuestion.length + 1}`,
+                    label: `Child ${noOfChild}`,
                     value: '',
                     placeholder: 'age'
                 }
@@ -320,6 +326,8 @@ class Questions extends Component {
 const mapDispatchToProps = {
     addQuestion,
     setAdvice,
+    populateJson,
+    sendPopulatedJson
 };
 
 const mapStateToProps = state => state.questionReducer;
