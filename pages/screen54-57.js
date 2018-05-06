@@ -48,7 +48,7 @@ export default class Navy extends Component {
                             </div>
                             
                         </div>
-                        <div style={{display: 'flex' , justifyContent:'space-between'}}>
+                        <div className={styles.quoteButtonContainer}>
                             <Button label="RESET"  buttonStyle={styles.disabledButton}/>
                             <Button label="SUBMIT" buttonStyle={styles.selectedButton} />
                         </div>  
