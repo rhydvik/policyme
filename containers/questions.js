@@ -166,6 +166,11 @@ class Questions extends Component {
 
     getSubQuestion = (question) => {
         if (question.subQuestion === undefined) return;
+<<<<<<< HEAD
+=======
+        // debugger;
+        console.log("YES I AM GETTING CONTROL")
+>>>>>>> ankur-code
         const { currentQuestion } = this.state;
         if(currentQuestion.addOn && currentQuestion.subQuestion.length ) {
             const subQuestion = currentQuestion.subQuestion;
@@ -239,12 +244,20 @@ class Questions extends Component {
                                 }
                             }
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
+<<<<<<< HEAD
+=======
+                            // debugger;
+>>>>>>> ankur-code
                         } else return false
                     }
                     if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from hulululu');
                         return true
                     }
+<<<<<<< HEAD
+=======
+                    // debugger;
+>>>>>>> ankur-code
                     return true;
                 }
         }
@@ -260,7 +273,7 @@ class Questions extends Component {
             inputs:[]
         }
         const noOfChild = (currentQuestion.subQuestion.length) ? (currentQuestion.subQuestion[0].inputs.length + 1) : 1
-            const inputs = 
+            const inputs =
                 {
                     label: `Child ${noOfChild}`,
                     value: '',
