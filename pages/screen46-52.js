@@ -27,40 +27,51 @@ export default class Navy extends Component {
                         <img src="../static/images/alex.png" />
                         <p className={styles.quoteMessage} >A term life insurance policy is the best fit for you. For more information on term life policies , click here</p>
                         <p className={styles.quoteMessage} >Now, let's talk about your coverage amount policy length</p>
-                        <div className={styles.selectedPolicyBox} > 
-                            <p className={styles.quoteMessage}>LifeStyle Protection</p>
-                            <p className={styles.policyText}>Choose this option if you want your family to be able to maintain their lifestyleif you are no longer around.</p>
-                            <p className={styles.quoteMessage}>$1,000,000 coverage</p>
-                            <p className={styles.quoteMessage}>$70 - $80 / month</p>
-                        </div>
-                        <a className={styles.questionText} onClick={this.openModal}>
-                            <p style={{textAlign:'right', fontSize: '1rem', width: '100%', marginTop: '2rem'}}>
-                                why should i pick this option?
-                            </p>
-                        </a>
-                        <div className={styles.policyBox} > 
-                            <p className={styles.quoteMessage}>Transition Protection</p>
-                            <p className={styles.policyText}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
-                            <p className={styles.quoteMessage}>$500,000 coverage</p>
-                            <p className={styles.quoteMessage}>$35 - $40 / month</p>
-                        </div>
-                        <a className={styles.questionText} onClick={this.openModal}>
-                            <p style={{textAlign:'right', fontSize: '1rem', width: '100%', marginTop: '2rem'}}>
-                                why should i pick this option?
-                            </p>
-                        </a>
-                        <div className={styles.policyBox} > 
-                            <p className={styles.quoteMessage}>Choose Your Own</p>
-                            <p className={styles.policyText}>Choose this option if you'd like to customize your coverage.</p>
-                            <p className={styles.quoteMessage}>Coveragee</p>
-                            <div>
-                                <input
-                                    className={styles.input}
-                                    onChange={(e) => console.log(e) } />
+                    </div>
+                    <div className={styles.recommendedPolicies}>
+                        <div className={styles.recommendedPolicyBox}>
+                            <div className={styles.selectedPolicyBox} > 
+                                <p className={styles.quoteMessage}>LifeStyle Protection</p>
+                                <p className={styles.policyText}>Choose this option if you want your family to be able to maintain their lifestyleif you are no longer around.</p>
+                                <p className={styles.quoteMessage}>$1,000,000 coverage</p>
+                                <p className={styles.quoteMessage}>$70 - $80 / month</p>
                             </div>
-                            
+                            <a className={styles.questionText} onClick={this.openModal}>
+                                <p style={{textAlign:'right', fontSize: '1rem', width: '100%', marginTop: '2rem'}}>
+                                    why should i pick this option?
+                                </p>
+                            </a>
                         </div>
+                        
+                        <div className={styles.recommendedPolicyBox}>
+                            <div className={styles.policyBox} > 
+                                    <p className={styles.quoteMessage}>Transition Protection</p>
+                                    <p className={styles.policyText}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
+                                    <p className={styles.quoteMessage}>$500,000 coverage</p>
+                                    <p className={styles.quoteMessage}>$35 - $40 / month</p>
+                                </div>
+                                <a className={styles.questionText} onClick={this.openModal}>
+                                    <p style={{textAlign:'right', fontSize: '1rem', width: '100%', marginTop: '2rem'}}>
+                                        why should i pick this option?
+                                    </p>
+                                </a>
                         </div>
+                        <div className={styles.recommendedPolicyBox}>
+                            <div className={styles.policyBox} > 
+                                <p className={styles.quoteMessage}>Choose Your Own</p>
+                                <p className={styles.policyText}>Choose this option if you'd like to customize your coverage.</p>
+                                <p className={styles.quoteMessage}>Coveragee</p>
+                                    <input
+                                        className={styles.input}
+                                        onChange={(e) => console.log(e) } />
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                        
+                        
+                
                         <div className={styles.otherCoverages}>
                             <p className={styles.quoteMessage}>Add Other Coverages</p>  
                             <div className={styles.otherCoverageBox}>
