@@ -31,7 +31,7 @@ class Questions extends Component {
     }
 
     handleButtonChange = (i) => {
-        // debugger;
+        // //debugger;
         const temp = Object.assign({}, question[this.state.questionIndex]);
         const inputs = this.resetButtonStatus(question[this.state.questionIndex].inputs);
         temp.inputs = inputs;
@@ -41,7 +41,7 @@ class Questions extends Component {
         this.setState({ currentQuestion: temp });
     };
     handleSubQuestionButtonChange = (i) => {
-        // debugger;
+        // //debugger;
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
         const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs);
@@ -51,7 +51,7 @@ class Questions extends Component {
         temp.inputs[i] = currentButton;
         currentQuestionTemp.subQuestion[0] = temp;
         this.setState({ currentQuestion: currentQuestionTemp });
-        // debugger;
+        // //debugger;
     };
     resetButtonStatus = (inputs) => {
         return inputs.map((x) =>{
@@ -61,11 +61,11 @@ class Questions extends Component {
     };
 
     handleInputChange = (i, e) => {
-        // debugger;
         const temp = this.state.currentQuestion;
         temp.inputs[i].value = parseInt(e.target.value);
         this.setState({ currentQuestion: temp });
     };
+
 
     handleSubQuestionInputChange = (e,input) => {
         // debugger;
@@ -127,7 +127,7 @@ class Questions extends Component {
                 );
             case 'INPUT':
                 return (
-                    <div className={cn('columns', (data.inputs.length > 1 || data.addon) ? styles.inputBorderContainer : '')}>
+                    <div className={cn((data.inputs.length > 1 || data.addon) ? styles.inputBorderContainer : '')}>
                         {data.inputs.map((input, i) => (
                             <div className={cn('column', (data.inputs.length > 1 || data.addon) ? styles.rightAlignedInputContainer: '')}>
                                 {(data.inputs.length > 1 || data.addon) ? <span>{input.label}</span> : '' }
@@ -161,19 +161,18 @@ class Questions extends Component {
 
     getSubQuestion = (question) => {
         if (question.subQuestion === undefined) return;
-        // debugger;
-        console.log("YES I AM GETTING CONTROL")
         const { currentQuestion } = this.state;
         if(currentQuestion.addOn && currentQuestion.subQuestion.length ) {
             const subQuestion = currentQuestion.subQuestion;
-                 return subQuestion.map(x=> <div>
+                 return subQuestion.map(x=>
+                     <div style={{ maxWidth: '300px', margin: 'auto' }}>
                         {x.question}
                         {this.getInputOptions(x)}
                     </div>)
         }
         const subQuestion = currentQuestion.subQuestion;
         for (let i = 0; i < currentQuestion.inputs.length; i++) {
-            // debugger;
+            // //debugger;
             const currentInputValue = currentQuestion.inputs[i].value;
             if (currentInputValue !== null && currentInputValue !== '') {
                 let qindex = 0;
@@ -198,7 +197,7 @@ class Questions extends Component {
         if (currentQuestion.overrideValidation !== undefined) return true
         switch (currentQuestion.type) {
             case 'BUTTON':
-                // debugger;
+                // //debugger;
                 for (let i = 0; i < currentQuestion.inputs.length; i++) {
                     if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
                         console.log('3');
@@ -235,14 +234,12 @@ class Questions extends Component {
                                 }
                             }
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
-                            // debugger;
                         } else return false
                     }
                     if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from hulululu');
                         return true
                     }
-                    // debugger;
                     return true;
                 }
         }
@@ -261,7 +258,7 @@ class Questions extends Component {
                 {
                     label: `Child ${currentQuestion.subQuestion.length + 1}`,
                     value: '',
-                    placeholder: ''
+                    placeholder: 'age'
                 }
 
 
@@ -273,21 +270,21 @@ class Questions extends Component {
                 currentQuestion.subQuestion[0].inputs.push(inputs)
             }
         this.setState({currentQuestion})
-    }
+    };
+
     addOn = (question) => {
         return (
-            <div className="addOnBtn"  onClick={this.handleAddOn}>
-                <img className='plus' src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/add_blue.png" />
-                <button>Add Child</button>
+            <div className="addOnBtn"  >
+                  <button className={styles.buttonBox} onClick={this.handleAddOn} >+ Add Child</button>
             </div>
         )
-    }
+    };
 
     render() {
         // console.log(this.props)
         const { questionIndex, currentQuestion } = this.state;
         let nextDisabled = this.validateQuestion();
-        console.log(this.props)
+        console.log(this.props);
         return (
             <div className={styles.mainBox}>
                 <Nav
