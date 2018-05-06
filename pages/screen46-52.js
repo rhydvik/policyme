@@ -20,7 +20,7 @@ export default class Navy extends Component {
                 >
                   <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
-                <div className={styles.quoteContainer}>
+                <div className={styles.policyContainer}>
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
 
                     <div className={styles.questionBox}>
@@ -63,58 +63,65 @@ export default class Navy extends Component {
                         </div>
                         <div className={styles.otherCoverages}>
                             <p className={styles.quoteMessage}>Add Other Coverages</p>  
-
-                            <div className={styles.policyBox} > 
-                                <p className={styles.quoteMessage}>Other Dependents</p>
-                                <p className={styles.policyText}>Add coverage if you have other dependents(not including childern in your household) who rely on you financially.</p>
-                                <input
-                                        className={styles.input}
-                                        onChange={(e) => console.log(e) } />
+                            <div className={styles.otherCoverageBox}>
+                                <div className={styles.policyBox} > 
+                                    <p className={styles.quoteMessage}>Other Dependents</p>
+                                    <p className={styles.policyText}>Add coverage if you have other dependents(not including childern in your household) who rely on you financially.</p>
+                                    <input
+                                            className={styles.input}
+                                            onChange={(e) => console.log(e) } />
+                                </div>
+                                <div className={styles.policyBox} > 
+                                    <p className={styles.quoteMessage}>End of Life Expenses</p>
+                                    <p className={styles.policyText}>Add coverage if you'd like to pay for end of life expenses(funeral cost).</p>
+                                    <p className={styles.policyText}>Most Leave $15,000. </p>
+                                    <input
+                                            className={styles.input}
+                                            onChange={(e) => console.log(e) } />
+                                </div>
                             </div>
-                            <div className={styles.policyBox} > 
-                                <p className={styles.quoteMessage}>End of Life Expenses</p>
-                                <p className={styles.policyText}>Add coverage if you'd like to pay for end of life expenses(funeral cost).</p>
-                                <p className={styles.policyText}>Most Leave $15,000. </p>
-                                <input
-                                        className={styles.input}
-                                        onChange={(e) => console.log(e) } />
+                            <div className={styles.otherCoverageBox}>
+                                <div className={styles.policyBox} > 
+                                    <p className={styles.quoteMessage}>Education Costs</p>
+                                    <p className={styles.policyText}>Add coverage if you'd like to leave money for post-secondar education costs.</p>
+                                    <p className={styles.policyText}>Most Leave $40,000 per child. </p>
+                                    <input
+                                            className={styles.input}
+                                            onChange={(e) => console.log(e) } />
+                                </div>
+                                <div className={styles.policyBox} > 
+                                    <p className={styles.quoteMessage}>Something else...</p>
+                                    <p className={styles.policyText}>Add coverage if there is any other needs we missed(additional caregiving costs, charitable donation or more family cobverage).</p>
+                                    <input
+                                            className={styles.input}
+                                            onChange={(e) => console.log(e) } />
+                                </div>
                             </div>
-                            <div className={styles.policyBox} > 
-                                <p className={styles.quoteMessage}>Education Costs</p>
-                                <p className={styles.policyText}>Add coverage if you'd like to leave money for post-secondar education costs.</p>
-                                <p className={styles.policyText}>Most Leave $40,000 per child. </p>
-                                <input
-                                        className={styles.input}
-                                        onChange={(e) => console.log(e) } />
-                            </div>
-                            <div className={styles.policyBox} > 
-                                <p className={styles.quoteMessage}>Something else...</p>
-                                <p className={styles.policyText}>Add coverage if there is any other needs we missed(additional caregiving costs, charitable donation or more family cobverage).</p>
-                                <input
-                                        className={styles.input}
-                                        onChange={(e) => console.log(e) } />
-                            </div>
+                            
                         </div>
-                        <div className={styles.questionBox}>
+                        <div className={styles.existingCoverageContainer}>
                             <p className={styles.quoteMessage}>Offset with any existing coverage</p>
                             <p className={styles.policyText}>Reduce your monthly premium by offsetting your needs with insurance policies you already have in place. </p>
-                            <div className={styles.policyBox} > 
-                                    <p className={styles.quoteMessage}>Employer Life Insurance</p>
-                                    <p className={styles.policyText}>Coverage you already have in place..</p>
-                                    <input
-                                            className={styles.input}
-                                            onChange={(e) => console.log(e) } />
+                            <div className={styles.otherCoverageBox}>
+                                <div className={styles.policyBox} > 
+                                        <p className={styles.quoteMessage}>Employer Life Insurance</p>
+                                        <p className={styles.policyText}>Coverage you already have in place..</p>
+                                        <input
+                                                className={styles.input}
+                                                onChange={(e) => console.log(e) } />
+                                </div>
+                                <div className={styles.policyBox} > 
+                                        <p className={styles.quoteMessage}>Life Insurance you bought</p>
+                                        <p className={styles.policyText}>Coverage you already have in place..</p>
+                                        <input
+                                                className={styles.input}
+                                                onChange={(e) => console.log(e) } />
+                                </div>
                             </div>
-                            <div className={styles.policyBox} > 
-                                    <p className={styles.quoteMessage}>Life Insurance you bought</p>
-                                    <p className={styles.policyText}>Coverage you already have in place..</p>
-                                    <input
-                                            className={styles.input}
-                                            onChange={(e) => console.log(e) } />
-                            </div>
+                            
                         </div>
                         
-                        <div className={styles.otherCoverages} > 
+                        <div className={styles.termLengthContainer} > 
                                 <p className={styles.quoteMessage}>Pick your term</p>
                                 <p className={styles.policyText}>Your term is the pre-agreed timeframe during which you will bw covered by the policy. For more insurance information on term insurance, click here. </p>
                                 <div className={styles.policyBox} > 
