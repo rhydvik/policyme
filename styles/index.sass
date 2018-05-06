@@ -81,6 +81,9 @@ button
   padding-bottom: 1.5rem
   padding-top: 1.5rem
 
+.quoteContainer
+  padding-bottom: 1.5rem
+  padding-top: 1.5rem
 
 .questionBox
   padding: 0 2rem 0 2rem
@@ -761,4 +764,41 @@ button
   display: flex
   align-items: center
   justify-content: center
+
+.quoteMessage
+  margin-top: 1rem
+  color: #004f78
+  font-size: 1.1rem
+  font-weight: bold
+
+.policyHeading
+  margin-bottom: 2rem
+  font-size: 1.3rem
+  color: #004f78
+
+.quoteBoxContainer
+  display: flex
+  flex-direction: column
+
+.quoteBox
+  display: flex
+  justify-content: space-around
+  align-items: center
+  height: 50px
+  background-color: rgba(27, 176, 219, 0.05)
+  border: solid 1px rgba(27, 176, 219, 0.3)
+  margin-bottom: 10px
+
+
+
+@media screen and (min-width: 768px)
+  .quoteBox
+    width: 45%
+    margin: 15px
+    height: 70px
+  .quoteContainer
+    width: 550px
+    margin: auto
+  .quoteBoxContainer
+    flex-direction: row
 
