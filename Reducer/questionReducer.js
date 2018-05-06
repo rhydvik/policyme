@@ -48,14 +48,17 @@ function populateFinance (finances, json) {
     if(x !== undefined){
     switch(x.json_key) {
       case 'debts':
-        json.debts = makeDebts(x.subQuestion[0])
+        json.debts = buttonValue(x.inputs).label === 'Yes' ? makeDebts(x.subQuestion[0]) : json.debts
         break;
       case 'mortage':
+      if (buttonValue(x.inputs).label === 'Rent' ) {
+        json.expenses.mortgage_or_rent = makeRent(x.subQuestion[0])
+      } else {
         json.mortgage = makeMortage(x.subQuestion[1])
-        json.expenses.mortgage_or_rent = buttonValue(x.inputs).label
+      }
         break;
       case 'savings':
-        json.savings = makeSavings(x.subQuestion[0])
+        json.savings = buttonValue(x.inputs).label === 'Yes' ? makeSavings(x.subQuestion[0]) : json.savings
         break;
       default:
         return false
@@ -67,10 +70,9 @@ function populateFinance (finances, json) {
 }
 function buttonValue (inputs) {
   for(let i=0; i< inputs.length; i++) {
-    console.log('BUTTON',inputs[i])
     if(inputs[i].value) {
       return inputs[i]
-    }
+    } else { return {label: '', value: ''}}
   }
 }
 function makeChildren (inputs) {
@@ -83,7 +85,9 @@ function makeChildren (inputs) {
   return children
 }
 function makeSpouse (inputs) {
+  if(inputs.inputs[0].value) {
   return {gender: buttonValue(inputs.subQuestion[0].inputs).label, age: inputs.inputs[0].value}
+  } else return {}
 }
 
 function makeDebts (inputs) {
@@ -97,6 +101,9 @@ function makeDebts (inputs) {
 
   }
 } 
+function makeRent (inputs) {
+  return inputs.inputs[0].value
+}
 function makeMortage(inputs) {
   return {current_mortage: inputs.inputs[0].value, monthly_payment: inputs.inputs[1].value}
 }

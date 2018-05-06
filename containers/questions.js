@@ -73,10 +73,10 @@ class Questions extends Component {
         // debugger;
         console.log("ASDADSDA#EQ#@$", input)
         const temp = this.state.currentQuestion;
-
-        const temp1 = input.subQuestionIndex ? temp.subQuestion[input.subQuestionIndex] : temp.subQuestion[0]
+        const index = input.subQuestionIndex || 0
+        const temp1 = temp.subQuestion[index]
         temp1.inputs[e.target.id].value = parseInt(e.target.value);
-        temp.subQuestion[0] = temp1;
+        temp.subQuestion[index] = temp1;
         this.setState({ currentQuestion: temp }, () => console.log(this.state.currentQuestion));
     };
 
