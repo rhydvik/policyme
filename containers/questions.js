@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import {
     addQuestion,
     setAdvice,
+    populateJson,
+    sendPopulatedJson
 } from '../Actions'
 import Modal from '../components/Modal/index';
 
@@ -81,7 +83,10 @@ class Questions extends Component {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
         this.props.addQuestion({qi, question: question[qi + 1]});
-        console.log(this.props.questions)
+        if (this.state.currentQuestion.last) {
+            this.props.populateJson(this.props.questions)
+            this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
+        }
     };
 
     goBack = () => {
@@ -256,9 +261,10 @@ class Questions extends Component {
             isSubQuestion: true,
             inputs:[]
         }
+        const noOfChild = (currentQuestion.subQuestion.length) ? (currentQuestion.subQuestion[0].inputs.length + 1) : 1
             const inputs = 
                 {
-                    label: `Child ${currentQuestion.subQuestion.length + 1}`,
+                    label: `Child ${noOfChild}`,
                     value: '',
                     placeholder: ''
                 }
@@ -322,6 +328,8 @@ class Questions extends Component {
 const mapDispatchToProps = {
     addQuestion,
     setAdvice,
+    populateJson,
+    sendPopulatedJson
 };
 
 const mapStateToProps = state => state.questionReducer;
