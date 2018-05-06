@@ -37,9 +37,11 @@ export default class Navy extends Component {
                                 <p className={styles.quoteMessage}>$70 - $80 / month</p>
                             </div>
                             <a className={styles.questionText} onClick={this.openModal}>
-                                <p style={{textAlign:'right', fontSize: '1rem', width: '100%', marginTop: '2rem'}}>
+                                <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
                                     why should i pick this option?
                                 </p>
+                                <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}} 
+                                    src="/static/images/questions/question.svg"  onClick={this.openModal} />
                             </a>
                         </div>
                         
@@ -51,9 +53,11 @@ export default class Navy extends Component {
                                     <p className={styles.quoteMessage}>$35 - $40 / month</p>
                                 </div>
                                 <a className={styles.questionText} onClick={this.openModal}>
-                                    <p style={{textAlign:'right', fontSize: '1rem', width: '100%', marginTop: '2rem'}}>
+                                    <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
                                         why should i pick this option?
                                     </p>
+                                    <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}} 
+                                        src="/static/images/questions/question.svg"  onClick={this.openModal} />
                                 </a>
                         </div>
                         <div className={styles.recommendedPolicyBox}>
@@ -63,6 +67,7 @@ export default class Navy extends Component {
                                 <p className={styles.quoteMessage}>Coveragee</p>
                                     <input
                                         className={styles.input}
+                                        placeholder="$10,000"
                                         onChange={(e) => console.log(e) } />
                             </div>
                         </div>
@@ -80,24 +85,27 @@ export default class Navy extends Component {
                                     <p className={styles.policyText}>Add coverage if you have other dependents(not including childern in your household) who rely on you financially.</p>
                                     <input
                                             className={styles.input}
+                                            placeholder="$10,000"
                                             onChange={(e) => console.log(e) } />
                                 </div>
                                 <div className={styles.policyBox} > 
                                     <p className={styles.quoteMessage}>End of Life Expenses</p>
-                                    <p className={styles.policyText}>Add coverage if you'd like to pay for end of life expenses(funeral cost).</p>
-                                    <p className={styles.policyText}>Most Leave $15,000. </p>
+                                    <p className={styles.policyText}>Add coverage if you'd like to pay for end of life expenses(funeral cost).
+                                    <br /><br />Most Leave $15,000.</p>
                                     <input
                                             className={styles.input}
+                                            placeholder="$10,000"
                                             onChange={(e) => console.log(e) } />
                                 </div>
                             </div>
                             <div className={styles.otherCoverageBox}>
                                 <div className={styles.policyBox} > 
                                     <p className={styles.quoteMessage}>Education Costs</p>
-                                    <p className={styles.policyText}>Add coverage if you'd like to leave money for post-secondar education costs.</p>
-                                    <p className={styles.policyText}>Most Leave $40,000 per child. </p>
+                                    <p className={styles.policyText}>Add coverage if you'd like to leave money for post-secondar education costs.
+                                    <br /><br />Most Leave $40,000 per child. </p>
                                     <input
                                             className={styles.input}
+                                            placeholder="$10,000"
                                             onChange={(e) => console.log(e) } />
                                 </div>
                                 <div className={styles.policyBox} > 
@@ -105,6 +113,7 @@ export default class Navy extends Component {
                                     <p className={styles.policyText}>Add coverage if there is any other needs we missed(additional caregiving costs, charitable donation or more family cobverage).</p>
                                     <input
                                             className={styles.input}
+                                            placeholder="$10,000"
                                             onChange={(e) => console.log(e) } />
                                 </div>
                             </div>
@@ -119,6 +128,7 @@ export default class Navy extends Component {
                                         <p className={styles.policyText}>Coverage you already have in place..</p>
                                         <input
                                                 className={styles.input}
+                                                placeholder="$10,000"
                                                 onChange={(e) => console.log(e) } />
                                 </div>
                                 <div className={styles.policyBox} > 
@@ -126,6 +136,7 @@ export default class Navy extends Component {
                                         <p className={styles.policyText}>Coverage you already have in place..</p>
                                         <input
                                                 className={styles.input}
+                                                placeholder="$10,000"
                                                 onChange={(e) => console.log(e) } />
                                 </div>
                             </div>

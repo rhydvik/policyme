@@ -865,19 +865,21 @@ button
   display: flex
   flex-direction: column
   justify-content: space-evenly
-  padding: 0 2rem 2rem 2rem
+  padding: 1rem 1rem 1rem 1rem
   .quoteMessage
     margin-top: 0
   .policyText
-    font-size: 0.8rem
+    font-size: 1rem
+    height: 80px
 
 .policyText 
   color: #004f78
 .otherCoverages
   background-color: rgba(27, 176, 219, 0.05)
-  padding: 1rem 10% 2rem 10%
+  padding: 1rem
   .policyText 
     color: #004f78
+    height: 120px
   .policyBox
     margin-top: 1rem
 
@@ -904,17 +906,23 @@ button
     font-size: 0.8rem
   .recommendedPolicyBox
     width: 230px
-    height: 230px
+    height: 250px
+    .policyText
+      font-size: 0.9rem
     .policyBox
       height: 85%
     .selectedPolicyBox
       height: 85%
     input
-      margin-top: 28px
+      margin-top: 6px
+      height: 36px
   .otherCoverageBox
     display: flex
     flex-direction: row
     justify-content: space-evenly
+    input 
+      height: 30px
+      //margin-top: 10px
   .existingCoverageContainer
     .policyBox
       width: 40%
@@ -944,7 +952,7 @@ button
     padding-bottom: 0px
 
 .existingCoverageContainer
-  padding: 0 10% 2rem 10%
+  padding: 1rem
   margin: auto
   p
     text-align: center
@@ -955,3 +963,12 @@ button
 
 
     
+.addOnBtn
+  display: flex
+  align-tems: center
+  padding: 20px
+  color: #24a6ff
+  cursor: pointer
+  .plus
+    height: 26px
+    width: 26px

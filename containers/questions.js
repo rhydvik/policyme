@@ -7,7 +7,10 @@ import question from '../constants/questions';
 import styles from '../styles/index.sass';
 import { connect } from 'react-redux';
 import {
-    addQuestion
+    addQuestion,
+    setAdvice,
+    populateJson,
+    sendPopulatedJson
 } from '../Actions'
 import Modal from '../components/Modal/index';
 
@@ -21,9 +24,14 @@ class Questions extends Component {
         };
     }
     componentWillMount() {
+
         this.props.addQuestion({qi:this.state.questionIndex, question: question[this.state.questionIndex]});
         this.setState({ currentQuestion: question[this.state.questionIndex] })
     }
+    componentDidMount() {
+        this.props.setAdvice()
+    }
+
     handleButtonChange = (i) => {
         // //debugger;
         const temp = Object.assign({}, question[this.state.questionIndex]);
@@ -55,34 +63,36 @@ class Questions extends Component {
     };
 
     handleInputChange = (i, e) => {
-        //debugger;
         const temp = this.state.currentQuestion;
         temp.inputs[i].value = parseInt(e.target.value);
         this.setState({ currentQuestion: temp });
     };
 
-    handleSubQuestionInputChange = (i, e) => {
-        //debugger;
-        console.log('asdfgh', this.state.currentQuestion);
+    handleSubQuestionInputChange = (e,input) => {
+        // debugger;
+        console.log("ASDADSDA#EQ#@$", input)
         const temp = this.state.currentQuestion;
-        const temp1 = temp.subQuestion[0];
-        temp1.inputs[i].value = parseInt(e.target.value);
-
-        temp.subQuestion = temp1;
-
-        this.setState({ currentQuestion: temp });
+        const index = input.subQuestionIndex || 0
+        const temp1 = temp.subQuestion[index]
+        temp1.inputs[e.target.id].value = parseInt(e.target.value);
+        temp.subQuestion[index] = temp1;
+        this.setState({ currentQuestion: temp }, () => console.log(this.state.currentQuestion));
     };
 
     next = () => {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
         this.props.addQuestion({qi, question: question[qi + 1]});
+        if (this.state.currentQuestion.last) {
+            this.props.populateJson(this.props.questions)
+            this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
+        }
     };
 
     goBack = () => {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi - 1, currentQuestion: question[qi - 1] })
-    }
+    };
 
     validate = (name) => {
         if (this.state.name === undefined) return true;
@@ -100,7 +110,11 @@ class Questions extends Component {
     closeModal = () => {
         this.setState({modalIsOpen: false});
     };
-
+    getInputClass = (data) => {
+        if (data.inputs.length > 1 || !data.addon) {
+           return  styles.alignInputsInOneLine
+        } else return ''
+    }
     getInputOptions = (data) => {
         switch (data.type) {
             case 'BUTTON':
@@ -117,16 +131,17 @@ class Questions extends Component {
                 );
             case 'INPUT':
                 return (
-                    <div className={cn('columns', data.inputs.length > 1 ? styles.inputBorderContainer : '')}>
+                    <div className={cn('columns', (data.inputs.length > 1 || data.addon) ? styles.inputBorderContainer : '')}>
                         {data.inputs.map((input, i) => (
-                            <div className={cn('column', data.inputs.length > 1 ? styles.rightAlignedInputContainer: '')}>
-                                {data.inputs.length > 1 ? <span>{input.label}</span> : '' }
+                            <div className={cn('column', (data.inputs.length > 1 || data.addon) ? styles.rightAlignedInputContainer: '')}>
+                                {(data.inputs.length > 1 || data.addon) ? <span>{input.label}</span> : '' }
                                 <input
                                     className={styles.input}
                                     type={input.type}
                                     placeholder={input.placeholder}
                                     value={input.value}
-                                    onChange={(e) => data.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(i, e) : this.handleInputChange(i, e)} />
+                                    id={i}
+                                    onChange={(e) => data.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(e,input) : this.handleInputChange(i, e)} />
                             </div>
                         ))}
                     </div>
@@ -150,8 +165,16 @@ class Questions extends Component {
 
     getSubQuestion = (question) => {
         if (question.subQuestion === undefined) return;
-        // //debugger;
+        // debugger;
+        console.log("YES I AM GETTING CONTROL")
         const { currentQuestion } = this.state;
+        if(currentQuestion.addOn && currentQuestion.subQuestion.length ) {
+            const subQuestion = currentQuestion.subQuestion;
+                 return subQuestion.map(x=> <div>
+                        {x.question}
+                        {this.getInputOptions(x)}
+                    </div>)
+        }
         const subQuestion = currentQuestion.subQuestion;
         for (let i = 0; i < currentQuestion.inputs.length; i++) {
             // //debugger;
@@ -159,8 +182,8 @@ class Questions extends Component {
             if (currentInputValue !== null && currentInputValue !== '') {
                 let qindex = 0;
                 if(currentQuestion.type === 'BUTTON' && currentQuestion.subQuestion) {
-                    if(currentQuestion.inputs[i].subQuestionIndex !== undefined) {
-                        qindex = currentQuestion.inputs[i].subQuestionIndex
+                    if(currentQuestion.inputs[i].subQuestionOpen !== undefined) {
+                        qindex = currentQuestion.inputs[i].subQuestionOpen
                     } else { return false; }
                 }
                 return (
@@ -175,7 +198,6 @@ class Questions extends Component {
     };
 
     validateQuestion = () => {
-        console.log('^^^^^^^', this.state.currentQuestion);
         const { currentQuestion } = this.state;
         if (currentQuestion.overrideValidation !== undefined) return true
         switch (currentQuestion.type) {
@@ -186,6 +208,7 @@ class Questions extends Component {
                         console.log('3');
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
+                        console.log('**^^^**', currentQuestion.subQuestion);
                         for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                             console.log('4');
                             if (currentQuestion.subQuestion[0].inputs[i].value !== null) return true
@@ -203,11 +226,10 @@ class Questions extends Component {
                             validInput = true;
                         }
                         if (validInput && currentQuestion.subQuestion === undefined) {
-                            //debugger;
+                            // debugger;
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            //debugger;
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
                                 if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
@@ -217,24 +239,60 @@ class Questions extends Component {
                                 }
                             }
                             if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
-                            //debugger;
+                            // debugger;
                         } else return false
                     }
                     if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
                         console.log('returning true from hulululu');
                         return true
                     }
-                    //debugger;
+                    // debugger;
                     return true;
                 }
         }
     };
+    handleAddOn = () => {
+        const { questionIndex, currentQuestion } = this.state;
+        let q =  {
+            question: '',
+            type: 'INPUT',
+            name: 'child',
+            addon: true,
+            isSubQuestion: true,
+            inputs:[]
+        }
+        const noOfChild = (currentQuestion.subQuestion.length) ? (currentQuestion.subQuestion[0].inputs.length + 1) : 1
+            const inputs = 
+                {
+                    label: `Child ${noOfChild}`,
+                    value: '',
+                    placeholder: ''
+                }
+
+
+            if(!currentQuestion.subQuestion.length) {
+                q.inputs.push(inputs)
+                currentQuestion.subQuestion.push(q)
+            } else {
+                console.log("SUBQUESI", currentQuestion)
+                currentQuestion.subQuestion[0].inputs.push(inputs)
+            }
+        this.setState({currentQuestion})
+    }
+    addOn = (question) => {
+        return (
+            <div className="addOnBtn"  onClick={this.handleAddOn}>
+                <img className='plus' src="https://cdn0.iconfinder.com/data/icons/round-ui-icons/512/add_blue.png" />
+                <button>Add Child</button>
+            </div>
+        )
+    }
 
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         const { questionIndex, currentQuestion } = this.state;
         let nextDisabled = this.validateQuestion();
-        console.log('****', this.state.currentQuestion);
+        console.log(this.props)
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -248,8 +306,10 @@ class Questions extends Component {
                 {renderIf(questionIndex > 1)(
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
                 )}
-                {this.getCurrentQuestion(question[this.state.questionIndex])}
-                {this.getSubQuestion(question[this.state.questionIndex])}
+                {this.getCurrentQuestion(currentQuestion)}
+                {/* {question.subQuestion ? this.getSubQuestion(question[this.state.questionIndex]) : ''} */}
+                {this.getSubQuestion(currentQuestion)}
+                {currentQuestion.addOn ? this.addOn(currentQuestion) : ''}
                 <div className={styles.questionContainer}>
                     <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
                     {renderIf(this.state.modalIsOpen)(
@@ -266,7 +326,10 @@ class Questions extends Component {
     }
 }
 const mapDispatchToProps = {
-    addQuestion
+    addQuestion,
+    setAdvice,
+    populateJson,
+    sendPopulatedJson
 };
 
 const mapStateToProps = state => state.questionReducer;
