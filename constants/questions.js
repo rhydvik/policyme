@@ -247,7 +247,7 @@ const questions = [
             {
                 label: 'Yes',
                 value: null,
-                subQuestionIndex: 0
+                subQuestionOpen: 0
             },
             {
                 label: 'No',
@@ -286,7 +286,7 @@ const questions = [
             {
                 label: 'Yes',
                 value: null,
-                subQuestionIndex: 0
+                subQuestionOpen: 0
             },
             {
                 label: 'No',

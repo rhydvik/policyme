@@ -16,7 +16,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionIndex: 5,
+            questionIndex: 0,
             currentQuestion: {},
             modalIsOpen: false
         };
@@ -177,8 +177,8 @@ class Questions extends Component {
             if (currentInputValue !== null && currentInputValue !== '') {
                 let qindex = 0;
                 if(currentQuestion.type === 'BUTTON' && currentQuestion.subQuestion) {
-                    if(currentQuestion.inputs[i].subQuestionIndex !== undefined) {
-                        qindex = currentQuestion.inputs[i].subQuestionIndex
+                    if(currentQuestion.inputs[i].subQuestionOpen !== undefined) {
+                        qindex = currentQuestion.inputs[i].subQuestionOpen
                     } else { return false; }
                 }
                 return (
