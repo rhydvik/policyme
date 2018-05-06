@@ -24,7 +24,7 @@ class Questions extends Component {
         };
     }
     componentWillMount() {
-        
+
         this.props.addQuestion({qi:this.state.questionIndex, question: question[this.state.questionIndex]});
         this.setState({ currentQuestion: question[this.state.questionIndex] })
     }
@@ -73,6 +73,7 @@ class Questions extends Component {
         // debugger;
         console.log("ASDADSDA#EQ#@$", input)
         const temp = this.state.currentQuestion;
+
         const temp1 = input.subQuestionIndex ? temp.subQuestion[input.subQuestionIndex] : temp.subQuestion[0]
         temp1.inputs[e.target.id].value = parseInt(e.target.value);
         temp.subQuestion[0] = temp1;
@@ -92,7 +93,7 @@ class Questions extends Component {
     goBack = () => {
         const qi = this.state.questionIndex;
         this.setState({ questionIndex: qi - 1, currentQuestion: question[qi - 1] })
-    }
+    };
 
     validate = (name) => {
         if (this.state.name === undefined) return true;
@@ -208,6 +209,7 @@ class Questions extends Component {
                         console.log('3');
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
+                        console.log('**^^^**', currentQuestion.subQuestion);
                         for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                             console.log('4');
                             if (currentQuestion.subQuestion[0].inputs[i].value !== null) return true
@@ -229,7 +231,6 @@ class Questions extends Component {
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            // debugger;
                             for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
                                 const currentInput = currentQuestion.subQuestion[0].inputs[i];
                                 if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
@@ -268,8 +269,8 @@ class Questions extends Component {
                     value: '',
                     placeholder: ''
                 }
-            
-         
+
+
             if(!currentQuestion.subQuestion.length) {
                 q.inputs.push(inputs)
                 currentQuestion.subQuestion.push(q)
