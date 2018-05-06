@@ -3,7 +3,8 @@ import * as actionTypes from 'utils/actionTypes';
 const initialState = {
     questions: [],
     s_id: null,
-    jsonSkeleton: {}
+    jsonSkeleton: {},
+    expense: {}
 };
 
 
@@ -141,6 +142,60 @@ export default (state = initialState, action) => {
       json.finances = populateFinance(finances, json.finances)
       console.log('ASJKDOEIOWEUROIUWE(*#@$',json)
       return { ...state, jsonSkeleton: json }
+      break;
+    case actionTypes.SET_EXPENSE:
+    const p = {
+      "default": {
+          "expenses": {
+              "categories": {
+                  "clothing": 0,
+                  "discretionary": 700,
+                  "education": 600,
+                  "food": 500,
+                  "health_care": 400,
+                  "housing_costs": 200,
+                  "mortgage_or_rent": 100,
+                  "other": [],
+                  "transportation": 300
+              },
+              "max": 20000,
+              "min": 19000
+          },
+          "savings": {
+              "max": 6000
+          }
+      },
+      "user": {
+          "expenses": {
+              "categories": {
+                  "clothing": 0,
+                  "discretionary": 700,
+                  "education": 600,
+                  "food": 500,
+                  "health_care": 400,
+                  "housing_costs": 200,
+                  "mortgage_or_rent": 100,
+                  "other": [
+                      {
+                          "amount": 20,
+                          "type": "additional1"
+                      },
+                      {
+                          "amount": 10,
+                          "type": "additional2"
+                      }
+                  ],
+                  "transportation": 300
+              },
+              "max": 21000,
+              "min": 19500
+          },
+          "savings": {
+              "max": 6500
+          }
+      }
+  }
+      return { ...state, expense: p}
       break;
 
     default:
