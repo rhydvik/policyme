@@ -16,7 +16,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionIndex: 0,
+            questionIndex: 5,
             currentQuestion: {},
             modalIsOpen: false
         };
@@ -61,22 +61,20 @@ class Questions extends Component {
     };
 
     handleInputChange = (i, e) => {
-        debugger;
+        // debugger;
         const temp = this.state.currentQuestion;
         temp.inputs[i].value = parseInt(e.target.value);
         this.setState({ currentQuestion: temp });
     };
 
-    handleSubQuestionInputChange = (i, e) => {
-        debugger;
-        console.log('asdfgh', this.state.currentQuestion);
+    handleSubQuestionInputChange = (e,input) => {
+        // debugger;
+        console.log("ASDADSDA#EQ#@$", input)
         const temp = this.state.currentQuestion;
-        const temp1 = temp.subQuestion[0];
-        temp1.inputs[i].value = parseInt(e.target.value);
-
-        temp.subQuestion = temp1;
-
-        this.setState({ currentQuestion: temp });
+        const temp1 = input.subQuestionIndex ? temp.subQuestion[input.subQuestionIndex] : temp.subQuestion[0]
+        temp1.inputs[e.target.id].value = parseInt(e.target.value);
+        temp.subQuestion[0] = temp1;
+        this.setState({ currentQuestion: temp }, () => console.log(this.state.currentQuestion));
     };
 
     next = () => {
@@ -137,7 +135,8 @@ class Questions extends Component {
                                     type={input.type}
                                     placeholder={input.placeholder}
                                     value={input.value}
-                                    onChange={(e) => data.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(i, e) : this.handleInputChange(i, e)} />
+                                    id={i}
+                                    onChange={(e) => data.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(e,input) : this.handleInputChange(i, e)} />
                             </div>
                         ))}
                     </div>
@@ -249,23 +248,30 @@ class Questions extends Component {
     };
     handleAddOn = () => {
         const { questionIndex, currentQuestion } = this.state;
-        const q =             {
+        let q =  {
             question: '',
             type: 'INPUT',
             name: 'child',
             addon: true,
-            inputs: [
+            isSubQuestion: true,
+            inputs:[]
+        }
+            const inputs = 
                 {
                     label: `Child ${currentQuestion.subQuestion.length + 1}`,
                     value: '',
                     placeholder: ''
                 }
-            ],
-            isSubQuestion: true,
-        }
-        currentQuestion.subQuestion.push(q)
+            
+         
+            if(!currentQuestion.subQuestion.length) {
+                q.inputs.push(inputs)
+                currentQuestion.subQuestion.push(q)
+            } else {
+                console.log("SUBQUESI", currentQuestion)
+                currentQuestion.subQuestion[0].inputs.push(inputs)
+            }
         this.setState({currentQuestion})
-
     }
     addOn = (question) => {
         return (

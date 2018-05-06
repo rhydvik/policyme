@@ -190,12 +190,12 @@ const questions = [
             {
                 label: 'Rent',
                 value: null,
-                subQuestionIndex: 0
+                subQuestionOpen: 0
             },
             {
                 label: 'Own',
                 value: null,
-                subQuestionIndex: 1
+                subQuestionOpen: 1
             }
         ],
         questionText: 'What if I\'m in the market to buy?',
@@ -209,6 +209,7 @@ const questions = [
                         label: 'Monthly rent',
                         value: '',
                         type: 'number',
+                        subQuestionIndex: 0 ,
                         placeholder: '$',
 
                     },
@@ -219,15 +220,18 @@ const questions = [
                 question: 'What is your mortgage amount?',
                 type: 'INPUT',
                 name: 'income',
+                index:1,
                 inputs: [
                     {
                         label: 'Current mortgage',
                         value: '',
+                        subQuestionIndex: 1 ,
                         placeholder: '$'
                     },
                     {
                         label: 'Monthly payment',
                         value: '',
+                        subQuestionIndex: 1 ,
                         placeholder: '$'
                     }
                 ],
@@ -295,6 +299,7 @@ const questions = [
                 question: 'Add debts',
                 type: 'INPUT',
                 name: 'income',
+                isSubQuestion: true,
                 inputs: [
                     {
                         label: 'Credit cards',
