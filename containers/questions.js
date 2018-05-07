@@ -20,7 +20,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionIndex: 12,
+            questionIndex: 0,
             currentQuestion: {},
             modalIsOpen: false
         };
