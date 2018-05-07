@@ -5,7 +5,8 @@ import renderIf from 'render-if';
 import Router from 'next/router';
 import cn from 'classnames';
 import question from '../../constants/questions';
-import styles from '../../styles/index.sass';
+import indexStyles from '../../styles/index.sass';
+import styles from './index.sass';
 import { CATEGORY } from '../../utils/const.js';
 import { connect } from 'react-redux';
 import {
@@ -59,7 +60,7 @@ next = () => {
         const {categories} = this.state
         const ifExpense = renderIf(Object.keys(expense).length && expense.user)
         return (
-        <div className={styles.mainBox}>
+        <div>
             <Nav
                 usedFor="questions"
                 showQuestionMark={true}
@@ -68,22 +69,46 @@ next = () => {
             >
               <img src="/static/images/questions/question.svg" onClick={this.openModal} />
             </Nav>
+            <div className={styles.container}>
+
+            </div>
             {categories ?
             <div>
-                {Object.keys(categories).map(x => <div>
-                    {x !== 'other' ? <div><label>
-                        {CATEGORY[x] || x }
-                        </label>
-                    <input type ="text"
-                    value={categories[x]}
-                    name={x}
-                    onChange={this.handleInput}/></div>
-                    : '' }
+                <div className={styles.container}>
+                    <div className={styles.textBox}>
+                        <img src="../../static/images/alex.png" />
+                        <p>
+                            Here is a breakdown your estimate by spend category.
+                            If a category looks off, feel free to revise.
+                        </p>
+                    </div>
                 </div>
-                )}
-                <button onClick={this.addCategory}>add Category</button>
+
+                <div className={styles.inputBorderContainer}>
+                    {Object.keys(categories).map(x =>
+                      <div>
+                        {x !== 'other' ?
+                          <div className={styles.rightAlignedInputContainer}>
+                              <span>
+                                {CATEGORY[x] || x }
+                              </span>
+                                <input type ="text"
+                                className="input"
+                                value={categories[x]}
+                                name={x}
+                                onChange={this.handleInput}/>
+                          </div>
+                        : '' }
+                      </div>
+                    )}
+                </div>
+                <div className={styles.addOnButton}  >
+                    <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
+                </div>
             </div> : ''}
-            <Button label="Next" buttonStyle={styles.nextEnabled}  onClick={this.next}/>
+            <div className={styles.buttonContainer}>
+              <Button label="NEXT"   onClick={this.next}/>
+            </div>
         </div>
             )
     }
