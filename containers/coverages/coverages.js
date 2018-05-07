@@ -25,14 +25,20 @@ export default class Navy extends Component {
 
                     <div className={styles.questionBox}>
                         <img src="../static/images/alex.png" />
-                        <p className={styles.quoteMessage} >A term life insurance policy is the best fit for you. For more information on term life policies , click here</p>
-                        <p className={styles.quoteMessage} >Now, let's talk about your coverage amount policy length</p>
+                        <p className={styles.quoteMessage} >
+                            A term life insurance policy is the best fit for you.
+                            For more information on term life policies , click here</p>
+                        <p className={styles.quoteMessage} >
+                            Now, let's talk about your coverage
+                            amount policy length</p>
                     </div>
                     <div className={cn('columns', styles.recommendedPolicies)}>
                         <div className={cn('column', styles.recommendedPolicyBox)}>
                             <div className={styles.selectedPolicyBox} >
                                 <p className={styles.quoteMessage}>LifeStyle Protection</p>
-                                <p className={styles.policyText}>Choose this option if you want your family to be able to maintain their lifestyleif you are no longer around.</p>
+                                <p className={styles.policyText}>
+                                    Choose this option if you want your family to be
+                                    able to maintain their life style if you are no longer around.</p>
                                 <p className={styles.quoteMessage}>$1,000,000 coverage</p>
                                 <p className={styles.quoteMessage}>$70 - $80 / month</p>
                             </div>
@@ -71,11 +77,7 @@ export default class Navy extends Component {
                                     onChange={(e) => console.log(e) } />
                             </div>
                         </div>
-
-
                     </div>
-
-
 
                     <div className={styles.otherCoverages}>
                         <p className={styles.quoteMessage}>Add Other Coverages</p>
@@ -145,7 +147,7 @@ export default class Navy extends Component {
 
                     <div className={styles.termLengthContainer} >
                         <p className={styles.quoteMessage}>Pick your term</p>
-                        <p className={styles.policyText}>Your term is the pre-agreed timeframe during which you will bw covered by the policy. For more insurance information on term insurance, click here. </p>
+                        <p className={styles.policyText}>Your term is the pre-agreed time frame during which you will bw covered by the policy. For more insurance information on term insurance, click here. </p>
                         <div className={styles.policyBox} >
                             <p className={styles.quoteMessage}>Term Length</p>
                             <div  className={styles.termLengthBox} >
@@ -154,7 +156,7 @@ export default class Navy extends Component {
                                 <Button buttonStyle={styles.termLengthInc} label="-"/>
                             </div>
 
-                            <p className={styles.policyText}>It look like your insurance needs are pretty steadyfor the next 30 years. We recommend buying a 30 year policy todayto protect your self. </p>
+                            <p className={styles.policyText}>It look like your insurance needs are pretty steady for the next 30 years. We recommend buying a 30 year policy today to protect your self. </p>
                             <p className={styles.policyText}>Insurance is cancellable, so need to worry if you outgrow the protection.</p>
                         </div>
                     </div>
