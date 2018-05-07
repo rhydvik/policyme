@@ -22,7 +22,10 @@ export class Navy extends Component {
                 employer:0,
                 personal:0,
                 term: null
-            }
+            },
+                lifeStyle: true,
+                transition: false,
+                own: false
 
         }
     }
@@ -47,8 +50,12 @@ export class Navy extends Component {
     }
     componentWillReceiveProps (next) {
     }
+    getBoxCLass = (str) => {
+        this.setState({lifeStyle: false,transition:false,own:false })
+        this.setState({[str]: true})
+    }
     render() {
-    console.log(this.props)
+    const { lifeStyle, transition, own } = this.state
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -69,7 +76,7 @@ export class Navy extends Component {
                     </div>
                     <div className={cn('columns', styles.recommendedPolicies)}>
                         <div className={cn('column', styles.recommendedPolicyBox)}>
-                            <div className={styles.selectedPolicyBox} >
+                            <div onClick={()=>this.getBoxCLass('lifeStyle')} className={lifeStyle ? styles.selectedPolicyBox : styles.policyBox}>
                                 <p className={styles.quoteMessage}>LifeStyle Protection</p>
                                 <p className={styles.policyText}>Choose this option if you want your family to be able to maintain their lifestyleif you are no longer around.</p>
                                 <p className={styles.quoteMessage}>$1,000,000 coverage</p>
@@ -85,7 +92,7 @@ export class Navy extends Component {
                         </div>
 
                         <div className={cn('column',styles.recommendedPolicyBox)}>
-                            <div className={styles.policyBox} >
+                            <div onClick={()=>this.getBoxCLass('transition')} className={transition ? styles.selectedPolicyBox : styles.policyBox} >
                                 <p className={styles.quoteMessage}>Transition Protection</p>
                                 <p className={styles.policyText}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
                                 <p className={styles.quoteMessage}>$500,000 coverage</p>
@@ -99,8 +106,8 @@ export class Navy extends Component {
                                      src="/static/images/questions/question.svg"  onClick={this.openModal} />
                             </a>
                         </div>
-                        {/* <div className={cn('column',styles.recommendedPolicyBox)}>
-                            <div className={styles.policyBox} >
+                        <div className={cn('column',styles.recommendedPolicyBox)}>
+                            <div onClick={()=>this.getBoxCLass('own')} className={own ? styles.selectedPolicyBox : styles.policyBox} >
                                 <p className={styles.quoteMessage}>Choose Your Own</p>
                                 <p className={styles.policyText}>Choose this option if you'd like to customize your coverage.</p>
                                 <p className={styles.quoteMessage}>Coveragee</p>
@@ -109,7 +116,7 @@ export class Navy extends Component {
                                     placeholder="$10,000"
                                     onChange={(e) => console.log(e) } />
                             </div>
-                        </div> */}
+                        </div>
 
 
                     </div>

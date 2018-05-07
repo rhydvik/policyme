@@ -218,3 +218,32 @@ export function getQuotes (payload) {
       });
   };
 }
+
+export function patchQuote (payload) {
+  const {s_id, quotes, selected} = payload
+  const updated = quotes.map((x) => {
+    if (x.company === selected ) {
+      x.selected = true
+    }
+    return x
+  }) 
+  console.log(updated)
+  return (dispatch) => {
+    fetch(`${ENDPOINT}quote/${payload.s_id}`,
+    {
+      method: 'PATCH' ,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'text/html; charset=utf-8',
+        'Access-Control-Request-Method': 'PATCH'
+        
+      },
+      body: JSON.stringify(updated)
+    })
+      .then(res => res.json())
+      .then((fetchedData) => {
+        console.log("PATCHED JSON", fetchedData)
+        // dispatch(setSkeletonJson(fetchedData))
+      });
+    }
+}

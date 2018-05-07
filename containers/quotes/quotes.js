@@ -6,18 +6,33 @@ import styles from '../../styles/index.sass';
 import { connect } from 'react-redux';
 import renderIf from 'render-if'
 import {
-    getQuotes
+    getQuotes,
+    patchQuote
 } from '../../Actions/index'
 export  class Navy extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            selectedQuote: null
+        }
     }
     componentDidMount () {
         this.props.getQuotes()
     }
+    selectQuote = (company) => {
+        this.setState({selectedQuote: company})
+    }
+    sendQuote = () => {
+        const id = "50c9a31a-443b-11e8-842f-0ed5f89f718b"
+        this.props.patchQuote({
+            quotes: this.props.quote,
+            selected: this.state.selectedQuote,
+            s_id: id
+        })
+    }
     render() {
         console.log(this.props)
+        const {selectedQuote} = this.state
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -61,16 +76,16 @@ export  class Navy extends Component {
                             <Button label="SUBMIT" buttonStyle={styles.selectedButton} />
                         </div>
                         <p className={cn( styles.quoteMessage, styles.policyHeading)}>Your Quotes </p>
-                        <div className={styles.quoteBoxContainer}>
+                        <div className={cn(styles.quoteBoxContainer,)}>
                             {this.props.quote.length ? 
-                            this.props.quote.map(x => <div className={styles.quoteBox}>
+                            this.props.quote.map(x => <div  onClick={()=>this.selectQuote(x.company)} className={cn(styles.quoteBox,selectedQuote === x.company ? styles.selectedQuote : '')}>
                                 <div>{x.company}</div>
                                 <p>${x.premiums} per Month </p>
                             </div>
                             ) : ''}
                         </div>
 
-                        <Button label="Next" buttonStyle={styles.nextEnabled} />
+                        <Button label="Next" onClick = {this.sendQuote} buttonStyle={styles.nextEnabled} />
 
                     </div>
                 </div>
@@ -80,7 +95,8 @@ export  class Navy extends Component {
 }
 
 const mapDispatchToProps = {
-getQuotes
+getQuotes,
+patchQuote
 };
 
 const mapStateToProps = state => state.questionReducer;
