@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Expenses from '../containers/expenses/expenses'
+import Final from '../containers/final/final'
 
 import store from '../store';
 import { Provider } from 'react-redux';
@@ -14,7 +14,7 @@ class Expense extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Expenses />
+                <Final />
             </Provider>
         )
     }

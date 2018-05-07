@@ -37,7 +37,7 @@ class Final extends Component {
         user[e.target.name] = e.target.value
         this.setState({user})
     };
-    
+
     componentDidMount () {
         this.props.setAdvice()
     }
