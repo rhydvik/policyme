@@ -1,15 +1,54 @@
 import React, {Component} from 'react';
+import Router from 'next/router';
 import Nav from '../../components/Nav';
 import cn from 'classnames';
 import Button from '../../components/Button/index';
 import styles from '../../styles/index.sass';
-
-export default class Navy extends Component {
+import { connect } from 'react-redux';
+import {
+    getCoverage,
+    setAdvice,
+    patchCoverage
+} from '../../Actions/index'
+export class Navy extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            coverage: {
+                education:0,
+                end_of_life:0,
+                other:0,
+                other_dependents:0,
+                employer:0,
+                personal:0,
+                term: null
+            }
+
+        }
+    }
+
+    goToQuotes = () => {
+        this.props.patchCoverage({
+            json: this.props.coverageJson,
+            coverage: this.state.coverage
+        })
+        Router.push('/quotes');
+    };
+    handleInput = (e) => {
+        const { coverage } = this.state
+        coverage[e.target.name] = parseInt(e.target.value)
+        this.setState({coverage})
+        console.log(this.state)
+    }
+    componentDidMount () {
+        this.props.setAdvice();
+        const id = "50c9a31a-443b-11e8-842f-0ed5f89f718b"
+        this.props.getCoverage(id)
+    }
+    componentWillReceiveProps (next) {
     }
     render() {
+    console.log(this.props)
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -60,7 +99,7 @@ export default class Navy extends Component {
                                      src="/static/images/questions/question.svg"  onClick={this.openModal} />
                             </a>
                         </div>
-                        <div className={cn('column',styles.recommendedPolicyBox)}>
+                        {/* <div className={cn('column',styles.recommendedPolicyBox)}>
                             <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>Choose Your Own</p>
                                 <p className={styles.policyText}>Choose this option if you'd like to customize your coverage.</p>
@@ -70,7 +109,7 @@ export default class Navy extends Component {
                                     placeholder="$10,000"
                                     onChange={(e) => console.log(e) } />
                             </div>
-                        </div>
+                        </div> */}
 
 
                     </div>
@@ -86,7 +125,8 @@ export default class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    onChange={(e) => console.log(e) } />
+                                    name="other_dependents"
+                                    onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>End of Life Expenses</p>
@@ -95,7 +135,8 @@ export default class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    onChange={(e) => console.log(e) } />
+                                    name="end_of_life"
+                                    onChange={this.handleInput} />
                             </div>
                         </div>
                         <div className={styles.otherCoverageBox}>
@@ -106,7 +147,8 @@ export default class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    onChange={(e) => console.log(e) } />
+                                    name="education"
+                                    onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>Something else...</p>
@@ -114,7 +156,8 @@ export default class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    onChange={(e) => console.log(e) } />
+                                    name="other"
+                                    onChange={this.handleInput} />
                             </div>
                         </div>
 
@@ -129,7 +172,8 @@ export default class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    onChange={(e) => console.log(e) } />
+                                    name="employer"
+                                    onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>Life Insurance you bought</p>
@@ -137,7 +181,8 @@ export default class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    onChange={(e) => console.log(e) } />
+                                    name="personal"
+                                    onChange={this.handleInput} />
                             </div>
                         </div>
 
@@ -151,12 +196,26 @@ export default class Navy extends Component {
                             <p className={styles.policyText}>30 year term</p>
                             <p className={styles.policyText}>It look like your insurance needs are pretty steadyfor the next 30 years. We recommend buying a 30 year policy todayto protect your self. </p>
                             <p className={styles.policyText}>Insurance is cancellable, so need to worry if you outgrow the protection.</p>
+                            <input
+                                    className={styles.input}
+                                    placeholder="$10,000"
+                                    name="term"
+                                    onChange={this.handleInput} />
                         </div>
                     </div>
-                    <Button label="Next" buttonStyle={styles.nextEnabled} />
+                    <Button label="NEXT" onClick={this.goToQuotes} buttonStyle={styles.nextEnabled} />
                 </div>
             </div>
 
         )
     }
 }
+
+const mapDispatchToProps = {
+    getCoverage,
+    setAdvice,
+    patchCoverage
+};
+
+const mapStateToProps = state => state.questionReducer;
+export default connect(mapStateToProps, mapDispatchToProps)(Navy);

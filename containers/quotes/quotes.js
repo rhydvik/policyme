@@ -3,13 +3,21 @@ import Nav from '../../components/Nav';
 import cn from 'classnames';
 import Button from '../../components/Button/index';
 import styles from '../../styles/index.sass';
-
-export default class Navy extends Component {
+import { connect } from 'react-redux';
+import renderIf from 'render-if'
+import {
+    getQuotes
+} from '../../Actions/index'
+export  class Navy extends Component {
     constructor(props) {
         super(props);
         this.state = {}
     }
+    componentDidMount () {
+        this.props.getQuotes()
+    }
     render() {
+        console.log(this.props)
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -54,14 +62,12 @@ export default class Navy extends Component {
                         </div>
                         <p className={cn( styles.quoteMessage, styles.policyHeading)}>Your Quotes </p>
                         <div className={styles.quoteBoxContainer}>
-                            <div className={styles.quoteBox}>
-                                <div>Empire Life</div>
-                                <p>$12.13 per Month </p>
+                            {this.props.quote.length ? 
+                            this.props.quote.map(x => <div className={styles.quoteBox}>
+                                <div>{x.company}</div>
+                                <p>${x.premiums} per Month </p>
                             </div>
-                            <div className={styles.quoteBox}>
-                                <p>Empire Life</p>
-                                <p>$12.13 per Month </p>
-                            </div>
+                            ) : ''}
                         </div>
 
                         <Button label="Next" buttonStyle={styles.nextEnabled} />
@@ -72,3 +78,10 @@ export default class Navy extends Component {
         )
     }
 }
+
+const mapDispatchToProps = {
+getQuotes
+};
+
+const mapStateToProps = state => state.questionReducer;
+export default connect(mapStateToProps, mapDispatchToProps)(Navy);
