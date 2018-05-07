@@ -1,5 +1,6 @@
 import * as actionTypes from '../utils/actionTypes';
 import { ENDPOINT } from '../config'
+import { createGzip } from 'zlib';
 
 export function addQuestion(payload) {
   return {
@@ -54,6 +55,12 @@ export function populateJson (payload) {
   };
 }
 
+export function setExpense (payload) {
+  return {
+    type: actionTypes.SET_EXPENSE,
+    payload
+  }
+}
 export function sendPopulatedJson (payload) {
   console.log(payload.payload)
   return (dispatch) => {
@@ -80,7 +87,30 @@ export function getExpenses (s_id) {
     fetch(`${ENDPOINT}expenses/${s_id}`)
       .then(res => res.json())
       .then((fetchedData) => {
+        dispatch(setExpense(fetchedData))
         console.log("RESPONSE JSON", fetchedData)
+        // dispatch(setSkeletonJson(fetchedData))
+      });
+  };
+}
+
+export function patchExpense (props,categories) {
+  let newPayload = props
+  console.log(props)
+  newPayload.user.expenses.categories = categories
+  return (dispatch) => {
+    fetch(`${ENDPOINT}expenses/9761e4a5-d83e-441f-a2c1-97f5280f8870`,
+    {
+      method: 'PATCH' ,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(newPayload)
+    })
+      .then(res => res.json())
+      .then((fetchedData) => {
+        console.log("PATCHED JSON", fetchedData)
         // dispatch(setSkeletonJson(fetchedData))
       });
   };

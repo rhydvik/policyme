@@ -6,6 +6,8 @@ import cn from 'classnames';
 import question from '../constants/questions';
 import styles from '../styles/index.sass';
 import { connect } from 'react-redux';
+import Link from 'next/link'
+import Router from 'next/router';
 import {
     addQuestion,
     setAdvice,
@@ -18,7 +20,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionIndex: 0,
+            questionIndex: 12,
             currentQuestion: {},
             modalIsOpen: false
         };
@@ -87,6 +89,8 @@ class Questions extends Component {
         if (this.state.currentQuestion.last) {
             this.props.populateJson(this.props.questions)
             this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
+            Router.push('/result')
+
         }
     };
 
