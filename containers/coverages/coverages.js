@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Router from 'next/router';
 import Nav from '../../components/Nav';
 import cn from 'classnames';
 import Button from '../../components/Button/index';
@@ -9,6 +10,11 @@ export default class Navy extends Component {
         super(props);
         this.state = {}
     }
+
+    goToQuotes = () => {
+        Router.push('/quotes');
+    };
+
     render() {
         return (
             <div className={styles.mainBox}>
@@ -153,7 +159,7 @@ export default class Navy extends Component {
                             <p className={styles.policyText}>Insurance is cancellable, so need to worry if you outgrow the protection.</p>
                         </div>
                     </div>
-                    <Button label="Next" buttonStyle={styles.nextEnabled} />
+                    <Button label="NEXT" onClick={this.goToQuotes} buttonStyle={styles.nextEnabled} />
                 </div>
             </div>
 

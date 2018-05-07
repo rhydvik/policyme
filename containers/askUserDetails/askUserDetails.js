@@ -1,35 +1,52 @@
 import React, { Component } from 'react';
+import Router from 'next/router';
 import Nav from '../../components/Nav/index'
 import styles from './index.sass';
 import Button from '../../components/Button/index';
 
 class AskUserDetails extends Component {
+    showCoverages = () => {
+        Router.push('/coverages');
+    };
+
     render() {
         return (
-            <div className={styles.modalBox}>
-                <div className={styles.modalNav}>
-                    <Nav usedFor="questions" >
-                        <img src="/static/images/close.svg" onClick={this.props.closeModal} />
-                    </Nav>
-                </div>
-                <div className={styles.popupContainer}>
-                    <p>Questions? ... Leave them here. </p>
-                    <input
-                        className={styles.input}
-                        placeholder="Name"
-                        onChange={(e) => console.log(e) }/>
-
-                    <input
-                        className={styles.input}
-                        placeholder="Email"
-                        onChange={(e) => console.log(e) }/>
-
-                    <textarea
-                        className={styles.input}
-                        placeholder="Your Question..."
-                        onChange={(e) => console.log(e) }/>
-
-                    <Button  onClick={this.submitUserDetails}  label='Submit' />
+            <div>
+                <Nav
+                    usedFor="questions"
+                    showQuestionMark={true}
+                    showHeader={false}
+                    openModal={this.openModal}
+                >
+                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                </Nav>
+                <div className={styles.container}>
+                    <div className={styles.textBox}>
+                        <img src="../../static/images/alex.png" />
+                        <p>
+                            Thanks for answering my questions!  That's all I
+                            need to provided your customized life insurance advice.
+                        </p>
+                        <p>
+                            If you choose to leave your information, we can save your progress.
+                        </p>
+                    </div>
+                    <div className={styles.inputContainer}>
+                        <input placeholder="First Name" />
+                        <input placeholder="Last Name" />
+                        <input placeholder="Email" />
+                    </div>
+                    <Button onClick={this.showCoverages} label="NEXT" />
+                    <br />
+                    <p className={styles.header}>DISCLAIMER</p>
+                    <p className={styles.message}>
+                        By providing your contact information above,
+                        you agree to this website's Privacy Policy,
+                        and your consent to email the email address
+                        provided to verify your identity for our
+                        insurance services and for marketing.
+                        We don't share or sell your information with third parties.
+                    </p>
                 </div>
             </div>
         );
