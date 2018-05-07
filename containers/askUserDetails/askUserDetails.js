@@ -3,23 +3,50 @@ import Router from 'next/router';
 import Nav from '../../components/Nav/index'
 import styles from './index.sass';
 import Button from '../../components/Button/index';
-
+import { connect } from 'react-redux';
+import {
+    updateUserDetail,
+    setAdvice
+} from '../../Actions/index'
 class AskUserDetails extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {
+                email: '',
+                first_name: '',
+                last_name: ''
+            }
+
+        };
+    }
+
+
+    submitUserDetails = () => {
+        this.props.updateUserDetail({
+            user: this.state.user,
+            json: this.props.jsonSkeleton
+        }
+        )
+    }
+
+    handleInput = (e)  => {
+        console.log(e.target.name)
+        const {user} = this.state
+        user[e.target.name] = e.target.value
+        this.setState({user})
+    }
+    componentDidMount () {
+        this.props.setAdvice()
+    }
     showCoverages = () => {
+        this.submitUserDetails()
         Router.push('/coverages');
     };
 
     render() {
+        console.log(this.props)
         return (
-            <div>
-                <Nav
-                    usedFor="questions"
-                    showQuestionMark={true}
-                    showHeader={false}
-                    openModal={this.openModal}
-                >
-                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
-                </Nav>
                 <div className={styles.container}>
                     <div className={styles.textBox}>
                         <img src="../../static/images/alex.png" />
@@ -32,9 +59,9 @@ class AskUserDetails extends Component {
                         </p>
                     </div>
                     <div className={styles.inputContainer}>
-                        <input placeholder="First Name" />
-                        <input placeholder="Last Name" />
-                        <input placeholder="Email" />
+                        <input placeholder="First Name" name="first_name" onChange={this.handleInput}/>
+                        <input placeholder="Last Name" name="last_name"onChange={this.handleInput} />
+                        <input placeholder="Email" name="email" onChange={this.handleInput}/>
                     </div>
                     <Button onClick={this.showCoverages} label="NEXT" />
                     <br />
@@ -48,10 +75,15 @@ class AskUserDetails extends Component {
                         We don't share or sell your information with third parties.
                     </p>
                 </div>
-            </div>
         );
     }
 }
 
 
-export default AskUserDetails;
+const mapDispatchToProps = {
+    updateUserDetail,
+    setAdvice
+};
+
+const mapStateToProps = state => state.questionReducer;
+export default connect(mapStateToProps, mapDispatchToProps)(AskUserDetails);

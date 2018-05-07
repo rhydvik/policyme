@@ -30,7 +30,7 @@
 
 .inputBorderContainer
   border-top: solid 1px #eaeaea
-  max-width: 100% !important
+  min-width: 100% !important
   margin: auto
 
 .rightAlignedInputContainer
@@ -72,6 +72,20 @@
   margin-top: 1rem
   text-align: center
 
-@media (max-width: 767px)
+.expensesContainer
+  text-align: center
+
+.expenses
+  max-width: 300px
+
+@media (min-width: 600px)
   .inputBorderContainer
+    min-width: 300px !important
+
+  .rightAlignedInputContainer
+    padding-left: 0
+
+  .container
     max-width: 300px
+    margin: 4rem auto
+

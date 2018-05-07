@@ -41,13 +41,24 @@ componentWillReceiveProps (newProps) {
 }
 handleInput = (e) => {
     let {categories} = this.state
-    categories[e.target.name] = e.target.value
+
+        categories[e.target.name] = parseInt(e.target.value)
+
     this.setState({categories})
 }
 addCategory = () => {
     let {categories} = this.state
     categories = {...categories, ...{[`category${Object.keys(categories).length}`]: 0}}
     this.setState({categories})
+}
+monthlyExpense = () => {
+    const { categories } = this.state
+    return Object.keys(categories).reduce((acc,cur)=>{
+        if(cur !== 'other') {
+            acc += + categories[cur]
+        }
+        return acc
+    }, 0)
 }
 next = () => {
     this.props.patchExpense(this.props.expense, this.state.categories);
@@ -56,9 +67,9 @@ next = () => {
     render() {
         console.log(this.props);
 
-        const { expense } = this.props
-        const {categories} = this.state
-        const ifExpense = renderIf(Object.keys(expense).length && expense.user)
+        const { expense } = this.props;
+        const {categories} = this.state;
+        const ifExpense = renderIf(Object.keys(expense).length && expense.user);
         return (
         <div>
             <Nav
@@ -69,14 +80,12 @@ next = () => {
             >
               <img src="/static/images/questions/question.svg" onClick={this.openModal} />
             </Nav>
-            <div className={styles.container}>
 
-            </div>
             {categories ?
             <div>
                 <div className={styles.container}>
                     <div className={styles.textBox}>
-                        <img src="../../static/images/alex.png" />
+                        <img src="../../static/images/alex.png" onClick={() => Router.push('/coverages')} />
                         <p>
                             Here is a breakdown your estimate by spend category.
                             If a category looks off, feel free to revise.
@@ -105,11 +114,13 @@ next = () => {
                 <div className={styles.addOnButton}  >
                     <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
                 </div>
-            </div> : ''}
-            <div className={styles.buttonContainer}>
-              <Button label="NEXT"   onClick={this.next}/>
-            </div>
-        </div>
+                <div className={styles.expenses} >
+                    <p>Monthly Expenses: {this.monthlyExpense()}</p>
+                    <p>Annual Savings: {this.props.expense.user.savings.max}</p>
+                </div>
+               </div>
+             : ''}
+             </div>
             )
     }
 }

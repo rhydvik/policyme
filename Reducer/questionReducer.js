@@ -4,7 +4,9 @@ const initialState = {
     questions: [],
     s_id: null,
     jsonSkeleton: {},
-    expense: {}
+    expense: {},
+    coverageJson:{},
+    quote: []
 };
 
 
@@ -198,6 +200,12 @@ export default (state = initialState, action) => {
       return { ...state, expense: p}
       break;
 
+    case actionTypes.SET_COVERAGE_JSON:
+      return { ...state, coverageJson: action.payload} 
+      break;
+    case actionTypes.SET_QUOTE:
+      return { ...state, quote: action.payload} 
+      break;
     default:
       return state;
   }
