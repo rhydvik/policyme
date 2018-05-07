@@ -32,9 +32,8 @@ class Final extends Component {
     };
 
     handleInput = (e)  => {
-        console.log(e.target.name)
-        const {user} = this.state
-        user[e.target.name] = e.target.value
+        const {user} = this.state;
+        user[e.target.name] = e.target.value;
         this.setState({user})
     };
 
@@ -42,12 +41,11 @@ class Final extends Component {
         this.props.setAdvice()
     }
     showCoverages = () => {
-        this.submitUserDetails()
+        this.submitUserDetails();
         Router.push('/coverages');
     };
 
     render() {
-        console.log(this.props)
         return (
             <div className={styles.container}>
                 <div className={styles.textBox}>
