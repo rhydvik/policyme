@@ -62,7 +62,7 @@ export function setExpense (payload) {
   }
 }
 export function sendPopulatedJson (payload) {
-  console.log(payload.payload)
+  console.log(payload.payload);
   return (dispatch) => {
     fetch(`${ENDPOINT}inputs/${payload.s_id}`,
     {
@@ -95,9 +95,9 @@ export function getExpenses (s_id) {
 }
 
 export function patchExpense (props,categories) {
-  let newPayload = props
-  console.log(props)
-  newPayload.user.expenses.categories = categories
+  let newPayload = props;
+  console.log(props);
+  newPayload.user.expenses.categories = categories;
   return (dispatch) => {
     fetch(`${ENDPOINT}expenses/9761e4a5-d83e-441f-a2c1-97f5280f8870`,
     {

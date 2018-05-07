@@ -24,7 +24,7 @@ class Results extends Component {
             categories: null,
             currentQuestion: {},
             modalIsOpen: false,
-            
+
         };
     }
 componentDidMount () {
@@ -42,17 +42,17 @@ handleInput = (e) => {
     categories[e.target.name] = e.target.value
     this.setState({categories})
 }
-addCategory = () => { 
+addCategory = () => {
     let {categories} = this.state
     categories = {...categories, ...{[`category${Object.keys(categories).length}`]: 0}}
     this.setState({categories})
 }
 next = () => {
     this.props.patchExpense(this.props.expense, this.state.categories)
-}
+};
     render() {
-        console.log(this.props)
-        
+        console.log(this.props);
+
         const { expense } = this.props
         const {categories} = this.state
         const ifExpense = renderIf(Object.keys(expense).length && expense.user)
@@ -66,7 +66,7 @@ next = () => {
             >
               <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
             </Nav>
-            {categories ? 
+            {categories ?
             <div>
                 {Object.keys(categories).map(x => <div>
                     {x !== 'other' ? <div><label>
@@ -83,7 +83,7 @@ next = () => {
             </div> : ''}
             <Button label="Next" buttonStyle={styles.nextEnabled}  onClick={this.next}/>
         </div>
-            )     
+            )
     }
 }
 const mapDispatchToProps = {

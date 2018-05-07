@@ -20,7 +20,7 @@ class Questions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            questionIndex: 12,
+            questionIndex: 0,
             currentQuestion: {},
             modalIsOpen: false
         };
@@ -83,13 +83,16 @@ class Questions extends Component {
     };
 
     next = () => {
+
         const qi = this.state.questionIndex;
-        this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
+        if(qi < 12){
+          this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
+        }
         this.props.addQuestion({qi, question: question[qi + 1]});
         if (this.state.currentQuestion.last) {
-            this.props.populateJson(this.props.questions)
-            this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
-            Router.push('/result')
+            // this.props.populateJson(this.props.questions);
+            // this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
+            Router.push('/expenses', {data: ['a']})
 
         }
     };
