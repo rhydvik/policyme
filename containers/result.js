@@ -39,13 +39,24 @@ componentWillReceiveProps (newProps) {
 }
 handleInput = (e) => {
     let {categories} = this.state
-    categories[e.target.name] = e.target.value
+
+        categories[e.target.name] = parseInt(e.target.value)
+
     this.setState({categories})
 }
 addCategory = () => { 
     let {categories} = this.state
     categories = {...categories, ...{[`category${Object.keys(categories).length}`]: 0}}
     this.setState({categories})
+}
+monthlyExpense = () => {
+    const { categories } = this.state
+    return Object.keys(categories).reduce((acc,cur)=>{
+        if(cur !== 'other') {
+            acc += + categories[cur]
+        }
+        return acc
+    }, 0)
 }
 next = () => {
     this.props.patchExpense(this.props.expense, this.state.categories)
@@ -80,7 +91,10 @@ next = () => {
                 </div>
                 )}
                 <button onClick={this.addCategory}>add Category</button>
-            </div> : ''}
+                <p>Monthly Expenses: {this.monthlyExpense()}</p>
+                <p>Annual Savings: {this.props.expense.user.savings.max}</p>
+            </div>
+            : ''}
             <Button label="Next" buttonStyle={styles.nextEnabled}  onClick={this.next}/>
         </div>
             )     

@@ -27,7 +27,6 @@ export function setAdvice() {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
       },
-      mode: 'no-cors',
       method: 'POST'
     })
       .then(res => res.json())
@@ -96,25 +95,26 @@ export function getExpenses (s_id) {
 
 export function patchExpense (props,categories) {
   let newPayload = props
-  console.log(props)
   newPayload.user.expenses.categories = categories
+  console.log(newPayload)
   return (dispatch) => {
-    fetch(`${ENDPOINT}expenses/9761e4a5-d83e-441f-a2c1-97f5280f8870`,
-    {
-      method: 'PATCH' ,
-      // mode: 'no-cors',
-      headers: {
-        'Access-Control-Allow-Origin':  'localhost:3000',
-        'Content-Type': 'text/html; charset=utf-8',
-        'Access-Control-Request-Method': 'PATCH'
+
+  //   fetch(`${ENDPOINT}expenses/9761e4a5-d83e-441f-a2c1-97f5280f8870`,
+  //   {
+  //     method: 'PATCH' ,
+  //     // mode: 'no-cors',
+  //     headers: {
+  //       'Access-Control-Allow-Origin': '*',
+  //       'Content-Type': 'text/html; charset=utf-8',
+  //       'Access-Control-Request-Method': 'PATCH'
         
-      },
-      body: JSON.stringify(newPayload)
-    })
-      .then(res => res.json())
-      .then((fetchedData) => {
-        console.log("PATCHED JSON", fetchedData)
-        // dispatch(setSkeletonJson(fetchedData))
-      });
+  //     },
+  //     body: JSON.stringify(newPayload)
+  //   })
+  //     .then(res => res.json())
+  //     .then((fetchedData) => {
+  //       console.log("PATCHED JSON", fetchedData)
+  //       // dispatch(setSkeletonJson(fetchedData))
+  //     });
   };
 }
