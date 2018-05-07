@@ -1,0 +1,64 @@
+.modalBox
+  height: 100%
+  width: 100%
+
+.popupContainer input, .popupContainer textarea, .popupContainer button
+  width: 90%
+
+.modalNav
+  height: 8%
+
+.popupContainer
+  height: 92%
+  padding: 1rem
+  background-color: #1bb0db
+  p
+    color: white
+    font-size: 1rem
+    font-weight: bold
+    padding: 0 0 1.5rem 0
+
+  input
+    width: 100%
+    margin-bottom: .6rem
+    height: 3rem
+    border-radius: .1rem
+    padding: 1rem
+    color: white
+    font-size: 1.1rem
+    font-weight: bold
+    text-align: left
+    background-color: rgba(255, 255, 255, 0.12)
+
+  ::-webkit-input-placeholder
+    text-align: left
+    color: white
+
+  textarea
+    width: 100%
+    margin-bottom: .6rem
+    height: 15rem
+    border-radius: .1rem
+    padding: 1rem
+    color: white
+    font-size: 1.1rem
+    font-weight: bold
+    text-align: left
+    background-color: rgba(255, 255, 255, 0.12)
+  button
+    background-color: white
+    width: 100%
+    color: #1bb0db
+    font-size: 1rem
+    border-radius: .1rem
+
+.input
+  border: none
+  padding: .5rem
+  outline: none
+  text-align: center
+  border-bottom: .1rem solid #1bb0db
+
+@media (min-width: 767px)
+ .ReactModal__Content--after-open
+   padding: 5rem !important

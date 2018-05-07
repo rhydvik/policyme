@@ -60,6 +60,9 @@ button
   /* Firefox 19+ */
   text-align: center
 
+.input
+  max-width: 8rem
+
 .text-center
   text-align: center
 // @import 'utilities/keyframes'
@@ -81,8 +84,16 @@ button
   padding-bottom: 1.5rem
   padding-top: 1.5rem
 
+.quoteContainer
+  padding-bottom: 1.5rem
+  padding-top: 1.5rem
+
+.policyContainer
+  padding-bottom: 1.5rem
+  padding-top: 1.5rem
+
 .questionBox
-  padding: 0 2rem 0 2rem
+  padding: 0 1rem 0 1rem
   text-align: center
   img
     height: 8rem
@@ -118,8 +129,6 @@ button
   text-align: center
   height: 100vh
 
-.modalNav
-  height: 10%
 
 .backArrow
   cursor: pointer
@@ -140,19 +149,11 @@ button
   color: white
   width: 95%
 
-.input
-  border: none
-  padding: .5rem
-  outline: none
-  text-align: center
-  border-bottom: .1rem solid #1bb0db
-
 .navbar
   border-bottom: 1px solid #dbdbdb
-  padding: 1rem 0 1rem 2rem
   .right-items
     position: absolute
-    right: 2em
+    right: 0
     font-size: 1em
     color: #1bb0db
     top: .7rem
@@ -164,72 +165,29 @@ button
 
 .inputBorderContainer
   border-top: solid 1px #eaeaea
+  max-width: 300px
+  margin: auto
 
 .rightAlignedInputContainer
   border-bottom: solid 1px #eaeaea
-  height: 3rem
-  input
-    float: right
+  max-width: 300px
+  min-height: 3rem
+  padding-bottom: 0
+
   span
     font-size: .9rem
     font-weight: normal
     font-style: normal
     font-stretch: normal
-    line-height: 1.89
+    line-height: 1.5
     letter-spacing: normal
-    float: left
     color: #004f78
+    width: 9rem
+    display: inline-block
 
-.popupContainer
-  display: flex
-  height: 90%
-  justify-content: center
-  align-items: center
-  flex-direction: column
-  background-color: #1bb0db
-
-  p
-    color: white
-    font-size: 1rem
-    font-weight: bold
-    padding: 1.5rem
-    padding-top: 0
-
-  input
-    width: 90%
-    margin: .6rem
-    height: 3rem
-    border-radius: .1rem
-    padding: 1rem
-    color: white
-    font-size: 1.1rem
-    font-weight: bold
-    text-align: left
-    background-color: rgba(255, 255, 255, 0.12)
-
-  ::-webkit-input-placeholder
-    text-align: left
-    color: white
-
-  textarea
-    width: 90%
-    margin: 1rem
-    height: 10rem
-    border-radius: .1rem
-    padding: 1rem
-    color: white
-    font-size: 1.1rem
-    font-weight: bold
-    text-align: left
-    background-color: rgba(255, 255, 255, 0.12)
-  button
-    background-color: white
-    width: 90%
-    margin: 10px
-    color: #1bb0db
-    font-size: 1rem
-    border-radius: .1rem
-
+.inputLabel
+  width: 49%
+  display: inline-block
 
 .home-wrapper
   .row-about-us
@@ -430,6 +388,9 @@ button
             line-height: 1.875rem
             img
               padding: 0 0.625rem
+
+.recommendedPolicyBox
+  padding: 0
 
 
 @media screen and (max-width: 1200px)
@@ -658,6 +619,62 @@ button
   .show-for-small-only
     display: none
 
+  .alignInputsInOneLine
+    button
+      width: 50%
+
+  .questionContainer
+    width: 300px
+    margin: auto
+    .nextDisabled
+      width: 300px
+
+  .nextEnabled
+    width: 300px
+
+  .inputBorderContainer
+    width: 100%
+
+  .popupContainer input, .popupContainer textarea, .popupContainer button
+      width: 90%
+
+  .inputsContainer
+    display: flex
+    flex-direction: column
+    width: 300px
+    align-items: center
+    margin: auto
+    .disabledButton
+      width: 300px
+    .selectedButton
+      width: 300px
+
+@media screen and (min-width: 567px) and (max-width: 768px)
+  .alignInputsInOneLine
+    button
+      width: 50%
+
+  .questionContainer
+    width: 300px
+    margin: auto
+    .nextDisabled
+      width: 300px
+
+
+  .nextEnabled
+    width: 300px
+
+  .inputsContainer
+    display: flex
+    flex-direction: column
+    width: 300px
+    align-items: center
+    margin: auto
+    .disabledButton
+      width: 300px
+    .selectedButton
+      width: 300px
+
 
 @media screen and (max-width: 360px)
   .home-wrapper
@@ -670,11 +687,31 @@ button
           #image-3-background
             height: 13.33rem
 
+
+
+.addOnBtn
+  display: flex
+  justify-content: center
+  padding: 20px
+  color: white
+  cursor: pointer
+  .plus
+    height: 26px
+    width: 26px
+
+.buttonBox
+  background: #1bb0db
+  color: white
+  width: 7.5rem
+  height: 2.3rem
+  outline: none
+  cursor: pointer
+
 .questionText
-  width: 204px
-  height: 16px
+  width: 100%
+  height: 1.6rem
   opacity: 0.5
-  font-size: 14px
+  font-size: .8rem
   font-weight: normal
   font-style: normal
   font-stretch: normal
@@ -683,12 +720,205 @@ button
   text-align: center
   color: #004f78
   text-decoration: underline
-.addOnBtn
   display: flex
-  align-tems: center
-  padding: 20px
-  color: #24a6ff
-  cursor: pointer
-  .plus
-    height: 26px
-    width: 26px
+  align-items: center
+  justify-content: center
+  margin-top: .7rem
+
+.quoteMessage
+  margin-top: 1rem
+  color: #004f78
+  font-size: 1rem
+  font-weight: bold
+
+.policyHeading
+  margin-bottom: 2rem
+  font-size: 1.3rem
+  color: #004f78
+
+.quoteBoxContainer
+  display: flex
+  flex-direction: column
+
+.quoteBox
+  display: flex
+  justify-content: space-around
+  align-items: center
+  height: 50px
+  background-color: rgba(27, 176, 219, 0.05)
+  border: solid 1px rgba(27, 176, 219, 0.3)
+  margin-bottom: 10px
+
+.quoteButtonContainer
+  display: flex
+  justify-content: space-between
+
+
+@media screen and (max-width: 360px)
+  .quoteButtonContainer
+    .disabledButton
+      margin: 0px
+    .selectedButton
+      margin: 0px
+
+  .quoteContainer
+    .questionBox
+      .inputBorderContainer
+        .rightAlignedInputContainer
+          span
+            width: 45%
+          input
+            width: 45%
+
+@media screen and (min-width: 768px)
+  .quoteBox
+    width: 45%
+    margin: 15px
+    height: 70px
+
+  .quoteContainer
+    width: 550px
+    margin: auto
+
+  .quoteBoxContainer
+    flex-direction: row
+
+
+.quoteContainer
+  .questionBox
+    margin-bottom: 3rem
+
+.policyContainer
+  .questionBox
+    margin-bottom: 3rem
+
+.selectedPolicyBox
+  background-color: #1bb0db
+  margin-top: 2rem
+  padding-top: 0.5rem
+  padding-bottom: 1rem
+  .quoteMessage
+    color: white
+  .policyText
+    margin: 1rem
+    color: white
+    font-size: 1rem
+
+.policyBox
+  background-color: rgba(27, 176, 219, 0.05)
+  border: solid 1px rgba(27, 176, 219, 0.3)
+  padding-top: 0.5rem
+  margin-top: 2rem
+  color: #004f78
+  .input
+    background-color: rgba(27, 176, 219, 0.0001)
+  .policyText
+    margin: 1rem
+    font-size: 1rem
+    color: #004f78
+
+
+.recommendedPolicies
+  display: flex
+  flex-direction: column
+  justify-content: space-evenly
+  padding: 1rem 1rem 1rem 1rem
+  .quoteMessage
+    margin-top: 0
+  .policyText
+    font-size: 1rem
+    height: 80px
+
+.policyText
+  color: #004f78
+.otherCoverages
+  background-color: rgba(27, 176, 219, 0.05)
+  padding: 1rem
+  .policyText
+    color: #004f78
+    height: 115px
+  .policyBox
+    background-color: #ffffff
+    margin-top: 2rem
+
+.termLengthContainer
+  background-color: rgba(27, 176, 219, 0.05)
+  padding: 1rem
+  margin-top: 1rem
+
+.otherCoverageBox
+  display: flex
+  flex-direction: column
+
+
+@media screen and (min-width: 768px)
+  .recommendedPolicies
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+    align-items: baseline
+    height: 375px
+
+  .quoteMessage
+    margin-top: 0
+
+  .policyText
+    font-size: 0.8rem
+
+  .recommendedPolicyBox
+    height: 250px
+    padding: 1rem
+    .policyText
+      font-size: 0.9rem
+    input
+      margin-top: 6px
+      height: 36px
+
+  .otherCoverageBox
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+    input
+      height: 30px
+      //margin-top: 10px
+
+  .existingCoverageContainer
+    .policyBox
+      width: 40%
+
+  .otherCoverages
+    .policyBox
+      width: 40%
+
+  .policyContainer
+    .questionBox
+      width: 550px
+      margin: auto
+    .nextEnabled
+      margin-top: 20px
+
+  .termLengthContainer
+    .policyText
+      width: 550px
+      margin: auto
+    .policyBox
+      width: 400px
+      margin: auto
+      margin-top: 20px
+      background-color: white
+      .policyText
+        width: 90%
+        margin: auto
+        margin-top: 10px
+
+  .policyBox
+    padding-bottom: 0
+    height: 210px
+
+.existingCoverageContainer
+  padding: 1rem
+  margin: auto
+  p
+    text-align: center
+    margin: auto
+    margin-top: 1rem

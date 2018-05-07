@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import Nav from 'components/Nav';
-import Button from 'components/Button';
+import Nav from 'components/Nav/index';
+import Button from 'components/Button/index';
 import renderIf from 'render-if';
+import Router from 'next/router';
 import cn from 'classnames';
-import question from '../constants/questions';
-import styles from '../styles/index.sass';
-import { CATEGORY } from '../utils/const.js';
+import question from '../../constants/questions';
+import styles from '../../styles/index.sass';
+import { CATEGORY } from '../../utils/const.js';
 import { connect } from 'react-redux';
 import {
     addQuestion,
@@ -14,8 +15,8 @@ import {
     sendPopulatedJson,
     setExpense,
     patchExpense
-} from '../Actions'
-import Modal from '../components/Modal/index';
+} from '../../Actions/index'
+import Modal from '../../components/Modal/index';
 
 class Results extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class Results extends Component {
             categories: null,
             currentQuestion: {},
             modalIsOpen: false,
-            
+
         };
     }
 componentDidMount () {
@@ -44,7 +45,7 @@ handleInput = (e) => {
 
     this.setState({categories})
 }
-addCategory = () => { 
+addCategory = () => {
     let {categories} = this.state
     categories = {...categories, ...{[`category${Object.keys(categories).length}`]: 0}}
     this.setState({categories})
@@ -59,11 +60,12 @@ monthlyExpense = () => {
     }, 0)
 }
 next = () => {
-    this.props.patchExpense(this.props.expense, this.state.categories)
-}
+    this.props.patchExpense(this.props.expense, this.state.categories);
+    Router.push('/askUserDetails')
+};
     render() {
-        console.log(this.props)
-        
+        console.log(this.props);
+
         const { expense } = this.props
         const {categories} = this.state
         const ifExpense = renderIf(Object.keys(expense).length && expense.user)
@@ -75,9 +77,9 @@ next = () => {
                 showHeader={false}
                 openModal={this.openModal}
             >
-              <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+              <img src="/static/images/questions/question.svg" onClick={this.openModal} />
             </Nav>
-            {categories ? 
+            {categories ?
             <div>
                 {Object.keys(categories).map(x => <div>
                     {x !== 'other' ? <div><label>
@@ -97,7 +99,7 @@ next = () => {
             : ''}
             <Button label="Next" buttonStyle={styles.nextEnabled}  onClick={this.next}/>
         </div>
-            )     
+            )
     }
 }
 const mapDispatchToProps = {

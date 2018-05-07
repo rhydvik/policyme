@@ -61,7 +61,7 @@ export function setExpense (payload) {
   }
 }
 export function sendPopulatedJson (payload) {
-  console.log(payload.payload)
+  console.log(payload.payload);
   return (dispatch) => {
     fetch(`${ENDPOINT}inputs/${payload.s_id}`,
     {
@@ -114,7 +114,33 @@ export function patchExpense (props,categories) {
   //     .then(res => res.json())
   //     .then((fetchedData) => {
   //       console.log("PATCHED JSON", fetchedData)
-  //       // dispatch(setSkeletonJson(fetchedData))
+        // dispatch(setSkeletonJson(fetchedData))
   //     });
   };
+}
+export function updateUserDetail (payload) {
+  console.log(payload)
+  const json = payload.json;
+  json.family.user.email = payload.user.email;
+  json.family.user.first_name = payload.user.first_name;
+  json.family.user.last_name = payload.user.last_name;
+  console.log(json);
+  return (dispatch) => {
+    fetch(`${ENDPOINT}inputs/${payload.s_id}`,
+    {
+      method: 'PATCH' ,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'text/html; charset=utf-8',
+        'Access-Control-Request-Method': 'PATCH'
+        
+      },
+      body: JSON.stringify(json)
+    })
+      .then(res => res.json())
+      .then((fetchedData) => {
+        console.log("PATCHED JSON", fetchedData)
+        // dispatch(setSkeletonJson(fetchedData))
+      });
+    }
 }

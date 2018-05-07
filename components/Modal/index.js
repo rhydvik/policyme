@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
+import Radium from 'radium';
 import Nav from '../Nav/index'
-import styles from '../../styles/index.sass';
+import styles from './index.sass';
 import Button from '../Button/index';
 
 class PopUp extends Component {
@@ -11,7 +12,7 @@ class PopUp extends Component {
           backgroundColor: 'rgba(0, 0, 0, 0.75)',
       },
       content: {
-          backgroundColor: 'white',
+          background: 'none',
           top: '50%',
           left: '50%',
           right: 'auto',
@@ -20,18 +21,19 @@ class PopUp extends Component {
           minHeight: '300px',
           transform: 'translate(-50%, -50%)',
           border: 'none',
-          borderRadius: '30px',
+          borderRadius: '0',
           padding: '0',
-          width: '100%',
+          width: '100vw',
+          height: '100vh',
           overflow: 'initial',
       },
   };
     return (
             <Modal style={modalStyle} isOpen={this.props.isOpen} onRequestClose={this.props.closeModal} >
-              <div className={styles.mainBox}>
+              <div className={styles.modalBox}>
                   <div className={styles.modalNav}>
-                      <Nav usedFor="modal" showQuestionMark={true} showHeader={false} closeModal={this.props.closeModal} >
-                         <img src="/static/images/questions/close.svg" onClick={this.props.closeModal} />
+                      <Nav usedFor="questions" >
+                         <img src="/static/images/close.svg" onClick={this.props.closeModal} />
                       </Nav>
                   </div>
                     <div className={styles.popupContainer}>
@@ -48,7 +50,6 @@ class PopUp extends Component {
 
                         <textarea
                             className={styles.input}
-                            placeholder="Your Question"
                             placeholder="Your Question..."
                             onChange={(e) => console.log(e) }/>
 
@@ -61,4 +62,4 @@ class PopUp extends Component {
 }
 
 
-export default PopUp
+export default Radium(PopUp);
