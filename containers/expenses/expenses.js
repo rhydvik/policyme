@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from "react-redux";
 import Router from 'next/router';
+import Nav from "../../components/Nav";
+import Button from "../../components/Button";
+import styles from './index.sass'
 
 class About extends Component {
     constructor(props) {
@@ -20,8 +23,18 @@ class About extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.looksGood}>LOOKS GOOD</button>
-                <button onClick={this.seeBreakDown}>SEE BREAKDOWN</button>
+                <Nav
+                    usedFor="questions"
+                    showQuestionMark={true}
+                    showHeader={false}
+                    openModal={this.openModal}
+                >
+                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                </Nav>
+                <div className={styles.container}>
+                    <Button onClick={this.looksGood} label="Yes" />
+                    <Button onClick={this.seeBreakDown} label="SEE BREAKDOWN"  />
+                </div>
             </div>
         )
     }

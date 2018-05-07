@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Nav from '../components/Nav';
+import Nav from '../../components/Nav';
 import cn from 'classnames';
-import Button from '../components/Button/index';
-import styles from '../styles/index.sass';
+import Button from '../../components/Button/index';
+import styles from '../../styles/index.sass';
 
 export default class Navy extends Component {
     constructor(props) {
@@ -12,13 +12,13 @@ export default class Navy extends Component {
     render() {
         return (
             <div className={styles.mainBox}>
-               <Nav
+                <Nav
                     usedFor="questions"
                     showQuestionMark={true}
                     showHeader={false}
                     openModal={this.openModal}
                 >
-                  <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
                 <div className={styles.quoteContainer}>
                     <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
@@ -31,27 +31,27 @@ export default class Navy extends Component {
                         <p className={cn( styles.quoteMessage, styles.policyHeading)}>Your Policy</p>
                         <div className={cn('columns',  styles.inputBorderContainer )}>
                             <div className={cn('column', styles.rightAlignedInputContainer )}>
-                                 <span>Coverage</span>
-                                 <input
+                                <span>Coverage</span>
+                                <input
                                     className={styles.input}
                                     placeholder="$1000"
                                     value="$1000"
                                     onChange={(e) => console.log(e) } />
                             </div>
                             <div className={cn('column', styles.rightAlignedInputContainer )}>
-                                 <span>Term Years</span>
-                                 <input
+                                <span>Term Years</span>
+                                <input
                                     className={styles.input}
                                     placeholder="$1000"
                                     value="$1000"
                                     onChange={(e) => console.log(e) } />
                             </div>
-                            
+
                         </div>
                         <div className={styles.quoteButtonContainer}>
                             <Button label="RESET"  buttonStyle={styles.disabledButton}/>
                             <Button label="SUBMIT" buttonStyle={styles.selectedButton} />
-                        </div>  
+                        </div>
                         <p className={cn( styles.quoteMessage, styles.policyHeading)}>Your Quotes </p>
                         <div className={styles.quoteBoxContainer}>
                             <div className={styles.quoteBox}>
@@ -63,7 +63,7 @@ export default class Navy extends Component {
                                 <p>$12.13 per Month </p>
                             </div>
                         </div>
-                        
+
                         <Button label="Next" buttonStyle={styles.nextEnabled} />
 
                     </div>

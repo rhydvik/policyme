@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Results from '../containers/result';
+import Results from '../containers/result/result';
 // import withRedux from 'next-redux-wrapper';
 import store from '../store';
 import { Provider } from 'react-redux';

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import Nav from 'components/Nav';
-import Button from 'components/Button';
+import Nav from 'components/Nav/index';
+import Button from 'components/Button/index';
 import renderIf from 'render-if';
+import Router from 'next/router';
 import cn from 'classnames';
-import question from '../constants/questions';
-import styles from '../styles/index.sass';
-import { CATEGORY } from '../utils/const.js';
+import question from '../../constants/questions';
+import styles from '../../styles/index.sass';
+import { CATEGORY } from '../../utils/const.js';
 import { connect } from 'react-redux';
 import {
     addQuestion,
@@ -14,8 +15,8 @@ import {
     sendPopulatedJson,
     setExpense,
     patchExpense
-} from '../Actions'
-import Modal from '../components/Modal/index';
+} from '../../Actions/index'
+import Modal from '../../components/Modal/index';
 
 class Results extends Component {
     constructor(props) {
@@ -48,7 +49,8 @@ addCategory = () => {
     this.setState({categories})
 }
 next = () => {
-    this.props.patchExpense(this.props.expense, this.state.categories)
+    this.props.patchExpense(this.props.expense, this.state.categories);
+    Router.push('/askUserDetails')
 };
     render() {
         console.log(this.props);
@@ -64,7 +66,7 @@ next = () => {
                 showHeader={false}
                 openModal={this.openModal}
             >
-              <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+              <img src="/static/images/questions/question.svg" onClick={this.openModal} />
             </Nav>
             {categories ?
             <div>
