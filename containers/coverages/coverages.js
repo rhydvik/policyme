@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Router from 'next/router';
 import Nav from '../../components/Nav';
 import cn from 'classnames';
 import Button from '../../components/Button/index';
@@ -10,11 +9,6 @@ export default class Navy extends Component {
         super(props);
         this.state = {}
     }
-
-    goToQuotes = () => {
-        Router.push('/quotes');
-    };
-
     render() {
         return (
             <div className={styles.mainBox}>
@@ -154,12 +148,17 @@ export default class Navy extends Component {
                         <p className={styles.policyText}>Your term is the pre-agreed timeframe during which you will bw covered by the policy. For more insurance information on term insurance, click here. </p>
                         <div className={styles.policyBox} >
                             <p className={styles.quoteMessage}>Term Length</p>
-                            <p className={styles.policyText}>30 year term</p>
+                            <div  className={styles.termLengthBox} >
+                                <Button buttonStyle={styles.termLengthInc} label="+"/>
+                                <p className={styles.policyText}>30 year term</p>
+                                <Button buttonStyle={styles.termLengthInc} label="-"/>
+                            </div>
+
                             <p className={styles.policyText}>It look like your insurance needs are pretty steadyfor the next 30 years. We recommend buying a 30 year policy todayto protect your self. </p>
                             <p className={styles.policyText}>Insurance is cancellable, so need to worry if you outgrow the protection.</p>
                         </div>
                     </div>
-                    <Button label="NEXT" onClick={this.goToQuotes} buttonStyle={styles.nextEnabled} />
+                    <Button label="Next" buttonStyle={styles.nextEnabled} />
                 </div>
             </div>
 
