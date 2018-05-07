@@ -25,9 +25,9 @@ export function setAdvice() {
     fetch(`${ENDPOINT}inputs`, {
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type'
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
-      // mode: 'no-cors',
+      mode: 'no-cors',
       method: 'POST'
     })
       .then(res => res.json())
@@ -102,9 +102,12 @@ export function patchExpense (props,categories) {
     fetch(`${ENDPOINT}expenses/9761e4a5-d83e-441f-a2c1-97f5280f8870`,
     {
       method: 'PATCH' ,
+      // mode: 'no-cors',
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        'Access-Control-Allow-Origin':  'localhost:3000',
+        'Content-Type': 'text/html; charset=utf-8',
+        'Access-Control-Request-Method': 'PATCH'
+        
       },
       body: JSON.stringify(newPayload)
     })
