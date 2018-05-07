@@ -66,6 +66,7 @@ export class Navy extends Component {
                     showQuestionMark={true}
                     showHeader={false}
                     openModal={this.openModal}
+                    progressBar="70"
                 >
                     <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
@@ -216,14 +217,14 @@ export class Navy extends Component {
 
                             <p className={styles.policyText}>It look like your insurance needs are pretty steady for the next 30 years. We recommend buying a 30 year policy today to protect your self. </p>
                             <p className={styles.policyText}>Insurance is cancellable, so need to worry if you outgrow the protection.</p>
-                            <input
-                                    className={styles.input}
-                                    placeholder="$10,000"
-                                    name="term"
-                                    onChange={this.handleInput} />
+                            {/*<input*/}
+                            {/*className={styles.input}*/}
+                            {/*placeholder="$10,000"*/}
+                            {/*name="term"*/}
+                            {/*onChange={this.handleInput} />*/}
                         </div>
                     </div>
-                    <Button label="Next" buttonStyle={styles.nextEnabled} />
+                    <Button label="Next" onClick={() => Router.push('/quotes')} buttonStyle={styles.nextEnabled} />
                 </div>
             </div>
 

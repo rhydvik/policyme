@@ -77,6 +77,7 @@ next = () => {
                 showQuestionMark={true}
                 showHeader={false}
                 openModal={this.openModal}
+                progressBar="50"
             >
               <img src="/static/images/questions/question.svg" onClick={this.openModal} />
             </Nav>
@@ -114,12 +115,21 @@ next = () => {
                 <div className={styles.addOnButton}  >
                     <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
                 </div>
-                <div className={styles.expenses} >
-                    <p>Monthly Expenses: {this.monthlyExpense()}</p>
-                    <p>Annual Savings: {this.props.expense.user.savings.max}</p>
+                <div className={styles.expensesContainer} >
+                    <div className={styles.expenses}>
+                        <div>
+                           <label>Monthly Expenses:</label> <span> {this.monthlyExpense()}</span>
+                        </div>
+                        <div>
+                           <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
+                        </div>
+                    </div>
                 </div>
                </div>
              : ''}
+             <div className={styles.buttonContainer}>
+                 <Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />
+             </div>
              </div>
             )
     }
