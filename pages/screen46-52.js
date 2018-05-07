@@ -28,9 +28,9 @@ export default class Navy extends Component {
                         <p className={styles.quoteMessage} >A term life insurance policy is the best fit for you. For more information on term life policies , click here</p>
                         <p className={styles.quoteMessage} >Now, let's talk about your coverage amount policy length</p>
                     </div>
-                    <div className={styles.recommendedPolicies}>
-                        <div className={styles.recommendedPolicyBox}>
-                            <div className={styles.selectedPolicyBox} > 
+                    <div className={cn('columns', styles.recommendedPolicies)}>
+                        <div className={cn('column', styles.recommendedPolicyBox)}>
+                            <div className={styles.selectedPolicyBox} >
                                 <p className={styles.quoteMessage}>LifeStyle Protection</p>
                                 <p className={styles.policyText}>Choose this option if you want your family to be able to maintain their lifestyleif you are no longer around.</p>
                                 <p className={styles.quoteMessage}>$1,000,000 coverage</p>
@@ -40,13 +40,13 @@ export default class Navy extends Component {
                                 <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
                                     why should i pick this option?
                                 </p>
-                                <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}} 
+                                <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}}
                                     src="/static/images/questions/question.svg"  onClick={this.openModal} />
                             </a>
                         </div>
-                        
-                        <div className={styles.recommendedPolicyBox}>
-                            <div className={styles.policyBox} > 
+
+                        <div className={cn('column',styles.recommendedPolicyBox)}>
+                            <div className={styles.policyBox} >
                                     <p className={styles.quoteMessage}>Transition Protection</p>
                                     <p className={styles.policyText}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
                                     <p className={styles.quoteMessage}>$500,000 coverage</p>
@@ -56,12 +56,12 @@ export default class Navy extends Component {
                                     <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
                                         why should i pick this option?
                                     </p>
-                                    <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}} 
+                                    <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}}
                                         src="/static/images/questions/question.svg"  onClick={this.openModal} />
                                 </a>
                         </div>
-                        <div className={styles.recommendedPolicyBox}>
-                            <div className={styles.policyBox} > 
+                        <div className={cn('column',styles.recommendedPolicyBox)}>
+                            <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>Choose Your Own</p>
                                 <p className={styles.policyText}>Choose this option if you'd like to customize your coverage.</p>
                                 <p className={styles.quoteMessage}>Coveragee</p>
@@ -72,15 +72,15 @@ export default class Navy extends Component {
                             </div>
                         </div>
 
-                        
+
                     </div>
-                        
-                        
-                
+
+
+
                         <div className={styles.otherCoverages}>
-                            <p className={styles.quoteMessage}>Add Other Coverages</p>  
+                            <p className={styles.quoteMessage}>Add Other Coverages</p>
                             <div className={styles.otherCoverageBox}>
-                                <div className={styles.policyBox} > 
+                                <div className={styles.policyBox} >
                                     <p className={styles.quoteMessage}>Other Dependents</p>
                                     <p className={styles.policyText}>Add coverage if you have other dependents(not including childern in your household) who rely on you financially.</p>
                                     <input
@@ -88,7 +88,7 @@ export default class Navy extends Component {
                                             placeholder="$10,000"
                                             onChange={(e) => console.log(e) } />
                                 </div>
-                                <div className={styles.policyBox} > 
+                                <div className={styles.policyBox} >
                                     <p className={styles.quoteMessage}>End of Life Expenses</p>
                                     <p className={styles.policyText}>Add coverage if you'd like to pay for end of life expenses(funeral cost).
                                     <br /><br />Most Leave $15,000.</p>
@@ -99,7 +99,7 @@ export default class Navy extends Component {
                                 </div>
                             </div>
                             <div className={styles.otherCoverageBox}>
-                                <div className={styles.policyBox} > 
+                                <div className={styles.policyBox} >
                                     <p className={styles.quoteMessage}>Education Costs</p>
                                     <p className={styles.policyText}>Add coverage if you'd like to leave money for post-secondar education costs.
                                     <br /><br />Most Leave $40,000 per child. </p>
@@ -108,7 +108,7 @@ export default class Navy extends Component {
                                             placeholder="$10,000"
                                             onChange={(e) => console.log(e) } />
                                 </div>
-                                <div className={styles.policyBox} > 
+                                <div className={styles.policyBox} >
                                     <p className={styles.quoteMessage}>Something else...</p>
                                     <p className={styles.policyText}>Add coverage if there is any other needs we missed(additional caregiving costs, charitable donation or more family cobverage).</p>
                                     <input
@@ -117,13 +117,13 @@ export default class Navy extends Component {
                                             onChange={(e) => console.log(e) } />
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div className={styles.existingCoverageContainer}>
                             <p className={styles.quoteMessage}>Offset with any existing coverage</p>
                             <p className={styles.policyText}>Reduce your monthly premium by offsetting your needs with insurance policies you already have in place. </p>
                             <div className={styles.otherCoverageBox}>
-                                <div className={styles.policyBox} > 
+                                <div className={styles.policyBox} >
                                         <p className={styles.quoteMessage}>Employer Life Insurance</p>
                                         <p className={styles.policyText}>Coverage you already have in place..</p>
                                         <input
@@ -131,7 +131,7 @@ export default class Navy extends Component {
                                                 placeholder="$10,000"
                                                 onChange={(e) => console.log(e) } />
                                 </div>
-                                <div className={styles.policyBox} > 
+                                <div className={styles.policyBox} >
                                         <p className={styles.quoteMessage}>Life Insurance you bought</p>
                                         <p className={styles.policyText}>Coverage you already have in place..</p>
                                         <input
@@ -140,13 +140,13 @@ export default class Navy extends Component {
                                                 onChange={(e) => console.log(e) } />
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
-                        <div className={styles.termLengthContainer} > 
+
+                        <div className={styles.termLengthContainer} >
                                 <p className={styles.quoteMessage}>Pick your term</p>
                                 <p className={styles.policyText}>Your term is the pre-agreed timeframe during which you will bw covered by the policy. For more insurance information on term insurance, click here. </p>
-                                <div className={styles.policyBox} > 
+                                <div className={styles.policyBox} >
                                     <p className={styles.quoteMessage}>Term Length</p>
                                     <p className={styles.policyText}>30 year term</p>
                                     <p className={styles.policyText}>It look like your insurance needs are pretty steadyfor the next 30 years. We recommend buying a 30 year policy todayto protect your self. </p>
@@ -156,7 +156,7 @@ export default class Navy extends Component {
                         <Button label="Next" buttonStyle={styles.nextEnabled} />
                     </div>
                 </div>
-            
+
         )
     }
 }

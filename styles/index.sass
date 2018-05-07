@@ -174,7 +174,7 @@ button
   min-height: 3rem
   padding-bottom: 0
 
-  span.inputBorderContainer
+  span
     font-size: .9rem
     font-weight: normal
     font-style: normal
@@ -388,6 +388,9 @@ button
             line-height: 1.875rem
             img
               padding: 0 0.625rem
+
+.recommendedPolicyBox
+  padding: 0
 
 
 @media screen and (max-width: 1200px)
@@ -804,10 +807,9 @@ button
 .policyBox
   background-color: rgba(27, 176, 219, 0.05)
   border: solid 1px rgba(27, 176, 219, 0.3)
-  margin-top: 4rem
   padding-top: 0.5rem
+  margin-top: 2rem
   color: #004f78
-  padding-bottom: 1rem
   .input
     background-color: rgba(27, 176, 219, 0.0001)
   .policyText
@@ -833,16 +835,15 @@ button
   background-color: rgba(27, 176, 219, 0.05)
   padding: 1rem
   .policyText
-
     color: #004f78
-    height: 120px
+    height: 115px
   .policyBox
     background-color: #ffffff
-    margin-top: 1rem
+    margin-top: 2rem
 
 .termLengthContainer
   background-color: rgba(27, 176, 219, 0.05)
-  padding: 1rem 2rem 2rem 2rem
+  padding: 1rem
   margin-top: 1rem
 
 .otherCoverageBox
@@ -865,14 +866,10 @@ button
     font-size: 0.8rem
 
   .recommendedPolicyBox
-    width: 230px
     height: 250px
+    padding: 1rem
     .policyText
       font-size: 0.9rem
-    .policyBox
-      height: 85%
-    .selectedPolicyBox
-      height: 85%
     input
       margin-top: 6px
       height: 36px
@@ -916,6 +913,7 @@ button
 
   .policyBox
     padding-bottom: 0
+    height: 210px
 
 .existingCoverageContainer
   padding: 1rem
