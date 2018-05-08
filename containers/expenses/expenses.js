@@ -28,6 +28,7 @@ class About extends Component {
                     showQuestionMark={true}
                     showHeader={false}
                     openModal={this.openModal}
+                    progressBar="40"
                 >
                     <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>

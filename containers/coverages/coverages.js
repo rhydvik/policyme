@@ -34,28 +34,31 @@ export class Navy extends Component {
         this.props.patchCoverage({
             json: this.props.coverageJson,
             coverage: this.state.coverage
-        })
+        });
         Router.push('/quotes');
     };
     handleInput = (e) => {
-        const { coverage } = this.state
-        coverage[e.target.name] = parseInt(e.target.value)
-        this.setState({coverage})
-        console.log(this.state)
-    }
+        const { coverage } = this.state;
+        coverage[e.target.name] = parseInt(e.target.value);
+        this.setState({coverage});
+        console.log(this.state);
+    };
+
     componentDidMount () {
         this.props.setAdvice();
-        const id = "50c9a31a-443b-11e8-842f-0ed5f89f718b"
-        this.props.getCoverage(id)
+        const id = "50c9a31a-443b-11e8-842f-0ed5f89f718b";
+        this.props.getCoverage(id);
     }
     componentWillReceiveProps (next) {
-    }
+    };
+
     getBoxCLass = (str) => {
-        this.setState({lifeStyle: false,transition:false,own:false })
-        this.setState({[str]: true})
-    }
+        this.setState({lifeStyle: false,transition:false,own:false });
+        this.setState({[str]: true});
+    };
+
     render() {
-    const { lifeStyle, transition, own } = this.state
+    const { lifeStyle, transition, own } = this.state;
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -63,22 +66,32 @@ export class Navy extends Component {
                     showQuestionMark={true}
                     showHeader={false}
                     openModal={this.openModal}
+                    progressBar="70"
                 >
                     <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
                 <div className={styles.policyContainer}>
-                    <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
+                    <img
+                        className={styles.backArrow}
+                        src='../../static/images/questions/backArrow.png'
+                        onClick={() => Router.push('/expenses')} />
 
                     <div className={styles.questionBox}>
                         <img src="../static/images/alex.png" />
-                        <p className={styles.quoteMessage} >A term life insurance policy is the best fit for you. For more information on term life policies , click here</p>
-                        <p className={styles.quoteMessage} >Now, let's talk about your coverage amount policy length</p>
+                        <p className={styles.quoteMessage} >
+                            A term life insurance policy is the best fit for you.
+                            For more information on term life policies , click here</p>
+                        <p className={styles.quoteMessage} >
+                            Now, let's talk about your coverage
+                            amount policy length</p>
                     </div>
                     <div className={cn('columns', styles.recommendedPolicies)}>
                         <div className={cn('column', styles.recommendedPolicyBox)}>
                             <div onClick={()=>this.getBoxCLass('lifeStyle')} className={lifeStyle ? styles.selectedPolicyBox : styles.policyBox}>
                                 <p className={styles.quoteMessage}>LifeStyle Protection</p>
-                                <p className={styles.policyText}>Choose this option if you want your family to be able to maintain their lifestyleif you are no longer around.</p>
+                                <p className={styles.policyText}>
+                                    Choose this option if you want your family to be
+                                    able to maintain their life style if you are no longer around.</p>
                                 <p className={styles.quoteMessage}>$1,000,000 coverage</p>
                                 <p className={styles.quoteMessage}>$70 - $80 / month</p>
                             </div>
@@ -117,11 +130,7 @@ export class Navy extends Component {
                                     onChange={(e) => console.log(e) } />
                             </div>
                         </div>
-
-
                     </div>
-
-
 
                     <div className={styles.otherCoverages}>
                         <p className={styles.quoteMessage}>Add Other Coverages</p>
@@ -197,20 +206,25 @@ export class Navy extends Component {
 
                     <div className={styles.termLengthContainer} >
                         <p className={styles.quoteMessage}>Pick your term</p>
-                        <p className={styles.policyText}>Your term is the pre-agreed timeframe during which you will bw covered by the policy. For more insurance information on term insurance, click here. </p>
+                        <p className={styles.policyText}>Your term is the pre-agreed time frame during which you will bw covered by the policy. For more insurance information on term insurance, click here. </p>
                         <div className={styles.policyBox} >
                             <p className={styles.quoteMessage}>Term Length</p>
-                            <p className={styles.policyText}>30 year term</p>
-                            <p className={styles.policyText}>It look like your insurance needs are pretty steadyfor the next 30 years. We recommend buying a 30 year policy todayto protect your self. </p>
+                            <div  className={styles.termLengthBox} >
+                                <Button buttonStyle={styles.termLengthInc} label="+"/>
+                                <p className={styles.policyText}>30 year term</p>
+                                <Button buttonStyle={styles.termLengthInc} label="-"/>
+                            </div>
+
+                            <p className={styles.policyText}>It look like your insurance needs are pretty steady for the next 30 years. We recommend buying a 30 year policy today to protect your self. </p>
                             <p className={styles.policyText}>Insurance is cancellable, so need to worry if you outgrow the protection.</p>
-                            <input
-                                    className={styles.input}
-                                    placeholder="$10,000"
-                                    name="term"
-                                    onChange={this.handleInput} />
+                            {/*<input*/}
+                            {/*className={styles.input}*/}
+                            {/*placeholder="$10,000"*/}
+                            {/*name="term"*/}
+                            {/*onChange={this.handleInput} />*/}
                         </div>
                     </div>
-                    <Button label="NEXT" onClick={this.goToQuotes} buttonStyle={styles.nextEnabled} />
+                    <Button label="Next" onClick={() => Router.push('/quotes')} buttonStyle={styles.nextEnabled} />
                 </div>
             </div>
 

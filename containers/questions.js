@@ -306,6 +306,7 @@ class Questions extends Component {
                     showQuestionMark={true}
                     showHeader={false}
                     openModal={this.openModal}
+                    progressBar={(questionIndex/question.length)*100}
                 >
                   <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>

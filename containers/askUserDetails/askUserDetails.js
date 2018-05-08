@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Router from 'next/router';
 import Nav from '../../components/Nav/index'
 import styles from './index.sass';
+import '../../styles/index.sass';
 import Button from '../../components/Button/index';
 import { connect } from 'react-redux';
 import {
@@ -40,13 +41,23 @@ class AskUserDetails extends Component {
         this.props.setAdvice()
     }
     showCoverages = () => {
-        this.submitUserDetails()
+        // this.submitUserDetails()
         Router.push('/coverages');
     };
 
     render() {
-        console.log(this.props)
+        console.log(this.props);
         return (
+            <div>
+                <Nav
+                    usedFor="questions"
+                    showQuestionMark={true}
+                    showHeader={false}
+                    openModal={this.openModal}
+                    progressBar="65"
+                >
+                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                </Nav>
                 <div className={styles.container}>
                     <div className={styles.textBox}>
                         <img src="../../static/images/alex.png" />
@@ -75,6 +86,7 @@ class AskUserDetails extends Component {
                         We don't share or sell your information with third parties.
                     </p>
                 </div>
+            </div>
         );
     }
 }

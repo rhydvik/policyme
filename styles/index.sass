@@ -60,8 +60,8 @@ button
   /* Firefox 19+ */
   text-align: center
 
-.input
-  max-width: 8rem
+//.input
+//  max-width: 8rem
 
 .text-center
   text-align: center
@@ -173,7 +173,6 @@ button
   max-width: 300px
   min-height: 3rem
   padding-bottom: 0
-
   span
     font-size: .9rem
     font-weight: normal
@@ -184,6 +183,8 @@ button
     color: #004f78
     width: 9rem
     display: inline-block
+  input
+    max-width: 8rem
 
 .inputLabel
   width: 49%
@@ -736,9 +737,8 @@ button
   font-size: 1.3rem
   color: #004f78
 
-.quoteBoxContainer
-  display: flex
-  flex-direction: column
+.quoteButtonContainer
+  padding: 1rem
 
 .quoteBox
   display: flex
@@ -778,14 +778,14 @@ button
     height: 70px
 
   .quoteContainer
-    width: 550px
+    max-width: 300px
     margin: auto
 
   .quoteBoxContainer
     flex-direction: row
 
 .selectedQuote
-  background: #28b0db 
+  background: #28b0db
   color: white
 .quoteContainer
   .questionBox
@@ -915,10 +915,17 @@ button
         width: 90%
         margin: auto
         margin-top: 10px
+      .termLengthBox
+        .policyText
+          margin: auto
 
   .policyBox
     padding-bottom: 0
     height: 210px
+
+  .termLengthBox
+    .policyText
+      margin: auto
 
 .existingCoverageContainer
   padding: 1rem
@@ -927,3 +934,18 @@ button
     text-align: center
     margin: auto
     margin-top: 1rem
+.termLengthBox
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: space-evenly
+  width: 250px
+  margin: auto
+  .policyText
+    margin: auto
+.termLengthInc
+  background-color: #1bb0db
+  color: white
+  width: 30px
+  height: 30px
+  padding: 0

@@ -5,7 +5,8 @@ import renderIf from 'render-if';
 import Router from 'next/router';
 import cn from 'classnames';
 import question from '../../constants/questions';
-import styles from '../../styles/index.sass';
+import indexStyles from '../../styles/index.sass';
+import styles from './index.sass';
 import { CATEGORY } from '../../utils/const.js';
 import { connect } from 'react-redux';
 import {
@@ -66,39 +67,70 @@ next = () => {
     render() {
         console.log(this.props);
 
-        const { expense } = this.props
-        const {categories} = this.state
-        const ifExpense = renderIf(Object.keys(expense).length && expense.user)
+        const { expense } = this.props;
+        const {categories} = this.state;
+        const ifExpense = renderIf(Object.keys(expense).length && expense.user);
         return (
-        <div className={styles.mainBox}>
+        <div>
             <Nav
                 usedFor="questions"
                 showQuestionMark={true}
                 showHeader={false}
                 openModal={this.openModal}
+                progressBar="50"
             >
               <img src="/static/images/questions/question.svg" onClick={this.openModal} />
             </Nav>
+
             {categories ?
             <div>
-                {Object.keys(categories).map(x => <div>
-                    {x !== 'other' ? <div><label>
-                        {CATEGORY[x] || x }
-                        </label>
-                    <input type ="text"
-                    value={categories[x]}
-                    name={x}
-                    onChange={this.handleInput}/></div>
-                    : '' }
+                <div className={styles.container}>
+                    <div className={styles.textBox}>
+                        <img src="../../static/images/alex.png" onClick={() => Router.push('/coverages')} />
+                        <p>
+                            Here is a breakdown your estimate by spend category.
+                            If a category looks off, feel free to revise.
+                        </p>
+                    </div>
                 </div>
-                )}
-                <button onClick={this.addCategory}>add Category</button>
-                <p>Monthly Expenses: {this.monthlyExpense()}</p>
-                <p>Annual Savings: {this.props.expense.user.savings.max}</p>
-            </div>
-            : ''}
-            <Button label="Next" buttonStyle={styles.nextEnabled}  onClick={this.next}/>
-        </div>
+
+                <div className={styles.inputBorderContainer}>
+                    {Object.keys(categories).map(x =>
+                      <div>
+                        {x !== 'other' ?
+                          <div className={styles.rightAlignedInputContainer}>
+                              <span>
+                                {CATEGORY[x] || x }
+                              </span>
+                                <input type ="text"
+                                className="input"
+                                value={categories[x]}
+                                name={x}
+                                onChange={this.handleInput}/>
+                          </div>
+                        : '' }
+                      </div>
+                    )}
+                </div>
+                <div className={styles.addOnButton}  >
+                    <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
+                </div>
+                <div className={styles.expensesContainer} >
+                    <div className={styles.expenses}>
+                        <div>
+                           <label>Monthly Expenses:</label> <span> {this.monthlyExpense()}</span>
+                        </div>
+                        <div>
+                           <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
+                        </div>
+                    </div>
+                </div>
+               </div>
+             : ''}
+             <div className={styles.buttonContainer}>
+                 <Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />
+             </div>
+             </div>
             )
     }
 }
