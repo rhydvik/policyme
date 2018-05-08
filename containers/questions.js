@@ -91,7 +91,7 @@ class Questions extends Component {
         this.props.addQuestion({qi, question: question[qi + 1]});
         if (this.state.currentQuestion.last) {
             // this.props.populateJson(this.props.questions);
-            // this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
+            this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
             Router.push('/expenses', {data: ['a']})
 
         }
