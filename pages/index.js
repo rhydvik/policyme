@@ -121,7 +121,7 @@ export default class Index extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="columns row-about-us second">
+                <div className="columns row-about-us second fifth">
                     <div className="column image-column">
                         <div>
                             <div id='image-3-background' className='image-background'></div>
@@ -147,6 +147,7 @@ export default class Index extends Component {
                         </div>
                     </div>
                 </div>
+                <hr className='show-for-large-only'/>
                 <div className="row-about-us sixth">
                     <div className='main-text'>
                         Answers to all of your life insurance questions every step of the way.
