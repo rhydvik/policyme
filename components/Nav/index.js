@@ -24,7 +24,7 @@ export default class Nav extends Component {
                     </div>
                 </div>
                 {renderProgressbar(
-                  <div style={{ width: `${this.props.progressBar}%` , border: '1px solid #1bb0db', transition: '.5s' }} />
+                  <div style={{ width: `${this.props.progressBar}%` , border: '1px solid #1bb0db', transition: '.5s', position: 'absolute', bottom: '0' }} />
                 )}
             </nav>
         )
