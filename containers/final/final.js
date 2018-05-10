@@ -47,6 +47,16 @@ class Final extends Component {
 
     render() {
         return (
+            <div>
+                <Nav
+                    usedFor="questions"
+                    showQuestionMark={true}
+                    showHeader={false}
+                    openModal={this.openModal}
+                    progressBar="95"
+                >
+                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                </Nav>
             <div className={styles.container}>
                 <div className={styles.textBox}>
                     <img src="../../static/images/alex.png" />
@@ -74,6 +84,7 @@ class Final extends Component {
                     insurance services and for marketing.
                     We don't share or sell your information with third parties.
                 </p>
+            </div>
             </div>
         );
     }

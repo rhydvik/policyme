@@ -5,7 +5,7 @@ import store from '../store';
 import { Provider } from 'react-redux';
 
 
-class Container extends Component {
+class Quote extends Component {
     constructor(props) {
         super(props)
     }
@@ -19,4 +19,4 @@ class Container extends Component {
     }
 }
 
-export default Container;
+export default Quote;

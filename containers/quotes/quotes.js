@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import Nav from '../../components/Nav';
 import cn from 'classnames';
+import Router from 'next/router';
+import Nav from '../../components/Nav';
 import Button from '../../components/Button/index';
 import styles from '../../styles/index.sass';
 import { connect } from 'react-redux';
 import renderIf from 'render-if'
+
 import {
     getQuotes,
     patchQuote
@@ -28,11 +30,17 @@ export  class Navy extends Component {
             quotes: this.props.quote,
             selected: this.state.selectedQuote,
             s_id: id
-        })
-    }
+        });
+        Router.push('/final');
+    };
+
+    goBack = () => {
+        Router.push('/coverages');
+    };
+
     render() {
-        console.log(this.props)
-        const {selectedQuote} = this.state
+        console.log(this.props);
+        const {selectedQuote} = this.state;
         return (
             <div className={styles.mainBox}>
                 <Nav
@@ -52,6 +60,7 @@ export  class Navy extends Component {
                         <p className={styles.quoteMessage} >When it comes to picking a term life insurence provider, the two most imporant factors are customer experience and price. We've looked at a number of insurance companiesand picked four that we believe will provide the best customer experience.</p>
                         <p className={styles.quoteMessage} >Going with the cheapest  price is a good choice but feel free to select a different option if you have a brand preference.</p>
                         <p className={cn( styles.quoteMessage, styles.policyHeading)}>Your Policy</p>
+                    </div>
                         <div className={cn('columns',  styles.inputBorderContainer )}>
                             <div className={cn('column', styles.rightAlignedInputContainer )}>
                                 <span>Coverage</span>
@@ -77,13 +86,13 @@ export  class Navy extends Component {
                         </div>
                         <p className={cn( styles.quoteMessage, styles.policyHeading)}>Your Quotes </p>
                         <div className={cn(styles.quoteBoxContainer,)}>
-                            {this.props.quote.length ? 
+                            {this.props.quote.length ?
                             this.props.quote.map(x => <div  onClick={()=>this.selectQuote(x.company)} className={cn(styles.quoteBox,selectedQuote === x.company ? styles.selectedQuote : '')}>
                                 <div>{x.company}</div>
                                 <p>${x.premiums} per Month </p>
                             </div>
                             ) : ''}
-                        </div>
+
 
                         <Button label="Next" onClick = {this.sendQuote} buttonStyle={styles.nextEnabled} />
 
