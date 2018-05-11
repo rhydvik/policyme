@@ -43,11 +43,12 @@ class Questions extends Component {
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
-        this.setState({ currentQuestion: temp });
+        this.setState({ currentQuestion: temp, validated: false });
         this.validateQuestion();
     };
+
     handleSubQuestionButtonChange = (i) => {
-        // //debugger;
+
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
         const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs);
@@ -56,9 +57,9 @@ class Questions extends Component {
         currentButton.value = true;
         temp.inputs[i] = currentButton;
         currentQuestionTemp.subQuestion[0] = temp;
-        this.setState({ currentQuestion: currentQuestionTemp });
+        this.setState({ currentQuestion: currentQuestionTemp, validated: false });
         this.validateQuestion();
-        // //debugger;
+
     };
     resetButtonStatus = (inputs) => {
         return inputs.map((x) =>{
@@ -69,21 +70,21 @@ class Questions extends Component {
 
     handleInputChange = (i, e) => {
         const temp = this.state.currentQuestion;
-        temp.inputs[i].value = parseInt(e.target.value);
-        this.setState({ currentQuestion: temp });
+        temp.inputs[i].value = parseInt(e.target.value) || '';
+        this.setState({ currentQuestion: temp, validated: false });
+        debugger;
         this.validateQuestion();
     };
 
 
     handleSubQuestionInputChange = (e,input) => {
-        // debugger;
-        console.log("ASDADSDA#EQ#@$", input);
+
         const temp = this.state.currentQuestion;
         const index = input.subQuestionIndex || 0;
         const temp1 = temp.subQuestion[index];
-        temp1.inputs[e.target.id].value = parseInt(e.target.value);
+        temp1.inputs[e.target.id].value = parseInt(e.target.value) || '';
         temp.subQuestion[index] = temp1;
-        this.setState({ currentQuestion: temp }, () => console.log(this.state.currentQuestion));
+        this.setState({ currentQuestion: temp, validated: false });
         this.validateQuestion();
     };
 
@@ -220,18 +221,32 @@ class Questions extends Component {
         switch (currentQuestion.type) {
             case 'BUTTON':
                 // //debugger;
-                for (let i = 0; i < currentQuestion.inputs.length; i++) {
-                    if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
+                for (let j = 0; j < currentQuestion.inputs.length; j++) {
+                    if (currentQuestion.inputs[j].value !== null && currentQuestion.subQuestion === undefined) {
                         console.log('3');
                         this.setState({ validated: true });
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
-                        console.log('**^^^**', currentQuestion.subQuestion);
-                        for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
-                            console.log('4');
-                            if (currentQuestion.subQuestion[0].inputs[i].value !== null) {
-                                this.setState({ validated: true });
-                                return true
+                        let validInputCount = 0;
+                        debugger;
+                        for(let i = 0; i< currentQuestion.subQuestion.length; i++){
+                            const currentSubQuestion = currentQuestion.subQuestion[i];
+                            for(let x = 0; x <currentSubQuestion.inputs.length; x++){
+                                const currentSubInput = currentSubQuestion.inputs[x];
+                                if(currentSubQuestion.type === 'BUTTON'){
+                                    if(currentSubInput.value !== null && currentQuestion.inputs[j].value !== null){
+                                        this.setState({ validated: true });
+                                        return true
+                                    }
+                                }
+                                if(currentSubQuestion.type === 'INPUT'){
+                                    if(currentSubInput.value !== '') validInputCount = validInputCount +1;
+                                    debugger;
+                                    if(currentSubQuestion.inputs.length === validInputCount) {
+                                        this.setState({ validated: true });
+                                        return true
+                                    }
+                                }
                             }
                         }
                     }
@@ -242,8 +257,15 @@ class Questions extends Component {
                     const value = currentQuestion.inputs[i].value;
                     const validationRules = currentQuestion.inputs[i].validationRules;
                     let validInput = false;
+
+                    let validInputFields = 0;
+                    for(let y = 0; y< currentQuestion.inputs.length; y++){
+                        debugger;
+                        if(currentQuestion.inputs[y].value !== '') validInputFields = validInputFields + 1;
+                    }
+
                     if (validationRules !== undefined) {
-                        if (value < validationRules.maximum && value > validationRules.minimum) {
+                        if (value < validationRules.maximum && value > validationRules.minimum && validInputFields === currentQuestion.inputs.length) {
                             validInput = true;
                         }
                         if (validInput && currentQuestion.subQuestion === undefined) {
@@ -252,28 +274,44 @@ class Questions extends Component {
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
-                                const currentInput = currentQuestion.subQuestion[0].inputs[i];
-                                if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
-                                    validInputCount = validInputCount + 1;
-                                } else if (currentInput.value !== null && currentQuestion.subQuestion[0].type === 'BUTTON') {
-                                    validInputCount = currentQuestion.subQuestion[0].inputs.length;
+                            debugger;
+                            for(let i = 0; i< currentQuestion.subQuestion.length; i++){
+                                const currentSubQuestion = currentQuestion.subQuestion[i];
+                                for(let x = 0; x <currentSubQuestion.inputs.length; x++){
+                                    const currentSubInput = currentSubQuestion.inputs[x];
+                                   if(currentSubQuestion.type === 'BUTTON'){
+                                       if(currentSubInput.value !== null && validInput){
+                                           this.setState({ validated: true });
+                                           return true
+                                       }
+                                   }
+                                    if(currentSubQuestion.type === 'INPUT'){
+                                        if(currentSubInput.value !== '') validInputCount = validInputCount + 1;
+                                        if(currentSubQuestion.inputs.length === validInputCount) {
+                                            this.setState({ validated: true });
+                                            return true
+                                        }
+                                   }
                                 }
                             }
-                            if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) {
-                                this.setState({ validated: true });
-                                return true
-                            }
+                            // for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
+                            //     const currentInput = currentQuestion.subQuestion[0].inputs[i];
+                            //     if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
+                            //         validInputCount = validInputCount + 1;
+                            //     } else if (currentInput.value !== null && currentQuestion.subQuestion[0].type === 'BUTTON') {
+                            //         validInputCount = currentQuestion.subQuestion[0].inputs.length;
+                            //     }
+                            // }
 
-                        } else return false
+                        }
                     }
-                    if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
+                    if (value !== null && value !== '' && currentQuestion.subQuestion === undefined && validInput) {
                         console.log('returning true from hulululu');
                         this.setState({ validated: true });
                         return true
                     }
-                    this.setState({ validated: true });
-                    return true;
+                    // this.setState({ validated: true });
+                    // return true;
                 }
         }
     };

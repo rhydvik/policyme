@@ -172,8 +172,11 @@ const questions = [
             {
                 label: 'You',
                 value: '',
-                placeholder: '$'
-
+                placeholder: '$',
+                validationRules: {
+                    minimum: 100,
+                    maximum: 6000,
+                }
             }
         ],
         questionText: 'What about non-employment income?',
@@ -188,12 +191,20 @@ const questions = [
             {
                 label: 'You',
                 value: '',
-                placeholder: '$'
+                placeholder: '$',
+                validationRules: {
+                    minimum: 1,
+                    maximum: 6000,
+                }
             },
             {
                 label: 'You partner',
                 value: '',
-                placeholder: '$'
+                placeholder: '$',
+                validationRules: {
+                    minimum: 1,
+                    maximum: 60000,
+                }
             }
         ],
         questionText: 'What about non-employment income?',
@@ -230,7 +241,10 @@ const questions = [
                         type: 'number',
                         subQuestionIndex: 0 ,
                         placeholder: '$',
-
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 6000,
+                        }
                     },
                 ],
                 isSubQuestion: true,
@@ -245,13 +259,21 @@ const questions = [
                         label: 'Current mortgage',
                         value: '',
                         subQuestionIndex: 1 ,
-                        placeholder: '$'
+                        placeholder: '$',
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 6000,
+                        }
                     },
                     {
                         label: 'Monthly payment',
                         value: '',
                         subQuestionIndex: 1 ,
-                        placeholder: '$'
+                        placeholder: '$',
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 6000,
+                        }
                     }
                 ],
                 isSubQuestion: true,
