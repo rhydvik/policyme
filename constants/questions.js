@@ -22,7 +22,8 @@ const questions = [
                     maximum: 60,
                 }
             }
-        ]
+        ],
+        infoText: 'Men and woman have different life expectancies and therefore insurers take gender into account when pricing life insurance policies.'
     },
     {
         question: 'What is your gender?',

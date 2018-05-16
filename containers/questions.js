@@ -166,8 +166,14 @@ class Questions extends Component {
     getCurrentQuestion = (data) => {
         return (
             <div className={styles.questionContainer}>
+                {renderIf(this.state.questionIndex > 1)(
+                    <img className={styles.backArrow} src='../static/images/questions/backarrow.svg' onClick={this.goBack} />
+                )}
                 <div className={styles.questionBox}>
-                    <img src="../static/images/alex.png" />
+                    <img src="../static/images/alex.jpg" />
+                    {renderIf(this.state.currentQuestion.infoText !== undefined)(
+                      <span>i</span>
+                    )}
                     {data.question}
                 </div>
                 <div className={styles.inputsContainer}>
@@ -367,15 +373,12 @@ class Questions extends Component {
                 >
                   <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
-                {renderIf(questionIndex > 1)(
-                    <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
-                )}
                 {this.getCurrentQuestion(currentQuestion)}
                 {/* {question.subQuestion ? this.getSubQuestion(question[this.state.questionIndex]) : ''} */}
                 {this.getSubQuestion(currentQuestion)}
                 {currentQuestion.addOn ? this.addOn(currentQuestion) : ''}
-                <div className={styles.questionContainer}>
-                    <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={validated ? styles.nextEnabled : styles.nextDisabled}  onClick={this.next} />
+                <div className={styles.questionButtonContainer}>
+                    <Button label={questionIndex === 0 ? "Get started" : "Next" } buttonStyle={validated ? styles.nextEnabled : styles.nextDisabled}  onClick={this.next} />
                     {renderIf(this.state.modalIsOpen)(
                       <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
                     )}

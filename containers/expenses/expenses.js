@@ -34,7 +34,7 @@ class About extends Component {
                 </Nav>
                 <div className={styles.container}>
                     <div className={styles.textBox}>
-                        <img src="../../static/images/alex.png" />
+                        <img src="../../static/images/alex.jpg" />
                         <p>
                             We estimate that families like yours save
                             about <span>$6,000 per year</span> and spend

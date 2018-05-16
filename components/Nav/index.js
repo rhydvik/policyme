@@ -14,7 +14,7 @@ export default class Nav extends Component {
                 <div className="navbar-brand">
                     <Link href={{ pathname: '/' }} >
                         <a className="navbar-item" href="#">
-                          <img src={this.props.usedFor === "questions" ? "static/images/questions/logo_pm.svg" : "static/images/home/logo.svg" }/>
+                          <img src="../../static/images/home/logo.svg" />
                         </a>
                     </Link>
                     <div className="right-items">
