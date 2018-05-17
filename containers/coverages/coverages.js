@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Router from 'next/router';
 import Nav from '../../components/Nav';
 import cn from 'classnames';
+import Loader from 'components/FullScreenLoader';
 import Button from '../../components/Button/index';
 import styles from '../../styles/index.sass';
 import { connect } from 'react-redux';
@@ -10,10 +11,12 @@ import {
     setAdvice,
     patchCoverage
 } from '../../Actions/index'
+import renderIf from "render-if";
 export class Navy extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: false,
             coverage: {
                 education:0,
                 end_of_life:0,
@@ -31,10 +34,11 @@ export class Navy extends Component {
     }
 
     goToQuotes = () => {
-        this.props.patchCoverage({
-            json: this.props.coverageJson,
-            coverage: this.state.coverage
-        });
+        // this.props.patchCoverage({
+        //     json: this.props.coverageJson,
+        //     coverage: this.state.coverage
+        // });
+        this.setState({ isLoading: true });
         Router.push('/quotes');
     };
     handleInput = (e) => {
@@ -49,8 +53,8 @@ export class Navy extends Component {
         const id = "50c9a31a-443b-11e8-842f-0ed5f89f718b";
         this.props.getCoverage(id);
     }
-    componentWillReceiveProps (next) {
-    };
+
+
 
     getBoxCLass = (str) => {
         this.setState({lifeStyle: false,transition:false,own:false });
@@ -58,9 +62,10 @@ export class Navy extends Component {
     };
 
     render() {
-    const { lifeStyle, transition, own } = this.state;
+    const { lifeStyle, transition, own, isLoading } = this.state;
         return (
             <div className={styles.mainBox}>
+                {renderIf(isLoading)(<Loader />)}
                 <Nav
                     usedFor="questions"
                     showQuestionMark={true}
@@ -73,11 +78,11 @@ export class Navy extends Component {
                 <div className={styles.policyContainer}>
                     <img
                         className={styles.backArrow}
-                        src='../../static/images/questions/backArrow.png'
+                        src='../../static/images/questions/backarrow.svg'
                         onClick={() => Router.push('/expenses')} />
 
                     <div className={cn('app-container no-p',styles.questionBox)}>
-                        <img src="../static/images/alex.png" />
+                        <img src="../static/images/alex.jpg" />
                         <p className={cn('app-texts x-large karma-family',styles.quoteMessage)} >
                             A term life insurance policy is the best fit for you.
                             For more information on term life policies , click here</p>
@@ -241,7 +246,7 @@ export class Navy extends Component {
                         </div>
                     </div>
                     <br/>
-                    <Button label="Next" onClick={() => Router.push('/quotes')} buttonStyle={styles.nextEnabled + ' next-button'} />
+                    <Button label="Next" onClick={this.goToQuotes} buttonStyle={styles.nextEnabled + ' next-button'} />
                 </div>
             </div>
 

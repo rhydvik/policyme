@@ -3,7 +3,7 @@ import Final from '../containers/final/final'
 
 import store from '../store';
 import { Provider } from 'react-redux';
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Expense extends Component {
     constructor(props) {
@@ -14,7 +14,9 @@ class Expense extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Final />
+               <MuiThemeProvider>
+                 <Final />
+               </MuiThemeProvider>
             </Provider>
         )
     }

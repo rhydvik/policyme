@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import Router from 'next/router';
+import DatePicker from 'material-ui/DatePicker';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import TimePicker from 'material-ui/TimePicker';
+
 import Nav from '../../components/Nav/index'
 import styles from './index.sass';
 import Button from '../../components/Button/index';
 import { connect } from 'react-redux';
+import Loader from 'components/FullScreenLoader';
 import {
     updateUserDetail,
     setAdvice
 } from '../../Actions/index'
+import renderIf from "render-if";
 
 class Final extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoading: false,
             user: {
                 email: '',
                 first_name: '',
@@ -40,52 +47,67 @@ class Final extends Component {
     componentDidMount () {
         this.props.setAdvice()
     }
-    showCoverages = () => {
+    changePage = () => {
         this.submitUserDetails();
-        Router.push('/coverages');
+        this.setState({ isLoading: true })
+        Router.push('/final2');
     };
 
     render() {
+        const { isLoading }= this.state;
         return (
-            <div>
-                <Nav
-                    usedFor="questions"
-                    showQuestionMark={true}
-                    showHeader={false}
-                    openModal={this.openModal}
-                    progressBar="95"
-                >
-                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
-                </Nav>
-            <div className={styles.container}>
-                <div className={styles.textBox}>
-                    <img src="../../static/images/alex.png" />
-                    <p>
-                        Thanks for answering my questions!  That's all I
-                        need to provided your customized life insurance advice.
-                    </p>
-                    <p>
-                        If you choose to leave your information, we can save your progress.
-                    </p>
+            <MuiThemeProvider>
+                <div>
+                    {renderIf(isLoading)(<Loader />)}
+                    <Nav
+                        usedFor="questions"
+                        showQuestionMark={true}
+                        showHeader={false}
+                        openModal={this.openModal}
+                        progressBar="95"
+                    >
+                        <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                    </Nav>
+                    <div className={styles.finalContainer}>
+                        <div className={styles.textBox}>
+                            <img src="../../static/images/alex.jpg" />
+                            <p>
+                                Thanks for answering my questions!  That's all I
+                                need to provided your customized life insurance advice.
+                            </p>
+                            <p>
+                                If you choose to leave your information, we can save your progress.
+                            </p>
+                        </div>
+                        <div className={styles.inputContainer}>
+                            <input placeholder="First Name" name="first_name" onChange={this.handleInput}/>
+                            <DatePicker
+                                hintText="&#x25BE; Select Date"
+                                className={styles.datePicker}
+                            />
+                            <TimePicker
+                               hintText="&#x25BE; Time Slot"
+                               className={styles.datePicker}
+                            />
+                        </div>
+                        <div className={styles.buttonContainer}>
+                        <Button onClick={this.changePage} label="NEXT" />
+                        </div>
+                        <br />
+                        <div className={styles.buttonContainer}>
+                            <p className={styles.header}>DISCLAIMER</p>
+                            <p className={styles.message}>
+                                By providing your contact information above,
+                                you agree to this website's Privacy Policy,
+                                and your consent to email the email address
+                                provided to verify your identity for our
+                                insurance services and for marketing.
+                                We don't share or sell your information with third parties.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div className={styles.inputContainer}>
-                    <input placeholder="First Name" name="first_name" onChange={this.handleInput}/>
-                    <input placeholder="Last Name" name="last_name"onChange={this.handleInput} />
-                    <input placeholder="Email" name="email" onChange={this.handleInput}/>
-                </div>
-                <Button onClick={this.showCoverages} label="NEXT" />
-                <br />
-                <p className={styles.header}>DISCLAIMER</p>
-                <p className={styles.message}>
-                    By providing your contact information above,
-                    you agree to this website's Privacy Policy,
-                    and your consent to email the email address
-                    provided to verify your identity for our
-                    insurance services and for marketing.
-                    We don't share or sell your information with third parties.
-                </p>
-            </div>
-            </div>
+            </MuiThemeProvider>
         );
     }
 }

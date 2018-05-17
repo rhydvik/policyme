@@ -6,7 +6,10 @@ import cn from 'classnames';
 import question from '../constants/questions';
 import styles from '../styles/index.sass';
 import { connect } from 'react-redux';
-import Link from 'next/link'
+import Tooltip from 'components/Tooltip/Tooltip';
+import SmallTooltip from 'components/Tooltip/TooltipForSmall';
+import Loader from 'components/FullScreenLoader';
+
 import Router from 'next/router';
 import {
     addQuestion,
@@ -14,7 +17,7 @@ import {
     populateJson,
     sendPopulatedJson
 } from '../Actions'
-import Modal from '../components/Modal/index';
+
 
 class Questions extends Component {
     constructor(props) {
@@ -24,15 +27,23 @@ class Questions extends Component {
             currentQuestion: {},
             modalIsOpen: false,
             validated: false,
+            isMobile: false,
+            isLoading: false,
         };
     }
     componentWillMount() {
 
         this.props.addQuestion({qi:this.state.questionIndex, question: question[this.state.questionIndex]});
-        this.setState({ currentQuestion: question[this.state.questionIndex], validated: true })
+        this.setState({
+            currentQuestion: question[this.state.questionIndex],
+            validated: true
+        })
     }
     componentDidMount() {
-        this.props.setAdvice()
+        this.props.setAdvice();
+        this.setState({
+            isMobile: window.innerWidth <= 700
+        })
     }
 
     handleButtonChange = (i) => {
@@ -99,7 +110,7 @@ class Questions extends Component {
             // this.props.populateJson(this.props.questions);
             // this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
             Router.push('/expenses', {data: ['a']})
-
+            this.setState({ isLoading: true });
         }
     };
 
@@ -116,14 +127,6 @@ class Questions extends Component {
     };
 
 
-    openModal = () => {
-        this.setState({modalIsOpen: true});
-    };
-
-
-    closeModal = () => {
-        this.setState({modalIsOpen: false});
-    };
     getInputClass = (data) => {
         if (data.inputs.length > 1 || !data.addon) {
            return  styles.alignInputsInOneLine
@@ -164,6 +167,8 @@ class Questions extends Component {
     };
 
     getCurrentQuestion = (data) => {
+        const { isMobile } = this.state;
+        console.log('isMobile', isMobile);
         return (
             <div className={styles.questionContainer}>
                 {renderIf(this.state.questionIndex > 1)(
@@ -171,8 +176,11 @@ class Questions extends Component {
                 )}
                 <div className={styles.questionBox}>
                     <img src="../static/images/alex.jpg" />
-                    {renderIf(this.state.currentQuestion.infoText !== undefined)(
-                      <span>i</span>
+                    {renderIf(this.state.currentQuestion.infoText !== undefined && isMobile === true)(
+                          <SmallTooltip title={this.state.currentQuestion.infoText}/>
+                    )}
+                    {renderIf(this.state.currentQuestion.infoText !== undefined && isMobile === false)(
+                        <Tooltip title={this.state.currentQuestion.infoText}/>
                     )}
                     {data.question}
                 </div>
@@ -360,10 +368,11 @@ class Questions extends Component {
 
     render() {
         // console.log(this.props)
-        const { questionIndex, currentQuestion, validated } = this.state;
+        const { questionIndex, currentQuestion, validated, isLoading } = this.state;
         console.log(this.props);
         return (
             <div className={styles.mainBox}>
+                {renderIf(isLoading)(<Loader />)}
                 <Nav
                     usedFor="questions"
                     showQuestionMark={true}
@@ -371,7 +380,7 @@ class Questions extends Component {
                     openModal={this.openModal}
                     progressBar={(questionIndex/question.length)*100}
                 >
-                  <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                  <img src="/static/images/questions/question.svg"/>
                 </Nav>
                 {this.getCurrentQuestion(currentQuestion)}
                 {/* {question.subQuestion ? this.getSubQuestion(question[this.state.questionIndex]) : ''} */}
@@ -379,9 +388,6 @@ class Questions extends Component {
                 {currentQuestion.addOn ? this.addOn(currentQuestion) : ''}
                 <div className={styles.questionButtonContainer}>
                     <Button label={questionIndex === 0 ? "Get started" : "Next" } buttonStyle={validated ? styles.nextEnabled : styles.nextDisabled}  onClick={this.next} />
-                    {renderIf(this.state.modalIsOpen)(
-                      <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
-                    )}
                     {renderIf(currentQuestion.questionText !== undefined)(
                         <a className={styles.questionText} onClick={this.openModal}>
                             {currentQuestion.questionText}

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Questions from '../containers/questions';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 // import withRedux from 'next-redux-wrapper';
 import store from '../store';
 import { Provider } from 'react-redux';
@@ -17,7 +19,9 @@ class QuestionsBox extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Questions />
+                <MuiThemeProvider>
+                   <Questions />
+                </MuiThemeProvider>
             </Provider>
         )
     }

@@ -4,25 +4,32 @@ import Router from 'next/router';
 import Nav from "../../components/Nav";
 import Button from "../../components/Button";
 import styles from './index.sass'
+import renderIf from "render-if";
+import Loader from 'components/FullScreenLoader';
 
 class About extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            isLoading: false,
+        }
     }
 
     looksGood = () => {
-        console.log(this.props);
+        this.setState({ isLoading: true });
         Router.push('/askUserDetails');
     };
 
     seeBreakDown = () => {
-        console.log(this.props);
+        this.setState({ isLoading: true });
         Router.push('/result');
     };
 
     render() {
+        const { isLoading } = this.state;
         return (
             <div>
+                {renderIf(isLoading)(<Loader />)}
                 <Nav
                     usedFor="questions"
                     showQuestionMark={true}

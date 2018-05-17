@@ -1,12 +1,25 @@
-import React, {Component} from 'react'
-import Link from 'next/link'
+import React, {Component} from 'react';
+import Link from 'next/link';
 import renderIf from 'render-if';
+import Modal from '../../components/Modal/index';
 
 export default class Nav extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            modalIsOpen: false,
+        }
     }
+
+    openModal = () => {
+        this.setState({modalIsOpen: true});
+    };
+
+
+    closeModal = () => {
+        this.setState({modalIsOpen: false});
+    };
+
     render() {
         const renderProgressbar = renderIf(this.props.progressBar !== undefined);
         return (
@@ -18,11 +31,14 @@ export default class Nav extends Component {
                         </a>
                     </Link>
                     <div className="right-items">
-                        <div className='item'>
+                        <div className='item' onClick={this.openModal}>
                             {this.props.children}
                         </div>
                     </div>
                 </div>
+                {renderIf(this.state.modalIsOpen)(
+                    <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
+                )}
                 {renderProgressbar(
                   <div style={{ width: `${this.props.progressBar}%` , border: '1px solid #1bb0db', transition: '.5s', position: 'absolute', bottom: '0' }} />
                 )}

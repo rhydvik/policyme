@@ -6,6 +6,7 @@ import Button from '../../components/Button/index';
 import styles from '../../styles/index.sass';
 import {connect} from 'react-redux';
 import renderIf from 'render-if'
+import Loader from 'components/FullScreenLoader';
 
 import {
     getQuotes,
@@ -16,7 +17,8 @@ export class Navy extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedQuote: null
+            selectedQuote: null,
+            isLoading: false
         }
     }
 
@@ -34,6 +36,7 @@ export class Navy extends Component {
             selected: this.state.selectedQuote,
             s_id: id
         });
+        this.setState({ isLoading: true });
         Router.push('/final');
     };
 
@@ -43,9 +46,10 @@ export class Navy extends Component {
 
     render() {
         console.log(this.props);
-        const {selectedQuote} = this.state;
+        const {selectedQuote, isLoading} = this.state;
         return (
             <div className={styles.mainBox}>
+                {renderIf(isLoading)(<Loader />)}
                 <Nav
                     usedFor="questions"
                     showQuestionMark={true}
@@ -55,11 +59,11 @@ export class Navy extends Component {
                     <img src="/static/images/questions/question.svg" onClick={this.openModal}/>
                 </Nav>
                 <div className='app-container'>
-                    <img className={styles.backArrow} src='../static/images/questions/backArrow.png'
+                    <img className={styles.backArrow} src='../static/images/questions/backarrow.svg'
                          onClick={this.goBack}/>
 
                     <div className={styles.questionBox}>
-                        <img src="../static/images/alex.png"/>
+                        <img src="../static/images/alex.jpg"/>
                         <p className='app-texts headings karma-family bold'>Here are your quotes</p>
                         <br/>
                         <p className='app-texts sub-headings karma-family'>When it comes to picking a term life

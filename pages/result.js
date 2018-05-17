@@ -3,6 +3,7 @@ import Results from '../containers/result/result';
 // import withRedux from 'next-redux-wrapper';
 import store from '../store';
 import { Provider } from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Result extends Component {
     constructor(props) {
@@ -17,7 +18,9 @@ class Result extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Results />
+                <MuiThemeProvider>
+                  <Results />
+                </MuiThemeProvider>
             </Provider>
 
         )
