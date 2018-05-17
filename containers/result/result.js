@@ -92,44 +92,44 @@ next = () => {
                             If a category looks off, feel free to revise.
                         </p>
                     </div>
-                </div>
-
-                <div className={styles.inputBorderContainer}>
-                    {Object.keys(categories).map(x =>
-                      <div>
-                        {x !== 'other' ?
-                          <div className={styles.rightAlignedInputContainer}>
+                    <div className={styles.inputBorderContainer}>
+                        {Object.keys(categories).map(x =>
+                            <div>
+                                {x !== 'other' ?
+                                    <div className={styles.rightAlignedInputContainer}>
                               <span>
                                 {CATEGORY[x] || x }
                               </span>
-                                <input type ="text"
-                                className="input"
-                                value={categories[x]}
-                                name={x}
-                                onChange={this.handleInput}/>
-                          </div>
-                        : '' }
-                      </div>
-                    )}
-                </div>
-                <div className={styles.addOnButton}  >
-                    <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
-                </div>
-                <div className={styles.expensesContainer} >
-                    <div className={styles.expenses}>
-                        <div>
-                           <label>Monthly Expenses:</label> <span> {this.monthlyExpense()}</span>
+                                        <input type ="text"
+                                               className="input"
+                                               value={categories[x]}
+                                               name={x}
+                                               onChange={this.handleInput}/>
+                                    </div>
+                                    : '' }
+                            </div>
+                        )}
+                    </div>
+                    <div className={styles.addOnButton}  >
+                        <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
+                    </div>
+                    <div className={styles.expensesContainer} >
+                        <div className={styles.expenses}>
+                            <div>
+                                <label>Monthly Expenses:</label> <span> {this.monthlyExpense()}</span>
+                            </div>
+                            <div>
+                                <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
+                            </div>
                         </div>
-                        <div>
-                           <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
-                        </div>
+                    </div>
+                    <div className={styles.buttonContainer}>
+                        <Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />
                     </div>
                 </div>
                </div>
              : ''}
-             <div className={styles.buttonContainer}>
-                 <Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />
-             </div>
+
              </div>
             )
     }

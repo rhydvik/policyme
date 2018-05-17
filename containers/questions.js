@@ -182,7 +182,9 @@ class Questions extends Component {
                     {renderIf(this.state.currentQuestion.infoText !== undefined && isMobile === false)(
                         <Tooltip title={this.state.currentQuestion.infoText}/>
                     )}
-                    {data.question}
+                    <span className='question-title-text'>{data.question}</span>
+                    <br/>
+                    <br/>
                 </div>
                 <div className={styles.inputsContainer}>
                     {this.getInputOptions(data)}
@@ -231,7 +233,6 @@ class Questions extends Component {
             debugger;
             return true
         }
-        debugger;
         switch (currentQuestion.type) {
             case 'BUTTON':
                 // //debugger;
