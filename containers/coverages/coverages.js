@@ -84,9 +84,12 @@ export class Navy extends Component {
         
         this.setState({coverageJson}, ()=>console.log(coverageJson.user.term))
     }
+    validated = () => {
+        const {transition, lifeStyle, own} = this.state
+        return  lifeStyle || own
+    }
 
     render() {
-        console.log(coverageJson)
         const coverageJson = this.state.coverageJson || null
         let addtl;
         let existing;
@@ -283,7 +286,7 @@ export class Navy extends Component {
                             {/*onChange={this.handleInput} />*/}
                         </div>
                     </div>
-                    <Button label="Next" onClick={() => this.goToQuotes()} buttonStyle={styles.nextEnabled} />
+                    <Button label="Next" onClick={() => this.goToQuotes()} buttonStyle={this.validated() ? styles.nextEnabled : styles.nextDisabled} />
                 </div> : ''}
             </div>
 

@@ -17,25 +17,28 @@ function populateFamily (family, json) {
     if(x !== undefined){
     switch(x.json_key) {
       case 'userAge':
-        json.user.age = x.inputs[0].value
+        json.family.user.age = x.inputs[0].value
         break;
       case 'userGender':
-        json.user.gender = buttonValue(x.inputs).label
+        json.family.user.gender = buttonValue(x.inputs).label
         break;
       case 'healthIssue':
-        json.user.health_issues = buttonValue(x.inputs).label
+        json.family.user.health_issues = buttonValue(x.inputs).label
         break;
       case 'smoke':
-        json.user.use_tobacco = buttonValue(x.inputs).label
+        json.family.user.use_tobacco = buttonValue(x.inputs).label === 'Yes' ? true : false
         break;
       case 'userIncome':
-        json.user.income = x.inputs[0].value  
+        json.finances.user.income = x.inputs[0].value  
         break;
       case 'children':
-        if(x.subQuestion.length) { json.children = makeChildren(x.subQuestion[0].inputs) }
+        if(x.subQuestion.length) { json.family.children = makeChildren(x.subQuestion[0].inputs) }
         break;
       case 'spouse':
         json.spouse = makeSpouse(x)
+        break;
+      case 'spouseIncome':
+        json.finances.spouse.income = x.inputs[1].value
         break;
       default:
         return false
@@ -51,18 +54,18 @@ function populateFinance (finances, json) {
     if(x !== undefined){
     switch(x.json_key) {
       case 'debts':
-        json.debts = buttonValue(x.inputs).label === 'Yes' ? makeDebts(x.subQuestion[0]) : json.debts
+        json.shared.debts = buttonValue(x.inputs).label === 'Yes' ? makeDebts(x.subQuestion[0]) : json.shared.debts
         break;
       case 'mortage':
       if (buttonValue(x.inputs).label === 'Rent' ) {
-        json.expenses.mortgage_or_rent = makeRent(x.subQuestion[0])
+        json.shared.expenses.rent = makeRent(x.subQuestion[0])
       } else {
-        json.mortgage = makeMortage(x.subQuestion[1])
+        json.shared.debts.mortgage = makeMortage(x.subQuestion[1])
       }
         break;
-      case 'savings':
-        json.savings = buttonValue(x.inputs).label === 'Yes' ? makeSavings(x.subQuestion[0]) : json.savings
-        break;
+      // case 'savings':
+      //   json.savings = buttonValue(x.inputs).label === 'Yes' ? makeSavings(x.subQuestion[0]) : json.savings
+      //   break;
       default:
         return false
         
@@ -100,7 +103,7 @@ function makeDebts (inputs) {
     credit_line: input[3].value,
     home_equity_loans: input[2].value,
     student_loans: input[1].value,
-    other: [],
+    other: input[4].value,
 
   }
 } 
@@ -128,14 +131,14 @@ export default (state = initialState, action) => {
       break;
     case actionTypes.POPULATE_JSON:
       console.log(action.payload)
-      const json = state.jsonSkeleton
+      let json = state.jsonSkeleton
       const { payload } = action
       const family = payload.map((x) => {
         if (x !== undefined  && x.category === 'family') {
           return x
         }
       })
-      json.family = populateFamily(family, json.family)
+      json = populateFamily(family, json)
       const finances = payload.map((x) => {
         if (x !== undefined  && x.category === 'finances') {
           return x

@@ -18,26 +18,33 @@ export class Navy extends Component {
         super(props);
         this.state = {
             selectedQuote: null,
-            isLoading: false
+            isLoading: false,
+            quote: []
         }
     }
     async componentDidMount () {
         await this.props.getQuotes({
-            user: this.props.jsonSkeleton.family.user,
+            user: this.props.jsonSkeleton,
             coverageJson: this.props.coverageJson,
             s_id: this.props.s_id
         })
+        this.setState({quote: this.props.quote})
     }
 
     selectQuote = (company) => {
-        this.setState({selectedQuote: company})
+        const { quote } = this.state
+        quote.map((x) => {
+            x.selected = false
+            if (x.company === company) {
+                x.selected = true
+            }
+        })
+        this.setState({selectedQuote: company, quote})
     }
     sendQuote = () => {
-        const id = "50c9a31a-443b-11e8-842f-0ed5f89f718b"
         this.props.patchQuote({
-            quotes: this.props.quote,
-            selected: this.state.selectedQuote,
-            s_id: id
+            quotes: this.state.quote,
+            s_id: this.props.s_id
         });
         this.setState({ isLoading: true });
         Router.push('/final');
@@ -46,10 +53,14 @@ export class Navy extends Component {
     goBack = () => {
         Router.push('/coverages');
     };
+    validated = () => { return this.state.selectedQuote }
 
     render() {
-        console.log(this.props);
         const {selectedQuote, isLoading} = this.state;
+        const ifHaveCoverage =  Object.keys(this.props.coverageJson).length
+        const term = ifHaveCoverage ? this.props.coverageJson.user.term : null
+        const coverage = ifHaveCoverage ? this.props.coverageJson.options[0].selected ? this.props.coverageJson.options[0].amt : this.props.coverageJson.options[1].amt : null
+        const { quote } = this.state
         return (
             <div className={styles.mainBox}>
                 {renderIf(isLoading)(<Loader />)}
@@ -91,8 +102,8 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$1000"
-                                    value="$1000"
-                                    onChange={(e) => console.log(e)}/>
+                                    value={`${coverage}`}
+                                    onChange={this.handleInput}/>
                             </div>
                         </div>
                         <div className='columns input-group is-mobile'>
@@ -105,8 +116,8 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$1000"
-                                    value="$1000"
-                                    onChange={(e) => console.log(e)}/>
+                                    value={`${term}`}
+                                    onChange={this.handleInput}/>
                             </div>
                         </div>
                     </div>
@@ -123,19 +134,16 @@ export class Navy extends Component {
                     <br/>
                     <p className={cn(styles.quoteMessage, styles.policyHeading)}>Your Quotes </p>
                     <div className={cn(styles.quoteBoxContainer, 'p-m')}>
-                        {this.props.quote.length ?
-                            this.props.quote.map(x => <div onClick={() => this.selectQuote(x.company)}
+                        {quote.length ?
+                            quote.map(x => <div onClick={() => this.selectQuote(x.company)}
                                                            className={cn('', styles.quoteBox, selectedQuote === x.company ? styles.selectedQuote : '')}>
                                     <div className=''>
                                         <label>{x.company}</label>
                                     </div>
                                     <div className=''><label>${x.premiums} <br/> per Month </label></div>
                                 </div>
-                            ) : ''}
-
-
-                        <Button label="Next" onClick={this.sendQuote} buttonStyle={styles.nextEnabled}/>
-
+                            ) : '' }
+                        <Button label="Next" onClick={() => this.sendQuote()} buttonStyle={this.validated() ? styles.nextEnabled : styles.nextDisabled} />
                     </div>
                 </div>
             </div>

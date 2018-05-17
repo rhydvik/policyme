@@ -195,8 +195,12 @@ export function patchCoverage (payload) {
 }
 
 export function getQuotes (payload) {
+  
+const { age, gender, use_tobacco } = payload.user.family.user
+const amt = payload.coverageJson.options[0].selected ? payload.coverageJson.options[0].amt : payload.coverageJson.options[1].amt
+const term = payload.coverageJson.user.term
   return async (dispatch) => {
-    await fetch(`${ENDPOINT}quotes?amt=100000&term=10&age=30&gender=female&is_smoker=true`,
+    await fetch(`${ENDPOINT}quotes?amt=${amt}&term=${term}&age=${age}&gender=${gender}&is_smoker=${use_tobacco}`,
   {
     headers: {
       'Content-Type': 'application/json'
@@ -204,32 +208,25 @@ export function getQuotes (payload) {
   })
       .then(res => res.json())
       .then((fetchedData) => {
-        console.log(fetchedData)
         dispatch(setQuote(fetchedData))
       });
   };
 }
 
 export function patchQuote (payload) {
-  const {s_id, quotes, selected} = payload
-  const updated = quotes.map((x) => {
-    if (x.company === selected ) {
-      x.selected = true
-    }
-    return x
-  }) 
-  console.log(updated)
+  let {s_id, quotes } = payload
+  s_id = '9761e4a5-d83e-441f-a2c1-97f5280f8870'
   return (dispatch) => {
-    fetch(`${ENDPOINT}quote/${payload.s_id}`,
+    fetch(`${ENDPOINT}quotes/${payload.s_id}`,
     {
       method: 'PATCH' ,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'text/html; charset=utf-8',
+        'Content-Type': 'application/json',
         'Access-Control-Request-Method': 'PATCH'
         
       },
-      body: JSON.stringify(updated)
+      body: JSON.stringify(quotes)
     })
       .then(res => res.json())
       .then((fetchedData) => {

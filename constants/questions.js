@@ -188,6 +188,7 @@ const questions = [
         type: 'INPUT',
         category: 'family',
         name: 'income',
+        json_key: 'spouseIncome',
         inputs: [
             {
                 label: 'You',

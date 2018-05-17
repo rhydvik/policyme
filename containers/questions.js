@@ -83,7 +83,7 @@ class Questions extends Component {
         const temp = this.state.currentQuestion;
         temp.inputs[i].value = parseInt(e.target.value) || '';
         this.setState({ currentQuestion: temp, validated: false });
-        debugger;
+        // debugger;
         this.validateQuestion();
     };
 
@@ -151,7 +151,10 @@ class Questions extends Component {
                     <div className={cn((data.inputs.length > 1 || data.addon) ? styles.inputBorderContainer : '')}>
                         {data.inputs.map((input, i) => (
                             <div className={cn('column', (data.inputs.length > 1 || data.addon) ? styles.rightAlignedInputContainer: '')}>
-                                {(data.inputs.length > 1 || data.addon) ? <span>{input.label}</span> : '' }
+                                {/* {input.addon ? <span>yes</span> : ''} */}
+                                {(data.inputs.length > 1 || data.addon)
+                                     ? <span>{input.addon ? <Button label="-" onClick={() => this.deleteAddon(i)} buttonStyle={styles.negative} /> : ''}{input.label}</span> 
+                                    : '' }
                                 <input
                                     className={styles.input}
                                     type={input.type}
@@ -228,10 +231,10 @@ class Questions extends Component {
         const { currentQuestion } = this.state;
         if (currentQuestion.overrideValidation !== undefined) {
             this.setState({ validated: true });
-            debugger;
+            // debugger;
             return true
         }
-        debugger;
+        // debugger;
         switch (currentQuestion.type) {
             case 'BUTTON':
                 // //debugger;
@@ -242,7 +245,7 @@ class Questions extends Component {
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
                         let validInputCount = 0;
-                        debugger;
+                        // debugger;
                         for(let i = 0; i< currentQuestion.subQuestion.length; i++){
                             const currentSubQuestion = currentQuestion.subQuestion[i];
                             for(let x = 0; x <currentSubQuestion.inputs.length; x++){
@@ -255,7 +258,7 @@ class Questions extends Component {
                                 }
                                 if(currentSubQuestion.type === 'INPUT'){
                                     if(currentSubInput.value !== '') validInputCount = validInputCount +1;
-                                    debugger;
+                                    // debugger;
                                     if(currentSubQuestion.inputs.length === validInputCount) {
                                         this.setState({ validated: true });
                                         return true
@@ -274,7 +277,7 @@ class Questions extends Component {
 
                     let validInputFields = 0;
                     for(let y = 0; y< currentQuestion.inputs.length; y++){
-                        debugger;
+                        // debugger;
                         if(currentQuestion.inputs[y].value !== '') validInputFields = validInputFields + 1;
                     }
 
@@ -288,7 +291,7 @@ class Questions extends Component {
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            debugger;
+                            // debugger;
                             for(let i = 0; i< currentQuestion.subQuestion.length; i++){
                                 const currentSubQuestion = currentQuestion.subQuestion[i];
                                 for(let x = 0; x <currentSubQuestion.inputs.length; x++){
@@ -344,7 +347,8 @@ class Questions extends Component {
                 {
                     label: `Child ${noOfChild}`,
                     value: '',
-                    placeholder: 'age'
+                    placeholder: 'age',
+                    addon: true
                 }
 
 
@@ -357,7 +361,6 @@ class Questions extends Component {
             }
         this.setState({currentQuestion})
     };
-
     addOn = (question) => {
         return (
             <div className="addOnBtn"  >
@@ -365,7 +368,14 @@ class Questions extends Component {
             </div>
         )
     };
-
+    deleteAddon = (i) => {
+        const { currentQuestion } = this.state
+        currentQuestion.subQuestion[0].inputs.splice(i, 1)
+        currentQuestion.subQuestion[0].inputs.map((x, i)=> {
+            x.label = `Child ${i+1}`
+        })
+        this.setState({currentQuestion})
+    }
     render() {
         // console.log(this.props)
         const { questionIndex, currentQuestion, validated, isLoading } = this.state;
