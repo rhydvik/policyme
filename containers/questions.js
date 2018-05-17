@@ -83,7 +83,7 @@ class Questions extends Component {
         const temp = this.state.currentQuestion;
         temp.inputs[i].value = parseInt(e.target.value) || '';
         this.setState({ currentQuestion: temp, validated: false });
-        debugger;
+        // debugger;
         this.validateQuestion();
     };
 
@@ -168,7 +168,7 @@ class Questions extends Component {
 
     getCurrentQuestion = (data) => {
         const { isMobile } = this.state;
-        console.log('isMobile', isMobile);
+
         return (
             <div className={styles.questionContainer}>
                 {renderIf(this.state.questionIndex > 1)(
@@ -200,8 +200,8 @@ class Questions extends Component {
             const subQuestion = currentQuestion.subQuestion;
                  return subQuestion.map(x=>
                      <div style={{ maxWidth: '300px', margin: 'auto' }}>
-                        {x.question}
-                        {this.getInputOptions(x)}
+                         {x.question}
+                         {this.getInputOptions(x)}
                     </div>)
         }
         const subQuestion = currentQuestion.subQuestion;
@@ -217,8 +217,7 @@ class Questions extends Component {
                 }
                 return (
                     <div>
-                        {console.log('subQuestion[i].question', subQuestion)}
-                        {subQuestion[qindex].question}
+                        <span className='question-title-text'>{subQuestion[qindex].question}</span>
                         {this.getInputOptions(subQuestion[qindex])}
                     </div>
                 )
@@ -230,7 +229,7 @@ class Questions extends Component {
         const { currentQuestion } = this.state;
         if (currentQuestion.overrideValidation !== undefined) {
             this.setState({ validated: true });
-            debugger;
+
             return true
         }
         switch (currentQuestion.type) {
@@ -243,7 +242,7 @@ class Questions extends Component {
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
                         let validInputCount = 0;
-                        debugger;
+                        // debugger;
                         for(let i = 0; i< currentQuestion.subQuestion.length; i++){
                             const currentSubQuestion = currentQuestion.subQuestion[i];
                             for(let x = 0; x <currentSubQuestion.inputs.length; x++){
@@ -256,7 +255,7 @@ class Questions extends Component {
                                 }
                                 if(currentSubQuestion.type === 'INPUT'){
                                     if(currentSubInput.value !== '') validInputCount = validInputCount +1;
-                                    debugger;
+                                    // debugger;
                                     if(currentSubQuestion.inputs.length === validInputCount) {
                                         this.setState({ validated: true });
                                         return true
@@ -275,7 +274,7 @@ class Questions extends Component {
 
                     let validInputFields = 0;
                     for(let y = 0; y< currentQuestion.inputs.length; y++){
-                        debugger;
+                        // debugger;
                         if(currentQuestion.inputs[y].value !== '') validInputFields = validInputFields + 1;
                     }
 
@@ -289,7 +288,7 @@ class Questions extends Component {
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            debugger;
+                            // debugger;
                             for(let i = 0; i< currentQuestion.subQuestion.length; i++){
                                 const currentSubQuestion = currentQuestion.subQuestion[i];
                                 for(let x = 0; x <currentSubQuestion.inputs.length; x++){

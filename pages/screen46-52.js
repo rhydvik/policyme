@@ -37,10 +37,10 @@ export default class Navy extends Component {
                                 <p className={styles.quoteMessage}>$70 - $80 / month</p>
                             </div>
                             <a className={styles.questionText} onClick={this.openModal}>
-                                <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
+                                <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '-1rem'}}>
                                     why should i pick this option?
                                 </p>
-                                <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}}
+                                <img style={{height: '24px', marginTop:'-1rem', marginLeft: '10px'}}
                                     src="/static/images/questions/question.svg"  onClick={this.openModal} />
                             </a>
                         </div>
@@ -53,10 +53,10 @@ export default class Navy extends Component {
                                     <p className={styles.quoteMessage}>$35 - $40 / month</p>
                                 </div>
                                 <a className={styles.questionText} onClick={this.openModal}>
-                                    <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
+                                    <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '-1rem'}}>
                                         why should i pick this option?
                                     </p>
-                                    <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}}
+                                    <img style={{height: '24px', marginTop:'-1rem', marginLeft: '10px'}}
                                         src="/static/images/questions/question.svg"  onClick={this.openModal} />
                                 </a>
                         </div>
