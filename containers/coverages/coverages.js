@@ -5,6 +5,7 @@ import cn from 'classnames';
 import Button from '../../components/Button/index';
 import styles from '../../styles/index.sass';
 import { connect } from 'react-redux';
+import renderIf from 'render-if';
 import {
     getCoverage,
     setAdvice,
@@ -14,50 +15,82 @@ export class Navy extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            coverage: {
-                education:0,
-                end_of_life:0,
-                other:0,
-                other_dependents:0,
-                employer:0,
-                personal:0,
-                term: null
-            },
-                lifeStyle: true,
-                transition: false,
-                own: false
-
+            max: 50,
+            min: 15,
         }
     }
 
     goToQuotes = () => {
         this.props.patchCoverage({
-            json: this.props.coverageJson,
-            coverage: this.state.coverage
+            s_id: this.props.s_id,
+            coverageJson: this.state.coverageJson,
         });
         Router.push('/quotes');
     };
     handleInput = (e) => {
-        const { coverage } = this.state;
-        coverage[e.target.name] = parseInt(e.target.value);
-        this.setState({coverage});
-        console.log(this.state);
+        const { coverageJson } = this.state;
+        const val = parseInt(e.target.value)
+        const name = e.target.name
+        if (name === 'custom') {
+            coverageJson.options[1].amt = val
+        }
+        else if(coverageJson.user.addtl[name] !== undefined) {
+            coverageJson.user.addtl[name] = val
+        }
+        else if (name === 'group' || name === 'individual') {
+            coverageJson.user.existing.user[name] = val
+        }
+        this.setState({coverageJson}, ()=> console.log(this.state.coverageJson));
     };
 
-    componentDidMount () {
-        this.props.setAdvice();
-        const id = "50c9a31a-443b-11e8-842f-0ed5f89f718b";
-        this.props.getCoverage(id);
+     async componentDidMount () {
+        const id = this.props.s_id;
+        await this.props.getCoverage(id);
+        this.setState({coverageJson:this.props.coverageJson})
     }
     componentWillReceiveProps (next) {
     };
 
     getBoxCLass = (str) => {
+        const { coverageJson } = this.state
+        coverageJson.options[0].selected = false
+        coverageJson.options[1].selected = false
         this.setState({lifeStyle: false,transition:false,own:false });
-        this.setState({[str]: true});
+        if (str === 'lifeStyle') {
+            coverageJson.options[0].selected = true
+        } else if(str === 'own') {
+            coverageJson.options[1].selected = true
+        }
+        this.setState({[str]: true, coverageJson});
     };
+    handleTerm = (inc) => {
+        const { coverageJson } = this.state
+        const { user } = this.state.coverageJson
+
+        const term = coverageJson.user.term
+        if (inc === '+'){
+            if (term < this.state.max){
+                user.term = coverageJson.user.term + 1
+            }
+        } else {
+            if (term > this.state.min) {
+                user.term = coverageJson.user.term -1  
+            } 
+        }
+        
+        this.setState({coverageJson}, ()=>console.log(coverageJson.user.term))
+    }
 
     render() {
+        console.log(coverageJson)
+        const coverageJson = this.state.coverageJson || null
+        const ifCoverage = renderIf(coverageJson && Object.keys(coverageJson).length)
+        let addtl;
+        let existing;
+        if (coverageJson && Object.keys(coverageJson).length) {
+            addtl = coverageJson.user.addtl
+            existing = coverageJson.user.existing            
+        }
     const { lifeStyle, transition, own } = this.state;
         return (
             <div className={styles.mainBox}>
@@ -70,7 +103,7 @@ export class Navy extends Component {
                 >
                     <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
-                <div className={styles.policyContainer}>
+                { coverageJson && Object.keys(coverageJson).length ? <div className={styles.policyContainer}>
                     <img
                         className={styles.backArrow}
                         src='../../static/images/questions/backArrow.png'
@@ -92,8 +125,8 @@ export class Navy extends Component {
                                 <p className={styles.policyText}>
                                     Choose this option if you want your family to be
                                     able to maintain their life style if you are no longer around.</p>
-                                <p className={styles.quoteMessage}>$1,000,000 coverage</p>
-                                <p className={styles.quoteMessage}>$70 - $80 / month</p>
+                                <p className={styles.quoteMessage}> $ {coverageJson.options[0].amt}</p>
+                                <p className={styles.quoteMessage}>$ {coverageJson.options[0].premiums} / month</p>
                             </div>
                             <a className={styles.questionText} onClick={this.openModal}>
                                 <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
@@ -126,8 +159,9 @@ export class Navy extends Component {
                                 <p className={styles.quoteMessage}>Coveragee</p>
                                 <input
                                     className={styles.input}
-                                    placeholder="$10,000"
-                                    onChange={(e) => console.log(e) } />
+                                    value={coverageJson.options[1].amt}
+                                    name="custom"
+                                    onChange={this.handleInput } />
                             </div>
                         </div>
                     </div>
@@ -141,7 +175,8 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    name="other_dependents"
+                                    name="other_deps"
+                                    value={addtl.other_deps}
                                     onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
@@ -151,7 +186,8 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    name="end_of_life"
+                                    name="funeral"
+                                    value={addtl.funeral}
                                     onChange={this.handleInput} />
                             </div>
                         </div>
@@ -164,6 +200,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="education"
+                                    value={addtl.education}
                                     onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
@@ -173,6 +210,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="other"
+                                    value={addtl.other}
                                     onChange={this.handleInput} />
                             </div>
                         </div>
@@ -188,7 +226,8 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    name="employer"
+                                    name="group"
+                                    value={existing.user.group}
                                     onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
@@ -197,7 +236,8 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
-                                    name="personal"
+                                    name="individual"
+                                    value={existing.user.individual}
                                     onChange={this.handleInput} />
                             </div>
                         </div>
@@ -210,9 +250,9 @@ export class Navy extends Component {
                         <div className={styles.policyBox} >
                             <p className={styles.quoteMessage}>Term Length</p>
                             <div  className={styles.termLengthBox} >
-                                <Button buttonStyle={styles.termLengthInc} label="+"/>
-                                <p className={styles.policyText}>30 year term</p>
-                                <Button buttonStyle={styles.termLengthInc} label="-"/>
+                                <Button onClick={()=> this.handleTerm('-')} buttonStyle={styles.termLengthInc} label="-"/>
+                                <p className={styles.policyText}>{coverageJson.user.term} year term</p>
+                                <Button onClick={()=> this.handleTerm('+')} buttonStyle={styles.termLengthInc} label="+"/>
                             </div>
 
                             <p className={styles.policyText}>It look like your insurance needs are pretty steady for the next 30 years. We recommend buying a 30 year policy today to protect your self. </p>
@@ -224,8 +264,8 @@ export class Navy extends Component {
                             {/*onChange={this.handleInput} />*/}
                         </div>
                     </div>
-                    <Button label="Next" onClick={() => Router.push('/quotes')} buttonStyle={styles.nextEnabled} />
-                </div>
+                    <Button label="Next" onClick={() => this.goToQuotes()} buttonStyle={styles.nextEnabled} />
+                </div> : ''}
             </div>
 
         )

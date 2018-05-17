@@ -7,5 +7,6 @@ export const CATEGORY = {
     "housing_costs": "Housing & Utilities",
     "mortgage_or_rent": "Mortgage/Rent",
     "other": [],
-    "transportation": "Transportation"
+    "transportation": "Transportation",
+    "housing": 'Housing Rent',
 }

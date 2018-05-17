@@ -26,7 +26,7 @@ class AskUserDetails extends Component {
     submitUserDetails = () => {
         this.props.updateUserDetail({
             user: this.state.user,
-            json: this.props.jsonSkeleton
+            json: this.props
         }
         )
     }
@@ -38,10 +38,9 @@ class AskUserDetails extends Component {
         this.setState({user})
     }
     componentDidMount () {
-        this.props.setAdvice()
     }
     showCoverages = () => {
-        // this.submitUserDetails()
+        this.submitUserDetails()
         Router.push('/coverages');
     };
 

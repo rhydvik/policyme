@@ -30,19 +30,18 @@ class Results extends Component {
         };
     }
 componentDidMount () {
-    this.props.setExpense('ad');
-}
-componentWillReceiveProps (newProps) {
-    console.log('AKJSDOIW',newProps)
-    if (newProps.expense.user) {
-        const categories = newProps.expense.user.expenses.categories
+    if(this.props.expense.default) {
+        const categories = this.props.expense.default.expenses.categories
         this.setState ({ categories})
     }
 }
 handleInput = (e) => {
     let {categories} = this.state
-
-        categories[e.target.name] = parseInt(e.target.value)
+        if (e.target.name === 'housing') {
+            categories[e.target.name].rent.monthly_payment = parseInt(e.target.value)
+        } else {
+            categories[e.target.name] = parseInt(e.target.value)
+        }
 
     this.setState({categories})
 }
@@ -51,25 +50,37 @@ addCategory = () => {
     categories = {...categories, ...{[`category${Object.keys(categories).length}`]: 0}}
     this.setState({categories})
 }
-monthlyExpense = () => {
-    const { categories } = this.state
-    return Object.keys(categories).reduce((acc,cur)=>{
-        if(cur !== 'other') {
+monthlyExpense = (categories) => {
+    if(categories) {
+        return Object.keys(categories).reduce((acc,cur)=>{
+        if(cur !== 'other' && cur !== 'housing') {
             acc += + categories[cur]
+        }
+        if (cur === 'housing') {
+            acc += + categories[cur].rent.monthly_payment
         }
         return acc
     }, 0)
+    } else return 0
 }
 next = () => {
-    this.props.patchExpense(this.props.expense, this.state.categories);
+    this.props.patchExpense(this.props, this.state.categories);
     Router.push('/askUserDetails')
 };
+ifHousingCategory = (x) => {
+        return <div className={styles.rightAlignedInputContainer}>
+                              <span>
+                                {CATEGORY[x] || x }
+                              </span>
+                                <input type ="text"
+                                className="input"
+                                value={this.state.categories[x].rent.monthly_payment}
+                                name={x}
+                                onChange={this.handleInput}/>
+                          </div>
+}
     render() {
-        console.log(this.props);
-
-        const { expense } = this.props;
-        const {categories} = this.state;
-        const ifExpense = renderIf(Object.keys(expense).length && expense.user);
+        const categories = this.state.categories || null
         return (
         <div>
             <Nav
@@ -98,7 +109,7 @@ next = () => {
                     {Object.keys(categories).map(x =>
                       <div>
                         {x !== 'other' ?
-                          <div className={styles.rightAlignedInputContainer}>
+                        x === 'housing' ? this.ifHousingCategory (x) : <div className={styles.rightAlignedInputContainer}>
                               <span>
                                 {CATEGORY[x] || x }
                               </span>
@@ -118,7 +129,7 @@ next = () => {
                 <div className={styles.expensesContainer} >
                     <div className={styles.expenses}>
                         <div>
-                           <label>Monthly Expenses:</label> <span> {this.monthlyExpense()}</span>
+                           <label>Monthly Expenses:</label> <span> {this.monthlyExpense(categories)}</span>
                         </div>
                         <div>
                            <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
@@ -128,7 +139,7 @@ next = () => {
                </div>
              : ''}
              <div className={styles.buttonContainer}>
-                 <Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />
+                 <Button label="NEXT" onClick={() => this.next()} />
              </div>
              </div>
             )

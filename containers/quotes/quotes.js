@@ -18,8 +18,12 @@ export  class Navy extends Component {
             selectedQuote: null
         }
     }
-    componentDidMount () {
-        this.props.getQuotes()
+    async componentDidMount () {
+        await this.props.getQuotes({
+            user: this.props.jsonSkeleton.family.user,
+            coverageJson: this.props.coverageJson,
+            s_id: this.props.s_id
+        })
     }
     selectQuote = (company) => {
         this.setState({selectedQuote: company})

@@ -11,7 +11,6 @@ class About extends Component {
     }
 
     looksGood = () => {
-        console.log(this.props);
         Router.push('/askUserDetails');
     };
 

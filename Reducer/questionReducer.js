@@ -146,58 +146,8 @@ export default (state = initialState, action) => {
       return { ...state, jsonSkeleton: json }
       break;
     case actionTypes.SET_EXPENSE:
-    const p = {
-      "default": {
-          "expenses": {
-              "categories": {
-                  "clothing": 0,
-                  "discretionary": 700,
-                  "education": 600,
-                  "food": 500,
-                  "health_care": 400,
-                  "housing_costs": 200,
-                  "mortgage_or_rent": 100,
-                  "other": [],
-                  "transportation": 300
-              },
-              "max": 20000,
-              "min": 19000
-          },
-          "savings": {
-              "max": 6000
-          }
-      },
-      "user": {
-          "expenses": {
-              "categories": {
-                  "clothing": 0,
-                  "discretionary": 700,
-                  "education": 600,
-                  "food": 500,
-                  "health_care": 400,
-                  "housing_costs": 200,
-                  "mortgage_or_rent": 100,
-                  "other": [
-                      {
-                          "amount": 20,
-                          "type": "additional1"
-                      },
-                      {
-                          "amount": 10,
-                          "type": "additional2"
-                      }
-                  ],
-                  "transportation": 300
-              },
-              "max": 21000,
-              "min": 19500
-          },
-          "savings": {
-              "max": 6500
-          }
-      }
-  }
-      return { ...state, expense: p}
+  
+      return { ...state, expense: action.payload}
       break;
 
     case actionTypes.SET_COVERAGE_JSON:

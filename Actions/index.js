@@ -106,45 +106,44 @@ export function getExpenses (s_id) {
 }
 
 export function patchExpense (props,categories) {
-  let newPayload = props
+  console.log("EXPENSESSSSSSS")
+  let newPayload = props.expense
+  const s_id = props.s_id
   newPayload.user.expenses.categories = categories
-  console.log(newPayload)
   return (dispatch) => {
 
-  //   fetch(`${ENDPOINT}expenses/9761e4a5-d83e-441f-a2c1-97f5280f8870`,
-  //   {
-  //     method: 'PATCH' ,
-  //     // mode: 'no-cors',
-  //     headers: {
-  //       'Access-Control-Allow-Origin': '*',
-  //       'Content-Type': 'text/html; charset=utf-8',
-  //       'Access-Control-Request-Method': 'PATCH'
+    fetch(`${ENDPOINT}expenses/${s_id}`,
+    {
+      method: 'PATCH' ,
+      // mode: 'no-cors',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+        'Access-Control-Request-Method': 'PATCH'
         
-  //     },
-  //     body: JSON.stringify(newPayload)
-  //   })
-  //     .then(res => res.json())
-  //     .then((fetchedData) => {
-  //       console.log("PATCHED JSON", fetchedData)
-        // dispatch(setSkeletonJson(fetchedData))
-  //     });
+      },
+      body: JSON.stringify(newPayload)
+    })
+      .then(res => res.json())
+      .then((fetchedData) => {
+        console.log("PATCHED JSON", fetchedData)
+      });
   };
 }
 export function updateUserDetail (payload) {
-  console.log(payload, payload.user)
-  const json = payload.json;
+  console.log("UPADTE USER DEIAL",payload)
+  const json = payload.json.jsonSkeleton;
   json.family.user.email = payload.user.email;
   json.family.user.first_name = payload.user.first_name;
   json.family.user.last_name = payload.user.last_name;
-  console.log(json);
   return (dispatch) => {
-    fetch(`${ENDPOINT}inputs/${payload.s_id}`,
+    fetch(`${ENDPOINT}inputs/${payload.json.s_id}`,
     {
-      method: 'PATCH' ,
+      method: 'PUT' ,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'text/html; charset=utf-8',
-        'Access-Control-Request-Method': 'PATCH'
+        'Content-Type': 'application/Json',
+        'Access-Control-Request-Method': 'PUT'
         
       },
       body: JSON.stringify(json)
@@ -159,11 +158,12 @@ export function updateUserDetail (payload) {
 
 
 export function getCoverage (s_id) {
-  return (dispatch) => {
-    fetch(`${ENDPOINT}coverage/${s_id}`)
+  s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+  return async (dispatch) => {
+    await fetch(`${ENDPOINT}coverage/${s_id}`)
       .then(res => res.json())
       .then((fetchedData) => {
-        console.log(fetchedData)
+        console.log('CoverageJson', fetchedData)
         dispatch(setCoverageJson(fetchedData))
         // dispatch(setSkeletonJson(fetchedData))
       });
@@ -171,41 +171,32 @@ export function getCoverage (s_id) {
 }
 
 export function patchCoverage (payload) {
-  const json = payload.json;
-  const coverage = payload.coverage;
-  let { user } = json
-  Object.keys(user.additional).map((x)=>{
-    user.additional[x] = coverage[x]
-  })
-  Object.keys(user.existing).map((x)=>{
-    user.existing[x] = coverage[x]
-  })
-  json.user.term = coverage.term
-  json.user = user
-  console.log(json)
+  const s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+  // s_id = payload.s_id
+  
   return (dispatch) => {
-    fetch(`${ENDPOINT}inputs/${payload.s_id}`,
+    fetch(`${ENDPOINT}coverage/${s_id}`,
     {
       method: 'PATCH' ,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'text/html; charset=utf-8',
+        'Content-Type': 'application/json',
         'Access-Control-Request-Method': 'PATCH'
         
       },
-      body: JSON.stringify(json)
+      body: JSON.stringify(payload.coverageJson)
     })
       .then(res => res.json())
       .then((fetchedData) => {
-        console.log("PATCHED JSON", fetchedData)
+        console.log("PATCHED Coverage", fetchedData)
         // dispatch(setSkeletonJson(fetchedData))
       });
     }
 }
 
 export function getQuotes (payload) {
-  return (dispatch) => {
-    fetch(`${ENDPOINT}quotes?amt=100000&term=10&age=30&gender=female&is_smoker=true`,
+  return async (dispatch) => {
+    await fetch(`${ENDPOINT}quotes?amt=100000&term=10&age=30&gender=female&is_smoker=true`,
   {
     headers: {
       'Content-Type': 'application/json'
