@@ -59,7 +59,7 @@ class AskUserDetails extends Component {
                 </Nav>
                 <div className={styles.container}>
                     <div className={styles.textBox}>
-                        <img src="../../static/images/alex.png" />
+                        <img src="../../static/images/alex.jpg" />
                         <p>
                             Thanks for answering my questions!  That's all I
                             need to provided your customized life insurance advice.

@@ -4,24 +4,32 @@ import Router from 'next/router';
 import Nav from "../../components/Nav";
 import Button from "../../components/Button";
 import styles from './index.sass'
+import renderIf from "render-if";
+import Loader from 'components/FullScreenLoader';
 
 class About extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            isLoading: false,
+        }
     }
 
     looksGood = () => {
+        this.setState({ isLoading: true });
         Router.push('/askUserDetails');
     };
 
     seeBreakDown = () => {
-        console.log(this.props);
+        this.setState({ isLoading: true });
         Router.push('/result');
     };
 
     render() {
+        const { isLoading } = this.state;
         return (
             <div>
+                {renderIf(isLoading)(<Loader />)}
                 <Nav
                     usedFor="questions"
                     showQuestionMark={true}
@@ -33,7 +41,7 @@ class About extends Component {
                 </Nav>
                 <div className={styles.container}>
                     <div className={styles.textBox}>
-                        <img src="../../static/images/alex.png" />
+                        <img src="../../static/images/alex.jpg" />
                         <p>
                             We estimate that families like yours save
                             about <span>$6,000 per year</span> and spend

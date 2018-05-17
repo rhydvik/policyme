@@ -1,24 +1,26 @@
 import React, {Component} from 'react'
-import Quotes from '../containers/quotes/quotes'
+import Final from '../containers/final2/final'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import store from '../store';
 import { Provider } from 'react-redux';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-class Quote extends Component {
+
+class FinalScreen extends Component {
     constructor(props) {
         super(props)
     }
+
 
     render() {
         return (
             <Provider store={store}>
                 <MuiThemeProvider>
-                <Quotes />
+                <Final />
                 </MuiThemeProvider>
             </Provider>
         )
     }
 }
 
-export default Quote;
+export default FinalScreen;

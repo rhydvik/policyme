@@ -3,7 +3,7 @@ import Coverages from '../containers/coverages/coverages'
 
 import store from '../store';
 import { Provider } from 'react-redux';
-
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class Container extends Component {
     constructor(props) {
@@ -13,7 +13,9 @@ class Container extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Coverages />
+               <MuiThemeProvider>
+                 <Coverages />
+               </MuiThemeProvider>
             </Provider>
         )
     }

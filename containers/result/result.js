@@ -97,7 +97,7 @@ ifHousingCategory = (x) => {
             <div>
                 <div className={styles.container}>
                     <div className={styles.textBox}>
-                        <img src="../../static/images/alex.png" onClick={() => Router.push('/coverages')} />
+                        <img src="../../static/images/alex.jpg" onClick={() => Router.push('/coverages')} />
                         <p>
                             Here is a breakdown your estimate by spend category.
                             If a category looks off, feel free to revise.

@@ -2,20 +2,24 @@ import React, {Component} from 'react';
 import Router from 'next/router';
 import Nav from '../../components/Nav';
 import cn from 'classnames';
+import Loader from 'components/FullScreenLoader';
 import Button from '../../components/Button/index';
 import styles from '../../styles/index.sass';
 import { connect } from 'react-redux';
 import renderIf from 'render-if';
+
 import {
     getCoverage,
     setAdvice,
     patchCoverage
 } from '../../Actions/index'
+
 export class Navy extends Component {
     constructor(props) {
         super(props);
         this.state = {
             max: 50,
+            isLoading: false,
             min: 15,
         }
     }
@@ -48,8 +52,8 @@ export class Navy extends Component {
         await this.props.getCoverage(id);
         this.setState({coverageJson:this.props.coverageJson})
     }
-    componentWillReceiveProps (next) {
-    };
+
+
 
     getBoxCLass = (str) => {
         const { coverageJson } = this.state
@@ -84,16 +88,16 @@ export class Navy extends Component {
     render() {
         console.log(coverageJson)
         const coverageJson = this.state.coverageJson || null
-        const ifCoverage = renderIf(coverageJson && Object.keys(coverageJson).length)
         let addtl;
         let existing;
         if (coverageJson && Object.keys(coverageJson).length) {
             addtl = coverageJson.user.addtl
             existing = coverageJson.user.existing            
         }
-    const { lifeStyle, transition, own } = this.state;
+    const { lifeStyle, transition, own, isLoading } = this.state;
         return (
             <div className={styles.mainBox}>
+                {renderIf(isLoading)(<Loader />)}
                 <Nav
                     usedFor="questions"
                     showQuestionMark={true}
@@ -106,23 +110,24 @@ export class Navy extends Component {
                 { coverageJson && Object.keys(coverageJson).length ? <div className={styles.policyContainer}>
                     <img
                         className={styles.backArrow}
-                        src='../../static/images/questions/backArrow.png'
+                        src='../../static/images/questions/backarrow.svg'
                         onClick={() => Router.push('/expenses')} />
 
-                    <div className={styles.questionBox}>
-                        <img src="../static/images/alex.png" />
-                        <p className={styles.quoteMessage} >
+                    <div className={cn('app-container no-p',styles.questionBox)}>
+                        <img src="../static/images/alex.jpg" />
+                        <p className={cn('app-texts x-large karma-family',styles.quoteMessage)} >
                             A term life insurance policy is the best fit for you.
                             For more information on term life policies , click here</p>
-                        <p className={styles.quoteMessage} >
+                        <p className={cn('app-texts x-large karma-family',styles.quoteMessage)} >
                             Now, let's talk about your coverage
                             amount policy length</p>
                     </div>
                     <div className={cn('columns', styles.recommendedPolicies)}>
                         <div className={cn('column', styles.recommendedPolicyBox)}>
                             <div onClick={()=>this.getBoxCLass('lifeStyle')} className={lifeStyle ? styles.selectedPolicyBox : styles.policyBox}>
-                                <p className={styles.quoteMessage}>LifeStyle Protection</p>
-                                <p className={styles.policyText}>
+                                <p className={'app-texts headings ' + (lifeStyle ? 'invert' : '' )}>LifeStyle Protection</p>
+                                <br/>
+                                <p className={'app-texts sub-text ' + (lifeStyle ? 'invert' : '' )}>
                                     Choose this option if you want your family to be
                                     able to maintain their life style if you are no longer around.</p>
                                 <p className={styles.quoteMessage}> $ {coverageJson.options[0].amt}</p>
@@ -139,10 +144,12 @@ export class Navy extends Component {
 
                         <div className={cn('column',styles.recommendedPolicyBox)}>
                             <div onClick={()=>this.getBoxCLass('transition')} className={transition ? styles.selectedPolicyBox : styles.policyBox} >
-                                <p className={styles.quoteMessage}>Transition Protection</p>
-                                <p className={styles.policyText}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
-                                <p className={styles.quoteMessage}>$500,000 coverage</p>
-                                <p className={styles.quoteMessage}>$35 - $40 / month</p>
+                                <p className={'app-texts headings ' + (transition ? 'invert' : '' )}>Transition Protection</p>
+                                <br/>
+                                <p className={'app-texts sub-text ' + (transition ? 'invert' : '' )}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
+                                <br/>
+                                <p className={'app-texts headings '+ (transition ? 'invert' : '' )}>$500,000 coverage</p>
+                                <p className={'app-texts headings ' + (transition ? 'invert' : '' )}>$35 - $40 / month</p>
                             </div>
                             <a className={styles.questionText} onClick={this.openModal}>
                                 <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
@@ -154,9 +161,11 @@ export class Navy extends Component {
                         </div>
                         <div className={cn('column',styles.recommendedPolicyBox)}>
                             <div onClick={()=>this.getBoxCLass('own')} className={own ? styles.selectedPolicyBox : styles.policyBox} >
-                                <p className={styles.quoteMessage}>Choose Your Own</p>
-                                <p className={styles.policyText}>Choose this option if you'd like to customize your coverage.</p>
-                                <p className={styles.quoteMessage}>Coveragee</p>
+                                <p className={'app-texts headings ' + (own ? 'invert' : '' )}>Choose Your Own</p>
+                                <br/>
+                                <p className={'app-texts sub-text ' + (own ? 'invert' : '' )}>Choose this option if you'd like to customize your coverage.</p>
+                                <br/>
+                                <p className={'app-texts headings ' + (own ? 'invert' : '' )}>Coverage</p>
                                 <input
                                     className={styles.input}
                                     value={coverageJson.options[1].amt}
@@ -167,11 +176,14 @@ export class Navy extends Component {
                     </div>
 
                     <div className={styles.otherCoverages}>
-                        <p className={styles.quoteMessage}>Add Other Coverages</p>
-                        <div className={styles.otherCoverageBox}>
-                            <div className={styles.policyBox} >
+                    <div className={'  medium-container'}>
+                        <p className={'app-texts headings'}>Add Other Coverages</p>
+                        <div className={styles.otherCoverageBox }>
+                            <div className={styles.policyBox + ' no-p-b'} >
                                 <p className={styles.quoteMessage}>Other Dependents</p>
-                                <p className={styles.policyText}>Add coverage if you have other dependents(not including childern in your household) who rely on you financially.</p>
+                                <br/>
+                                <p className={styles.policyText}>Add coverage if you have other dependents (not including children in your household) who rely on you financially.</p>
+                                <br/>
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
@@ -181,8 +193,10 @@ export class Navy extends Component {
                             </div>
                             <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>End of Life Expenses</p>
-                                <p className={styles.policyText}>Add coverage if you'd like to pay for end of life expenses(funeral cost).
-                                    <br /><br />Most Leave $15,000.</p>
+                                <br/>
+                                <p className={styles.policyText}>Add coverage if you'd like to pay for end of life expenses (funeral cost).
+                                    <br /><br /><span className='app-texts'>Most Leave $15,000.</span></p>
+                                <br/>
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
@@ -194,8 +208,10 @@ export class Navy extends Component {
                         <div className={styles.otherCoverageBox}>
                             <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>Education Costs</p>
+                                <br/>
                                 <p className={styles.policyText}>Add coverage if you'd like to leave money for post-secondar education costs.
                                     <br /><br />Most Leave $40,000 per child. </p>
+                                <br/>
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
@@ -205,7 +221,9 @@ export class Navy extends Component {
                             </div>
                             <div className={styles.policyBox} >
                                 <p className={styles.quoteMessage}>Something else...</p>
+                                <br/>
                                 <p className={styles.policyText}>Add coverage if there is any other needs we missed(additional caregiving costs, charitable donation or more family cobverage).</p>
+                                <br/>
                                 <input
                                     className={styles.input}
                                     placeholder="$10,000"
@@ -215,6 +233,7 @@ export class Navy extends Component {
                             </div>
                         </div>
 
+                    </div>
                     </div>
                     <div className={styles.existingCoverageContainer}>
                         <p className={styles.quoteMessage}>Offset with any existing coverage</p>

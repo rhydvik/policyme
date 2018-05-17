@@ -6,7 +6,10 @@ import cn from 'classnames';
 import question from '../constants/questions';
 import styles from '../styles/index.sass';
 import { connect } from 'react-redux';
-import Link from 'next/link'
+import Tooltip from 'components/Tooltip/Tooltip';
+import SmallTooltip from 'components/Tooltip/TooltipForSmall';
+import Loader from 'components/FullScreenLoader';
+
 import Router from 'next/router';
 import {
     addQuestion,
@@ -14,7 +17,7 @@ import {
     populateJson,
     sendPopulatedJson
 } from '../Actions'
-import Modal from '../components/Modal/index';
+
 
 class Questions extends Component {
     constructor(props) {
@@ -22,16 +25,25 @@ class Questions extends Component {
         this.state = {
             questionIndex: 0,
             currentQuestion: {},
-            modalIsOpen: false
+            modalIsOpen: false,
+            validated: false,
+            isMobile: false,
+            isLoading: false,
         };
     }
     componentWillMount() {
 
         this.props.addQuestion({qi:this.state.questionIndex, question: question[this.state.questionIndex]});
-        this.setState({ currentQuestion: question[this.state.questionIndex] })
+        this.setState({
+            currentQuestion: question[this.state.questionIndex],
+            validated: true
+        })
     }
     componentDidMount() {
-        this.props.setAdvice()
+        this.props.setAdvice();
+        this.setState({
+            isMobile: window.innerWidth <= 700
+        })
     }
 
     handleButtonChange = (i) => {
@@ -42,10 +54,12 @@ class Questions extends Component {
         const currentButton = temp.inputs[i];
         currentButton.value = true;
         temp.inputs[i] = currentButton;
-        this.setState({ currentQuestion: temp });
+        this.setState({ currentQuestion: temp, validated: false });
+        this.validateQuestion();
     };
+
     handleSubQuestionButtonChange = (i) => {
-        // //debugger;
+
         const currentQuestionTemp = Object.assign({}, question[this.state.questionIndex]);
         const temp = Object.assign({}, question[this.state.questionIndex].subQuestion[0]);
         const inputs = this.resetButtonStatus(question[this.state.questionIndex].subQuestion[0].inputs);
@@ -54,8 +68,9 @@ class Questions extends Component {
         currentButton.value = true;
         temp.inputs[i] = currentButton;
         currentQuestionTemp.subQuestion[0] = temp;
-        this.setState({ currentQuestion: currentQuestionTemp });
-        // //debugger;
+        this.setState({ currentQuestion: currentQuestionTemp, validated: false });
+        this.validateQuestion();
+
     };
     resetButtonStatus = (inputs) => {
         return inputs.map((x) =>{
@@ -66,34 +81,36 @@ class Questions extends Component {
 
     handleInputChange = (i, e) => {
         const temp = this.state.currentQuestion;
-        temp.inputs[i].value = parseInt(e.target.value);
-        this.setState({ currentQuestion: temp });
+        temp.inputs[i].value = parseInt(e.target.value) || '';
+        this.setState({ currentQuestion: temp, validated: false });
+        debugger;
+        this.validateQuestion();
     };
 
 
     handleSubQuestionInputChange = (e,input) => {
-        // debugger;
-        console.log("ASDADSDA#EQ#@$", input)
+
         const temp = this.state.currentQuestion;
-        const index = input.subQuestionIndex || 0
-        const temp1 = temp.subQuestion[index]
-        temp1.inputs[e.target.id].value = parseInt(e.target.value);
+        const index = input.subQuestionIndex || 0;
+        const temp1 = temp.subQuestion[index];
+        temp1.inputs[e.target.id].value = parseInt(e.target.value) || '';
         temp.subQuestion[index] = temp1;
-        this.setState({ currentQuestion: temp }, () => console.log(this.state.currentQuestion));
+        this.setState({ currentQuestion: temp, validated: false });
+        this.validateQuestion();
     };
 
     next = () => {
 
         const qi = this.state.questionIndex;
         if(qi < 12){
-          this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1] });
+          this.setState({ questionIndex: qi + 1, currentQuestion: question[qi + 1], validated: false });
         }
         this.props.addQuestion({qi, question: question[qi + 1]});
         if (this.state.currentQuestion.last) {
             this.props.populateJson(this.props.questions);
             this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id })
             Router.push('/expenses', {data: ['a']})
-
+            this.setState({ isLoading: true });
         }
     };
 
@@ -110,19 +127,11 @@ class Questions extends Component {
     };
 
 
-    openModal = () => {
-        this.setState({modalIsOpen: true});
-    };
-
-
-    closeModal = () => {
-        this.setState({modalIsOpen: false});
-    };
     getInputClass = (data) => {
         if (data.inputs.length > 1 || !data.addon) {
            return  styles.alignInputsInOneLine
         } else return ''
-    }
+    };
     getInputOptions = (data) => {
         switch (data.type) {
             case 'BUTTON':
@@ -158,10 +167,21 @@ class Questions extends Component {
     };
 
     getCurrentQuestion = (data) => {
+        const { isMobile } = this.state;
+        console.log('isMobile', isMobile);
         return (
             <div className={styles.questionContainer}>
+                {renderIf(this.state.questionIndex > 1)(
+                    <img className={styles.backArrow} src='../static/images/questions/backarrow.svg' onClick={this.goBack} />
+                )}
                 <div className={styles.questionBox}>
-                    <img src="../static/images/alex.png" />
+                    <img src="../static/images/alex.jpg" />
+                    {renderIf(this.state.currentQuestion.infoText !== undefined && isMobile === true)(
+                          <SmallTooltip title={this.state.currentQuestion.infoText}/>
+                    )}
+                    {renderIf(this.state.currentQuestion.infoText !== undefined && isMobile === false)(
+                        <Tooltip title={this.state.currentQuestion.infoText}/>
+                    )}
                     {data.question}
                 </div>
                 <div className={styles.inputsContainer}>
@@ -206,19 +226,42 @@ class Questions extends Component {
 
     validateQuestion = () => {
         const { currentQuestion } = this.state;
-        if (currentQuestion.overrideValidation !== undefined) return true
+        if (currentQuestion.overrideValidation !== undefined) {
+            this.setState({ validated: true });
+            debugger;
+            return true
+        }
+        debugger;
         switch (currentQuestion.type) {
             case 'BUTTON':
                 // //debugger;
-                for (let i = 0; i < currentQuestion.inputs.length; i++) {
-                    if (currentQuestion.inputs[i].value !== null && currentQuestion.subQuestion === undefined) {
+                for (let j = 0; j < currentQuestion.inputs.length; j++) {
+                    if (currentQuestion.inputs[j].value !== null && currentQuestion.subQuestion === undefined) {
                         console.log('3');
+                        this.setState({ validated: true });
                         return true
                     } else if (currentQuestion.subQuestion !== undefined) {
-                        console.log('**^^^**', currentQuestion.subQuestion);
-                        for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
-                            console.log('4');
-                            if (currentQuestion.subQuestion[0].inputs[i].value !== null) return true
+                        let validInputCount = 0;
+                        debugger;
+                        for(let i = 0; i< currentQuestion.subQuestion.length; i++){
+                            const currentSubQuestion = currentQuestion.subQuestion[i];
+                            for(let x = 0; x <currentSubQuestion.inputs.length; x++){
+                                const currentSubInput = currentSubQuestion.inputs[x];
+                                if(currentSubQuestion.type === 'BUTTON'){
+                                    if(currentSubInput.value !== null && currentQuestion.inputs[j].value !== null){
+                                        this.setState({ validated: true });
+                                        return true
+                                    }
+                                }
+                                if(currentSubQuestion.type === 'INPUT'){
+                                    if(currentSubInput.value !== '') validInputCount = validInputCount +1;
+                                    debugger;
+                                    if(currentSubQuestion.inputs.length === validInputCount) {
+                                        this.setState({ validated: true });
+                                        return true
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -228,32 +271,61 @@ class Questions extends Component {
                     const value = currentQuestion.inputs[i].value;
                     const validationRules = currentQuestion.inputs[i].validationRules;
                     let validInput = false;
+
+                    let validInputFields = 0;
+                    for(let y = 0; y< currentQuestion.inputs.length; y++){
+                        debugger;
+                        if(currentQuestion.inputs[y].value !== '') validInputFields = validInputFields + 1;
+                    }
+
                     if (validationRules !== undefined) {
-                        if (value < validationRules.maximum && value > validationRules.minimum) {
+                        if (value < validationRules.maximum && value > validationRules.minimum && validInputFields === currentQuestion.inputs.length) {
                             validInput = true;
                         }
                         if (validInput && currentQuestion.subQuestion === undefined) {
                             // debugger;
+                            this.setState({ validated: true });
                             return true
                         } else if (currentQuestion.subQuestion !== undefined) {
                             let validInputCount = 0;
-                            for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
-                                const currentInput = currentQuestion.subQuestion[0].inputs[i];
-                                if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
-                                    validInputCount = validInputCount + 1;
-                                } else if (currentInput.value !== null && currentQuestion.subQuestion[0].type === 'BUTTON') {
-                                    validInputCount = currentQuestion.subQuestion[0].inputs.length;
+                            debugger;
+                            for(let i = 0; i< currentQuestion.subQuestion.length; i++){
+                                const currentSubQuestion = currentQuestion.subQuestion[i];
+                                for(let x = 0; x <currentSubQuestion.inputs.length; x++){
+                                    const currentSubInput = currentSubQuestion.inputs[x];
+                                   if(currentSubQuestion.type === 'BUTTON'){
+                                       if(currentSubInput.value !== null && validInput){
+                                           this.setState({ validated: true });
+                                           return true
+                                       }
+                                   }
+                                    if(currentSubQuestion.type === 'INPUT'){
+                                        if(currentSubInput.value !== '') validInputCount = validInputCount + 1;
+                                        if(currentSubQuestion.inputs.length === validInputCount) {
+                                            this.setState({ validated: true });
+                                            return true
+                                        }
+                                   }
                                 }
                             }
-                            if (validInputCount === currentQuestion.subQuestion[0].inputs.length && validInput) return true
+                            // for (let i = 0; i < currentQuestion.subQuestion[0].inputs.length; i++) {
+                            //     const currentInput = currentQuestion.subQuestion[0].inputs[i];
+                            //     if (currentInput.value !== '' && currentQuestion.subQuestion[0].type === 'INPUT') {
+                            //         validInputCount = validInputCount + 1;
+                            //     } else if (currentInput.value !== null && currentQuestion.subQuestion[0].type === 'BUTTON') {
+                            //         validInputCount = currentQuestion.subQuestion[0].inputs.length;
+                            //     }
+                            // }
 
-                        } else return false
+                        }
                     }
-                    if (value !== null && value !== '' && currentQuestion.subQuestion === undefined) {
+                    if (value !== null && value !== '' && currentQuestion.subQuestion === undefined && validInput) {
                         console.log('returning true from hulululu');
+                        this.setState({ validated: true });
                         return true
                     }
-                    return true;
+                    // this.setState({ validated: true });
+                    // return true;
                 }
         }
     };
@@ -296,11 +368,11 @@ class Questions extends Component {
 
     render() {
         // console.log(this.props)
-        const { questionIndex, currentQuestion } = this.state;
-        let nextDisabled = this.validateQuestion();
+        const { questionIndex, currentQuestion, validated, isLoading } = this.state;
         console.log(this.props);
         return (
             <div className={styles.mainBox}>
+                {renderIf(isLoading)(<Loader />)}
                 <Nav
                     usedFor="questions"
                     showQuestionMark={true}
@@ -308,20 +380,14 @@ class Questions extends Component {
                     openModal={this.openModal}
                     progressBar={(questionIndex/question.length)*100}
                 >
-                  <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                  <img src="/static/images/questions/question.svg"/>
                 </Nav>
-                {renderIf(questionIndex > 1)(
-                    <img className={styles.backArrow} src='../static/images/questions/backArrow.png' onClick={this.goBack} />
-                )}
                 {this.getCurrentQuestion(currentQuestion)}
                 {/* {question.subQuestion ? this.getSubQuestion(question[this.state.questionIndex]) : ''} */}
                 {this.getSubQuestion(currentQuestion)}
                 {currentQuestion.addOn ? this.addOn(currentQuestion) : ''}
-                <div className={styles.questionContainer}>
-                    <Button label={questionIndex === 0 ? "GET STARTED" : "NEXT" } buttonStyle={nextDisabled ? styles.nextEnabled : styles.nextDisabled} disabled={nextDisabled} onClick={this.next} />
-                    {renderIf(this.state.modalIsOpen)(
-                      <Modal  isOpen={this.state.modalIsOpen} closeModal={this.closeModal} />
-                    )}
+                <div className={styles.questionButtonContainer}>
+                    <Button label={questionIndex === 0 ? "Get started" : "Next" } buttonStyle={validated ? styles.nextEnabled : styles.nextDisabled}  onClick={this.next} />
                     {renderIf(currentQuestion.questionText !== undefined)(
                         <a className={styles.questionText} onClick={this.openModal}>
                             {currentQuestion.questionText}
