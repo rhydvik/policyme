@@ -102,7 +102,6 @@ class Questions extends Component {
 
 
     handleSubQuestionInputChange = (e,input) => {
-
         const temp = this.state.currentQuestion;
         const index = input.subQuestionIndex || 0;
         const temp1 = temp.subQuestion[index];
@@ -290,6 +289,17 @@ class Questions extends Component {
             this.setState({ validated: true });
             return true
         }
+        if (currentQuestion.subQuestion && currentQuestion.subQuestion[0].addon !== undefined) {
+            let validAddon = 0
+            currentQuestion.subQuestion[0].inputs.map((x) =>{
+                if (!x.value || typeof x.value !== 'number' || x.value < x.validationRules.minimum || x.value > x.validationRules.maximum) {
+                    validAddon ++
+                }
+            })
+            if (!validAddon) { this.setState({ validated: true }); }
+            else { this.setState({validated: false})}
+            return true
+        }
         switch (currentQuestion.type) {
             case 'BUTTON':
                 // //debugger;
@@ -403,7 +413,11 @@ class Questions extends Component {
                     label: `Child ${noOfChild}`,
                     value: '',
                     placeholder: 'age',
-                    addon: true
+                    addon: true,
+                    validationRules: {
+                        minimum: 1,
+                        maximum: 50,
+                    }
                 }
 
 
@@ -411,10 +425,10 @@ class Questions extends Component {
                 q.inputs.push(inputs)
                 currentQuestion.subQuestion.push(q)
             } else {
-                console.log("SUBQUESI", currentQuestion)
                 currentQuestion.subQuestion[0].inputs.push(inputs)
             }
         this.setState({currentQuestion})
+        this.validateQuestion()
     };
     addOn = (question) => {
         return (
@@ -430,6 +444,7 @@ class Questions extends Component {
             x.label = `Child ${i+1}`
         });
         this.setState({currentQuestion})
+        this.validateQuestion()
     };
 
     render() {
