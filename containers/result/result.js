@@ -9,6 +9,7 @@ import indexStyles from '../../styles/index.sass';
 import styles from './index.sass';
 import { CATEGORY } from '../../utils/const.js';
 import { connect } from 'react-redux';
+import Loader from 'components/FullScreenLoader';
 import {
     addQuestion,
     setAdvice,
@@ -25,6 +26,7 @@ class Results extends Component {
         this.state = {
             categories: null,
             currentQuestion: {},
+            isLoading:false,
             modalIsOpen: false,
 
         };
@@ -83,6 +85,7 @@ deleteCategory = (i) => {
 
 }
 next = () => {
+    this.setState({isLoading:true})
     this.props.patchExpense(this.props, this.state.categories);
     Router.push('/askUserDetails')
 };
@@ -100,8 +103,10 @@ ifHousingCategory = (x) => {
 }
     render() {
         const categories = this.state.categories || null
+        const { isLoading } = this.state
         return (
         <div>
+            {renderIf(isLoading)(<Loader />)}
             <Nav
                 usedFor="questions"
                 showQuestionMark={true}

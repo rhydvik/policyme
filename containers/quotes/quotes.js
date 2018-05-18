@@ -42,6 +42,7 @@ export class Navy extends Component {
         this.setState({selectedQuote: company, quote})
     };
     sendQuote = () => {
+        this.setState({isLoading:true})
         this.props.patchQuote({
             quotes: this.state.quote,
             s_id: this.props.s_id

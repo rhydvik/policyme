@@ -25,6 +25,7 @@ export class Navy extends Component {
     }
 
     goToQuotes = () => {
+        this.setState({isLoading:true})
         this.props.patchCoverage({
             s_id: this.props.s_id,
             coverageJson: this.state.coverageJson,
