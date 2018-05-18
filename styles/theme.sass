@@ -4,7 +4,15 @@ $brand-primary-light: #69d0ff
 $brand-grey-light: #eaeaea
 
 .full-width
-  width: 100%
+  width: 100% !important
+.full-width-inner
+  button
+    width: 100%
+.secondary-invert-inner
+  button
+    border:  solid  0.0625rem  rgba(27, 176, 219, 0.3) !important
+    background: rgba(27, 176, 219, 0.05) !important
+    color: #004f78 !important
 .p-m
   padding: 1.31rem
 .no-p-b
@@ -28,6 +36,10 @@ button
     border: 0.0625rem solid rgba(27, 176, 219, 0.3)
     background: rgba(27, 176, 219, 0.05)
     color: $brand-secondary
+  &.secondary-invert
+    border:  solid  0.0625rem  rgba(27, 176, 219, 0.3)
+    background: rgba(27, 176, 219, 0.05)
+    color: $brand-primary
 
 .p-16
   font-size: 1rem !important

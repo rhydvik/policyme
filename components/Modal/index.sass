@@ -6,51 +6,56 @@
   width: 90%
 
 .modalNav
-  height: 8%
+  height: 3.25rem
 
 .popupContainer
-  height: 92%
-  padding: 1rem
+  height: calc(100vh - 3.25rem)
   background-color: #1bb0db
-  p
-    color: white
-    font-size: 1rem
-    font-weight: bold
-    padding: 0 0 1.5rem 0
-  input
-    width: 100%
-    max-width: 100% !important
-    margin-bottom: .6rem
-    height: 3rem
-    border-radius: .1rem
+  .innerContainer
     padding: 1rem
-    color: white
-    font-size: 1.1rem
-    font-weight: bold
-    text-align: left
-    background-color: rgba(255, 255, 255, 0.12)
+    max-width: 31rem
+    margin: auto
+    p
+      color: white
+      font-size: 1.375rem
+      font-weight: bold
+      padding: 0 0 1.5rem 0
+    input
+      width: 100%
+      max-width: 100% !important
+      margin-bottom: .6rem
+      height: 3rem
+      border-radius: .1rem
+      padding: 1rem
+      color: #1bb0db
+      font-size: 1.1rem
+      text-align: left
+      background-color: white
 
-  ::-webkit-input-placeholder
-    text-align: left
-    color: white
+    ::-webkit-input-placeholder
+      text-align: left
+      color: #1bb0db
+      font-size: 1.375rem
 
-  textarea
-    width: 100%
-    margin-bottom: .6rem
-    height: 15rem
-    border-radius: .1rem
-    padding: 1rem
-    color: white
-    font-size: 1.1rem
-    font-weight: bold
-    text-align: left
-    background-color: rgba(255, 255, 255, 0.12)
-  button
-    background-color: white
-    width: 100%
-    color: #1bb0db
-    font-size: 1rem
-    border-radius: .1rem
+
+    textarea
+      width: 100%
+      margin-bottom: .6rem
+      height: 15rem
+      border-radius: .1rem
+      padding: 1rem
+      color: #1bb0db
+      font-size: 1.375rem
+      text-align: left
+      background-color: white
+    button
+      background: none
+      width: 100%
+      height: 3.375rem
+      color: white
+      border: 1px solid white
+      font-size: 1rem
+      border-radius: .1rem
 
 .input
   border: none
@@ -61,4 +66,4 @@
 
 @media (min-width: 767px)
  .ReactModal__Content--after-open
-   padding: 5rem !important
+   //padding: 5rem !important

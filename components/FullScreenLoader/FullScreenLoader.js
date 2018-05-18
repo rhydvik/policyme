@@ -30,6 +30,7 @@ class FullScreenLoader extends Component {
         transform: 'translate(-50%, -50%)',
         background: 'none',
         border: 'none',
+
       },
     };
     const { open, showCloseIcon } = this.state;
@@ -40,7 +41,7 @@ class FullScreenLoader extends Component {
           style={modalStyle}
           showCloseIcon={showCloseIcon} isOpen={open}
         >
-          <CircularProgress />
+            <div className='polic-yme-loader'></div>
         </Modal>
       </div>
     );

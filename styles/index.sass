@@ -59,6 +59,10 @@ button
   border: none
   cursor: pointer
   outline: none
+  transition: background-color 0.5s ease
+  height: 3.375rem
+  &.nextEnabled
+    background-color: #1bb0db
 
 ::-moz-placeholder
   /* Firefox 19+ */
@@ -71,7 +75,7 @@ input[type=number]::-webkit-outer-spin-button
   appearance: none
   margin: 0
 
-//input::-webkit-input-placeholder,
+//input::-webkit-input-placeholder,rightAlignedInputContainer
 //textarea::-webkit-input-placeholder
 //  color: red
 //  text-shadow: red
@@ -197,14 +201,14 @@ input[type=number]::-webkit-outer-spin-button
 
 .inputBorderContainer
   border-top: solid 1px #eaeaea
-  max-width: 300px
+  max-width: 350px
   margin: auto
 
 .rightAlignedInputContainer
   border-bottom: solid 1px #eaeaea
-  max-width: 300px
+  max-width: 350px
   min-height: 3rem
-  padding-bottom: 0
+  padding: 0 1rem
   span
     font-size: .9rem
     font-weight: normal
@@ -217,6 +221,7 @@ input[type=number]::-webkit-outer-spin-button
     display: inline-block
   input
     max-width: 8rem
+
 
 .inputLabel
   width: 49%
@@ -994,3 +999,23 @@ input[type=number]::-webkit-outer-spin-button
     height: 20px
     cursor: pointer
 
+.polic-yme-loader
+  border: 16px solid #f3f3f3
+  border-radius: 50%
+  border-top: 16px solid #3498db
+  width: 120px
+  height: 120px
+  -webkit-animation: spin 2s linear infinite
+  animation: spin 2s linear infinite
+
+@-webkit-keyframes spin
+  0%
+    -webkit-transform: rotate(0deg)
+  100%
+    -webkit-transform: rotate(360deg)
+
+@keyframes spin
+  0%
+    transform: rotate(0deg)
+  100%
+    transform: rotate(360deg)

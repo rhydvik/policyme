@@ -27,20 +27,20 @@ export class Navy extends Component {
             user: this.props.jsonSkeleton,
             coverageJson: this.props.coverageJson,
             s_id: this.props.s_id
-        })
+        });
         this.setState({quote: this.props.quote})
     }
 
     selectQuote = (company) => {
-        const { quote } = this.state
+        const { quote } = this.state;
         quote.map((x) => {
-            x.selected = false
+            x.selected = false;
             if (x.company === company) {
                 x.selected = true
             }
-        })
+        });
         this.setState({selectedQuote: company, quote})
-    }
+    };
     sendQuote = () => {
         this.props.patchQuote({
             quotes: this.state.quote,
@@ -53,14 +53,14 @@ export class Navy extends Component {
     goBack = () => {
         Router.push('/coverages');
     };
-    validated = () => { return this.state.selectedQuote }
+    validated = () => { return this.state.selectedQuote };
 
     render() {
         const {selectedQuote, isLoading} = this.state;
         const ifHaveCoverage =  Object.keys(this.props.coverageJson).length
         const term = ifHaveCoverage ? this.props.coverageJson.user.term : null
         const coverage = ifHaveCoverage ? this.props.coverageJson.options[0].selected ? this.props.coverageJson.options[0].amt : this.props.coverageJson.options[1].amt : null
-        const { quote } = this.state
+        const { quote } = this.state;
         return (
             <div className={styles.mainBox}>
                 {renderIf(isLoading)(<Loader />)}
@@ -68,8 +68,7 @@ export class Navy extends Component {
                     usedFor="questions"
                     showQuestionMark={true}
                     showHeader={false}
-                    openModal={this.openModal}
-                >
+                    openModal={this.openModal}>
                     <img src="/static/images/questions/question.svg" onClick={this.openModal}/>
                 </Nav>
                 <div className='app-container'>
@@ -123,10 +122,10 @@ export class Navy extends Component {
                     </div>
                     <br/>
                     <div className='sub-container columns is-mobile'>
-                        <div className='column'>
-                            <Button label="RESET" className='full-width secondary-button'/>
+                        <div className='column full-width-inner secondary-invert-inner'>
+                            <Button label="RESET" className='full-width secondary-invert'/>
                         </div>
-                        <div className='column'>
+                        <div className='column full-width-inner'>
                             <Button label="SUBMIT" className='full-width'/>
                         </div>
                     </div>

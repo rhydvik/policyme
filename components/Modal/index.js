@@ -37,23 +37,26 @@ class PopUp extends Component {
                       </Nav>
                   </div>
                     <div className={styles.popupContainer}>
-                        <p>Questions? ... Leave them here. </p>
-                        <input
-                            className={styles.input}
-                            placeholder="Name"
-                            onChange={(e) => console.log(e) }/>
+                        <div className='innerContainer'>
+                            <p>Questions? ... Leave them here. </p>
+                            <input
+                                className={styles.input}
+                                placeholder="Name"
+                                onChange={(e) => console.log(e) }/>
 
-                        <input
-                        className={styles.input}
-                        placeholder="Email"
-                        onChange={(e) => console.log(e) }/>
+                            <input
+                                className={styles.input}
+                                placeholder="Email"
+                                onChange={(e) => console.log(e) }/>
 
-                        <textarea
-                            className={styles.input}
-                            placeholder="Your Question..."
-                            onChange={(e) => console.log(e) }/>
+                            <textarea
+                                className={styles.input}
+                                placeholder="Your Question..."
+                                onChange={(e) => console.log(e) }/>
 
-                        <Button   label='Submit' />
+                            <Button   label='Submit' />
+                        </div>
+
                     </div>
                 </div>
             </Modal>
