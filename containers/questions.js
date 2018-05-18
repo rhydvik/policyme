@@ -147,15 +147,14 @@ class Questions extends Component {
                         this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1], validated: false});
                     }
 
-
-                } else {
+                    } else if(qi < allQuestions.length -1) {
                     this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1], validated: false});
                 }
             this.props.addQuestion({qi, question: allQuestions[qi + 1]});
             if (this.state.currentQuestion.last) {
                 this.props.populateJson(this.props.questions);
                 this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id });
-                Router.push('/expenses', {data: ['a']});
+                Router.push('/expenses');
                 this.setState({ isLoading: true });
             }
         }
@@ -421,7 +420,11 @@ class Questions extends Component {
                     label: `Child ${noOfChild}`,
                     value: '',
                     placeholder: 'age',
-                    addon: true
+                    addon: true,
+                    validationRules: {
+                      minimum: 1,
+                      maximum: 50,
+                    }
                 }
 
 
@@ -433,6 +436,7 @@ class Questions extends Component {
                 currentQuestion.subQuestion[0].inputs.push(inputs)
             }
         this.setState({currentQuestion})
+        this.validateQuestion()
     };
     addOn = (question) => {
         return (
@@ -488,7 +492,6 @@ const mapDispatchToProps = {
     populateJson,
     sendPopulatedJson,
     updateQuestion,
-    removeQuestionUpdated
 };
 
 
