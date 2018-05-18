@@ -23,7 +23,6 @@ const questions = [
                 }
             }
         ],
-        infoText: 'Men and woman have different life expectancies and therefore insurers take gender into account when pricing life insurance policies.'
     },
     {
         question: 'What is your gender?',
@@ -286,6 +285,9 @@ const questions = [
         question: 'Do you have any family savings or investments?',
         name: 'savingsOrInvestment',
         type: 'BUTTON',
+        exception: {
+            question: 'yesNoButtons'
+        },
         category: 'finances',
         json_key: 'savings',
         inputs: [
@@ -326,6 +328,9 @@ const questions = [
         question: 'Do you have any debts?\n',
         name: 'debts',
         last:true,
+        exception: {
+            question: 'yesNoButtons'
+        },
         category: 'finances',
         json_key:'debts',
         type: 'BUTTON',
