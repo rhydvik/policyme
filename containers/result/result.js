@@ -30,46 +30,76 @@ class Results extends Component {
         };
     }
 componentDidMount () {
-    this.props.setExpense('ad');
-}
-componentWillReceiveProps (newProps) {
-    console.log('AKJSDOIW',newProps)
-    if (newProps.expense.user) {
-        const categories = newProps.expense.user.expenses.categories
+    if(this.props.expense.default) {
+        const categories = this.props.expense.default.expenses.categories
         this.setState ({ categories})
     }
 }
-handleInput = (e) => {
+handleInput = (e, i) => {
     let {categories} = this.state
-
-        categories[e.target.name] = parseInt(e.target.value)
+        if (e.target.name === 'housing') {
+            categories[e.target.name].rent.monthly_payment = parseInt(e.target.value)
+        } else if(e.target.name === 'other' ){
+            categories.other[i].amount = parseInt(e.target.value)
+        }else {
+            categories[e.target.name] = parseInt(e.target.value)
+        }
 
     this.setState({categories})
 }
 addCategory = () => {
     let {categories} = this.state
-    categories = {...categories, ...{[`category${Object.keys(categories).length}`]: 0}}
+    const { other } = categories
+    categories.other.push({type:`category ${other.length + 1}`, amount: 0})
     this.setState({categories})
 }
-monthlyExpense = () => {
-    const { categories } = this.state
-    return Object.keys(categories).reduce((acc,cur)=>{
-        if(cur !== 'other') {
+monthlyExpense = (categories) => {
+    let sum = 0;
+    if(categories) {
+        sum =  Object.keys(categories).reduce((acc,cur)=>{
+        if(cur !== 'other' && cur !== 'housing') {
             acc += + categories[cur]
+        }
+        if (cur === 'housing') {
+            acc += + categories[cur].rent.monthly_payment
         }
         return acc
     }, 0)
+
+    sum += categories.other.reduce((acc,cur)=>{
+            acc += + cur.amount
+        return acc
+    }, 0)
+    return sum
+}
+}
+deleteCategory = (i) => {
+    const { categories } = this.state
+    categories.other.splice(i,1)
+    categories.other.map((x,j) => {
+        x.type = `category ${j+1}`
+    } )
+    this.setState({categories})
+
 }
 next = () => {
-    this.props.patchExpense(this.props.expense, this.state.categories);
+    this.props.patchExpense(this.props, this.state.categories);
     Router.push('/askUserDetails')
 };
+ifHousingCategory = (x) => {
+        return <div className={styles.rightAlignedInputContainer}>
+                              <span>
+                                {CATEGORY[x] || x }
+                              </span>
+                                <input type ="text"
+                                className="input"
+                                value={this.state.categories[x].rent.monthly_payment}
+                                name={x}
+                                onChange={this.handleInput}/>
+                          </div>
+}
     render() {
-        console.log(this.props);
-
-        const { expense } = this.props;
-        const {categories} = this.state;
-        const ifExpense = renderIf(Object.keys(expense).length && expense.user);
+        const categories = this.state.categories || null
         return (
         <div>
             <Nav
@@ -92,44 +122,63 @@ next = () => {
                             If a category looks off, feel free to revise.
                         </p>
                     </div>
-                    <div className={styles.inputBorderContainer}>
-                        {Object.keys(categories).map(x =>
-                            <div>
-                                {x !== 'other' ?
-                                    <div className={styles.rightAlignedInputContainer}>
+                </div>
+
+                <div className={styles.inputBorderContainer}>
+                    {Object.keys(categories).map(x =>
+                      <div>
+                        {x !== 'other' ?
+                        x === 'housing' ? this.ifHousingCategory (x) : <div className={styles.rightAlignedInputContainer}>
                               <span>
                                 {CATEGORY[x] || x }
                               </span>
-                                        <input type ="text"
-                                               className="input"
-                                               value={categories[x]}
-                                               name={x}
-                                               onChange={this.handleInput}/>
-                                    </div>
-                                    : '' }
-                            </div>
-                        )}
-                    </div>
-                    <div className={styles.addOnButton}  >
-                        <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
-                    </div>
-                    <div className={styles.expensesContainer} >
-                        <div className={styles.expenses}>
-                            <div>
-                                <label>Monthly Expenses:</label> <span> {this.monthlyExpense()}</span>
-                            </div>
-                            <div>
-                                <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
-                            </div>
+                                <input type ="text"
+                                className="input"
+                                value={categories[x]}
+                                name={x}
+                                onChange={(e) => this.handleInput(e)}/>
+                          </div>
+                        : ''
+                         }
+                      </div>
+                    )}
+                         {categories.other && categories.other.length ?                         <div>
+                            {categories.other.map((y,i) => <div className={styles.rightAlignedInputContainer}>
+                              <span>
+                                <button onClick={()=>this.deleteCategory(i)}  className="negative">-</button>
+                                {y.type}
+                              </span>
+                                <input type ="text"
+                                className="input"
+                                value={y.amount}
+                                name='other'
+                                onChange={(e)=>this.handleInput(e, i)}/>
+                          </div>)}
+                        </div>: ''}
+                </div>
+                <div className={styles.addOnButton}  >
+                    <button className={styles.buttonBox} onClick={this.addCategory} >+ Add Category</button>
+                </div>
+                <div className={styles.expensesContainer} >
+                    <div className={styles.expenses}>
+                        <div>
+                           <label>Monthly Expenses:</label> <span> {this.monthlyExpense(categories)}</span>
+                        </div>
+                        <div>
+                           <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
+
                         </div>
                     </div>
-                    <div className={styles.buttonContainer}>
-                        <Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />
-                    </div>
+                    {/*<div className={styles.buttonContainer}>*/}
+                        {/*<Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />*/}
+                    {/*</div>*/}
                 </div>
                </div>
              : ''}
 
+             <div className={styles.buttonContainer}>
+                 <Button label="NEXT" onClick={() => this.next()} />
+             </div>
              </div>
             )
     }

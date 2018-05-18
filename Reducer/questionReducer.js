@@ -1,4 +1,5 @@
 import * as actionTypes from 'utils/actionTypes';
+import questionsFromConstants from '../constants/questions';
 
 const initialState = {
     questions: [],
@@ -6,7 +7,10 @@ const initialState = {
     jsonSkeleton: {},
     expense: {},
     coverageJson:{},
-    quote: []
+    quote: [],
+    allQuestions: questionsFromConstants,
+    fixedQuestions: questionsFromConstants,
+    questionUpdated: false,
 };
 
 
@@ -17,29 +21,32 @@ function populateFamily (family, json) {
     if(x !== undefined){
     switch(x.json_key) {
       case 'userAge':
-        json.user.age = x.inputs[0].value
+        json.family.user.age = x.inputs[0].value
         break;
       case 'userGender':
-        json.user.gender = buttonValue(x.inputs).label
+        json.family.user.gender = buttonValue(x.inputs).label
         break;
       case 'healthIssue':
-        json.user.health_issues = buttonValue(x.inputs).label
+        json.family.user.health_issues = buttonValue(x.inputs).label
         break;
       case 'smoke':
-        json.user.use_tobacco = buttonValue(x.inputs).label
+        json.family.user.use_tobacco = buttonValue(x.inputs).label === 'Yes' ? true : false
         break;
       case 'userIncome':
-        json.user.income = x.inputs[0].value  
+        json.finances.user.income = x.inputs[0].value
         break;
       case 'children':
-        if(x.subQuestion.length) { json.children = makeChildren(x.subQuestion[0].inputs) }
+        if(x.subQuestion.length) { json.family.children = makeChildren(x.subQuestion[0].inputs) }
         break;
       case 'spouse':
         json.spouse = makeSpouse(x)
         break;
+      case 'spouseIncome':
+        json.finances.spouse.income = x.inputs[1].value
+        break;
       default:
         return false
-        
+
     }
   }
   })
@@ -51,21 +58,21 @@ function populateFinance (finances, json) {
     if(x !== undefined){
     switch(x.json_key) {
       case 'debts':
-        json.debts = buttonValue(x.inputs).label === 'Yes' ? makeDebts(x.subQuestion[0]) : json.debts
+        json.shared.debts = buttonValue(x.inputs).label === 'Yes' ? makeDebts(x.subQuestion[0]) : json.shared.debts
         break;
       case 'mortage':
       if (buttonValue(x.inputs).label === 'Rent' ) {
-        json.expenses.mortgage_or_rent = makeRent(x.subQuestion[0])
+        json.shared.expenses.rent = makeRent(x.subQuestion[0])
       } else {
-        json.mortgage = makeMortage(x.subQuestion[1])
+        json.shared.debts.mortgage = makeMortage(x.subQuestion[1])
       }
         break;
-      case 'savings':
-        json.savings = buttonValue(x.inputs).label === 'Yes' ? makeSavings(x.subQuestion[0]) : json.savings
-        break;
+      // case 'savings':
+      //   json.savings = buttonValue(x.inputs).label === 'Yes' ? makeSavings(x.subQuestion[0]) : json.savings
+      //   break;
       default:
         return false
-        
+
     }
   }
   })
@@ -100,10 +107,10 @@ function makeDebts (inputs) {
     credit_line: input[3].value,
     home_equity_loans: input[2].value,
     student_loans: input[1].value,
-    other: [],
+    other: input[4].value,
 
   }
-} 
+}
 function makeRent (inputs) {
   return inputs.inputs[0].value
 }
@@ -116,96 +123,51 @@ function makeSavings (inputs) {
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_QUESTION:
-    const { qi, question } = action.payload
-      state.questions[qi] = question
+    const { qi, question } = action.payload;
+      state.questions[qi] = question;
+      state.questionUpdated = false;
       return { ...state };
-      break;
+
     case actionTypes.SET_SESSION_ID:
-      return { ...state, s_id: action.payload.id }
-      break;
+      return { ...state, s_id: action.payload.id };
+
     case actionTypes.SET_SKELETON_JSON:
-      return { ...state, jsonSkeleton: action.payload }
-      break;
+      return { ...state, jsonSkeleton: action.payload };
+
     case actionTypes.POPULATE_JSON:
-      console.log(action.payload)
-      const json = state.jsonSkeleton
-      const { payload } = action
+      console.log(action.payload);
+      let json = state.jsonSkeleton;
+      const { payload } = action;
       const family = payload.map((x) => {
         if (x !== undefined  && x.category === 'family') {
           return x
         }
-      })
-      json.family = populateFamily(family, json.family)
+      });
+      json = populateFamily(family, json);
       const finances = payload.map((x) => {
         if (x !== undefined  && x.category === 'finances') {
-          return x
+          return x;
         }
-      })
-      json.finances = populateFinance(finances, json.finances)
-      console.log('ASJKDOEIOWEUROIUWE(*#@$',json)
-      return { ...state, jsonSkeleton: json }
-      break;
+      });
+      json.finances = populateFinance(finances, json.finances);
+      return { ...state, jsonSkeleton: json };
+
     case actionTypes.SET_EXPENSE:
-    const p = {
-      "default": {
-          "expenses": {
-              "categories": {
-                  "clothing": 0,
-                  "discretionary": 700,
-                  "education": 600,
-                  "food": 500,
-                  "health_care": 400,
-                  "housing_costs": 200,
-                  "mortgage_or_rent": 100,
-                  "other": [],
-                  "transportation": 300
-              },
-              "max": 20000,
-              "min": 19000
-          },
-          "savings": {
-              "max": 6000
-          }
-      },
-      "user": {
-          "expenses": {
-              "categories": {
-                  "clothing": 0,
-                  "discretionary": 700,
-                  "education": 600,
-                  "food": 500,
-                  "health_care": 400,
-                  "housing_costs": 200,
-                  "mortgage_or_rent": 100,
-                  "other": [
-                      {
-                          "amount": 20,
-                          "type": "additional1"
-                      },
-                      {
-                          "amount": 10,
-                          "type": "additional2"
-                      }
-                  ],
-                  "transportation": 300
-              },
-              "max": 21000,
-              "min": 19500
-          },
-          "savings": {
-              "max": 6500
-          }
-      }
-  }
-      return { ...state, expense: p}
-      break;
+
+      return { ...state, expense: action.payload};
+
 
     case actionTypes.SET_COVERAGE_JSON:
-      return { ...state, coverageJson: action.payload} 
-      break;
+      return { ...state, coverageJson: action.payload};
+
     case actionTypes.SET_QUOTE:
-      return { ...state, quote: action.payload} 
-      break;
+      return { ...state, quote: action.payload};
+
+      case 'UPDATE_QUESTION':
+        return { ...state, allQuestions: action.question, questionUpdated: true };
+
+      case 'UPDATE_QUESTION_UPDATED_VALUE':
+        return { ...state, questionUpdated: false };
     default:
       return state;
   }
