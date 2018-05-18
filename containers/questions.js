@@ -17,7 +17,6 @@ import {
     populateJson,
     sendPopulatedJson,
     updateQuestion,
-    removeQuestionUpdated,
 } from '../Actions'
 
 
@@ -122,7 +121,6 @@ class Questions extends Component {
                     if (currentQuestion.inputs[0].value !== null) {
                         let temp =  []
                         temp = this.props.fixedQuestions.slice(0);
-                        console.log('temp', temp);
                         temp.splice(4, 1);
                         temp.splice(4, 1);
                         temp.splice(7,1);
@@ -132,7 +130,6 @@ class Questions extends Component {
                     } else if (currentQuestion.inputs[1].value !== null) {
                         let temp = [];
                         temp = this.props.fixedQuestions.slice(0);
-                        console.log('temp', temp);
                         temp.splice(4, 1);
                         temp.splice(8, 1);
                         this.props.updateQuestion(temp);
@@ -140,7 +137,6 @@ class Questions extends Component {
                     } else if (currentQuestion.inputs[2].value !== null) {
                         let temp = [];
                         temp = this.props.fixedQuestions.slice(0);
-                        console.log('temp', temp);
                         temp.splice(5, 1);
                         this.props.updateQuestion(temp);
                         this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1], validated: false })
@@ -149,14 +145,14 @@ class Questions extends Component {
                     }
 
 
-                } else {
+                } else if(qi < allQuestions.length -1) {
                     this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1], validated: false});
                 }
             this.props.addQuestion({qi, question: allQuestions[qi + 1]});
             if (this.state.currentQuestion.last) {
                 this.props.populateJson(this.props.questions);
                 this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id });
-                Router.push('/expenses', {data: ['a']});
+                Router.push('/expenses');
                 this.setState({ isLoading: true });
             }
         }
@@ -253,33 +249,38 @@ class Questions extends Component {
     };
 
     getSubQuestion = (question) => {
-        if (question.subQuestion === undefined) return;
-        const { currentQuestion } = this.state;
-        if(currentQuestion.addOn && currentQuestion.subQuestion.length ) {
-            const subQuestion = currentQuestion.subQuestion;
-                 return subQuestion.map(x=>
-                     <div style={{ maxWidth: '300px', margin: 'auto' }}>
-                         {x.question}
-                         {this.getInputOptions(x)}
+        console.log('sub question', question);
+        if(question !== undefined) {
+            if (question.subQuestion === undefined) return;
+            const {currentQuestion} = this.state;
+            if (currentQuestion.addOn && currentQuestion.subQuestion.length) {
+                const subQuestion = currentQuestion.subQuestion;
+                return subQuestion.map(x =>
+                    <div style={{maxWidth: '300px', margin: 'auto'}}>
+                        {x.question}
+                        {this.getInputOptions(x)}
                     </div>)
-        }
-        const subQuestion = currentQuestion.subQuestion;
-        for (let i = 0; i < currentQuestion.inputs.length; i++) {
-            // //debugger;
-            const currentInputValue = currentQuestion.inputs[i].value;
-            if (currentInputValue !== null && currentInputValue !== '') {
-                let qindex = 0;
-                if(currentQuestion.type === 'BUTTON' && currentQuestion.subQuestion) {
-                    if(currentQuestion.inputs[i].subQuestionOpen !== undefined) {
-                        qindex = currentQuestion.inputs[i].subQuestionOpen
-                    } else { return false; }
+            }
+            const subQuestion = currentQuestion.subQuestion;
+            for (let i = 0; i < currentQuestion.inputs.length; i++) {
+                // //debugger;
+                const currentInputValue = currentQuestion.inputs[i].value;
+                if (currentInputValue !== null && currentInputValue !== '') {
+                    let qindex = 0;
+                    if (currentQuestion.type === 'BUTTON' && currentQuestion.subQuestion) {
+                        if (currentQuestion.inputs[i].subQuestionOpen !== undefined) {
+                            qindex = currentQuestion.inputs[i].subQuestionOpen
+                        } else {
+                            return false;
+                        }
+                    }
+                    return (
+                        <div>
+                            <span className='question-title-text'>{subQuestion[qindex].question}</span>
+                            {this.getInputOptions(subQuestion[qindex])}
+                        </div>
+                    )
                 }
-                return (
-                    <div>
-                        <span className='question-title-text'>{subQuestion[qindex].question}</span>
-                        {this.getInputOptions(subQuestion[qindex])}
-                    </div>
-                )
             }
         }
     };
@@ -289,6 +290,14 @@ class Questions extends Component {
         if (currentQuestion.overrideValidation !== undefined) {
             this.setState({ validated: true });
             return true
+        }
+        if(currentQuestion.exception !== undefined) {
+            if(currentQuestion.exception.question === 'yesNoButtons'){
+                if(currentQuestion.inputs[1].value !== null){
+                    this.setState({ validated: true });
+                    return true
+                }
+            }
         }
         switch (currentQuestion.type) {
             case 'BUTTON':
@@ -447,6 +456,7 @@ class Questions extends Component {
                 >
                   <img src="/static/images/questions/question.svg"/>
                 </Nav>
+
                 {this.getCurrentQuestion(currentQuestion)}
                 {/* {question.subQuestion ? this.getSubQuestion(question[this.state.questionIndex]) : ''} */}
                 {this.getSubQuestion(currentQuestion)}
@@ -469,7 +479,6 @@ const mapDispatchToProps = {
     populateJson,
     sendPopulatedJson,
     updateQuestion,
-    removeQuestionUpdated
 };
 
 
