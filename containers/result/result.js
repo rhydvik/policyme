@@ -70,7 +70,7 @@ monthlyExpense = (categories) => {
             acc += + cur.amount
         return acc
     }, 0)
-    return sum
+    return sum;
 }
 }
 deleteCategory = (i) => {
@@ -145,7 +145,7 @@ ifHousingCategory = (x) => {
                          {categories.other && categories.other.length ?                         <div>
                             {categories.other.map((y,i) => <div className={styles.rightAlignedInputContainer}>
                               <span>
-                                <button onClick={()=>this.deleteCategory(i)}  className="negative">-</button>
+                                <button onClick={()=>this.deleteCategory(i)}  className="negative">-</button> 
                                 {y.type}
                               </span>
                                 <input type ="text"
@@ -166,16 +166,11 @@ ifHousingCategory = (x) => {
                         </div>
                         <div>
                            <label>Implied Annual Savings:</label> <span>{this.props.expense.user.savings.max}</span>
-
                         </div>
                     </div>
-                    {/*<div className={styles.buttonContainer}>*/}
-                        {/*<Button label="NEXT" onClick={() => Router.push('/askUserDetails')} />*/}
-                    {/*</div>*/}
                 </div>
                </div>
              : ''}
-
              <div className={styles.buttonContainer}>
                  <Button label="NEXT" onClick={() => this.next()} />
              </div>

@@ -288,7 +288,7 @@ export class Navy extends Component {
                             {/*onChange={this.handleInput} />*/}
                         </div>
                     </div>
-                    <Button label="Next" onClick={() => this.goToQuotes()} buttonStyle={this.validated() ? styles.nextEnabled : styles.nextDisabled} />
+                    <Button label="Next" onClick={this.validated() ? () => this.goToQuotes() : () =>{}} buttonStyle={this.validated() ? styles.nextEnabled : styles.nextDisabled} />
                 </div> : ''}
             </div>
 

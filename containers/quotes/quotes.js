@@ -142,7 +142,7 @@ export class Navy extends Component {
                                     <div className=''><label>${x.premiums} <br/> per Month </label></div>
                                 </div>
                             ) : '' }
-                        <Button label="Next" onClick={() => this.sendQuote()} buttonStyle={this.validated() ? styles.nextEnabled : styles.nextDisabled} />
+                        <Button label="Next" onClick={this.validated() ? () => this.sendQuote() : ()=> {}} buttonStyle={this.validated() ? styles.nextEnabled : styles.nextDisabled} />
                     </div>
                 </div>
             </div>
