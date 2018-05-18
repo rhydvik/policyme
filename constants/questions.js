@@ -19,7 +19,7 @@ const questions = [
                 placeholder: 'Age',
                 validationRules: {
                     minimum: 18,
-                    maximum: 60,
+                    maximum: 99,
                 }
             }
         ],
@@ -85,7 +85,7 @@ const questions = [
                 placeholder: 'Age',
                 validationRules: {
                     minimum: 18,
-                    maximum: 60,
+                    maximum: 99,
                 }
             }
         ],
@@ -175,8 +175,8 @@ const questions = [
                 value: '',
                 placeholder: '$',
                 validationRules: {
-                    minimum: 100,
-                    maximum: 6000,
+                    minimum: 1,
+                    maximum: 999999999,
                 }
             }
         ],
@@ -196,7 +196,7 @@ const questions = [
                 placeholder: '$',
                 validationRules: {
                     minimum: 1,
-                    maximum: 6000,
+                    maximum: 99999999,
                 }
             },
             {
@@ -205,7 +205,7 @@ const questions = [
                 placeholder: '$',
                 validationRules: {
                     minimum: 1,
-                    maximum: 60000,
+                    maximum: 99999999,
                 }
             }
         ],
@@ -245,7 +245,7 @@ const questions = [
                         placeholder: '$',
                         validationRules: {
                             minimum: 1,
-                            maximum: 6000,
+                            maximum: 99999999,
                         }
                     },
                 ],
@@ -264,7 +264,7 @@ const questions = [
                         placeholder: '$',
                         validationRules: {
                             minimum: 1,
-                            maximum: 6000,
+                            maximum: 99999999,
                         }
                     },
                     {
@@ -274,7 +274,7 @@ const questions = [
                         placeholder: '$',
                         validationRules: {
                             minimum: 1,
-                            maximum: 6000,
+                            maximum: 99999999,
                         }
                     }
                 ],
@@ -351,27 +351,47 @@ const questions = [
                     {
                         label: 'Credit cards',
                         value: '',
-                        placeholder: '$'
+                        placeholder: '$',
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 99999999,
+                        }
                     },
                     {
                         label: 'Student loans',
                         value: '',
-                        placeholder: '$'
+                        placeholder: '$',
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 99999999,
+                        }
                     },
                     {
                         label: 'Home equity loans',
                         value: '',
-                        placeholder: '$'
+                        placeholder: '$',
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 99999999,
+                        }
                     },
                     {
                         label: 'Lines of credit',
                         value: '',
-                        placeholder: '$'
+                        placeholder: '$',
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 99999999,
+                        }
                     },
                     {
                         label: 'Other',
                         value: '',
-                        placeholder: '$'
+                        placeholder: '$',
+                        validationRules: {
+                            minimum: 1,
+                            maximum: 99999999,
+                        }
                     },
                 ],
                 infoText: 'Only include if you typically carry a balance',

@@ -1,4 +1,5 @@
 import * as actionTypes from 'utils/actionTypes';
+import questionsFromConstants from '../constants/questions';
 
 const initialState = {
     questions: [],
@@ -6,7 +7,10 @@ const initialState = {
     jsonSkeleton: {},
     expense: {},
     coverageJson:{},
-    quote: []
+    quote: [],
+    allQuestions: questionsFromConstants,
+    fixedQuestions: questionsFromConstants,
+    questionUpdated: false,
 };
 
 
@@ -29,7 +33,7 @@ function populateFamily (family, json) {
         json.family.user.use_tobacco = buttonValue(x.inputs).label === 'Yes' ? true : false
         break;
       case 'userIncome':
-        json.finances.user.income = x.inputs[0].value  
+        json.finances.user.income = x.inputs[0].value
         break;
       case 'children':
         if(x.subQuestion.length) { json.family.children = makeChildren(x.subQuestion[0].inputs) }
@@ -42,7 +46,7 @@ function populateFamily (family, json) {
         break;
       default:
         return false
-        
+
     }
   }
   })
@@ -68,7 +72,7 @@ function populateFinance (finances, json) {
       //   break;
       default:
         return false
-        
+
     }
   }
   })
@@ -106,7 +110,7 @@ function makeDebts (inputs) {
     other: input[4].value,
 
   }
-} 
+}
 function makeRent (inputs) {
   return inputs.inputs[0].value
 }
@@ -119,46 +123,51 @@ function makeSavings (inputs) {
 export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_QUESTION:
-    const { qi, question } = action.payload
-      state.questions[qi] = question
+    const { qi, question } = action.payload;
+      state.questions[qi] = question;
+      state.questionUpdated = false;
       return { ...state };
-      break;
+
     case actionTypes.SET_SESSION_ID:
-      return { ...state, s_id: action.payload.id }
-      break;
+      return { ...state, s_id: action.payload.id };
+
     case actionTypes.SET_SKELETON_JSON:
-      return { ...state, jsonSkeleton: action.payload }
-      break;
+      return { ...state, jsonSkeleton: action.payload };
+
     case actionTypes.POPULATE_JSON:
-      console.log(action.payload)
-      let json = state.jsonSkeleton
-      const { payload } = action
+      console.log(action.payload);
+      let json = state.jsonSkeleton;
+      const { payload } = action;
       const family = payload.map((x) => {
         if (x !== undefined  && x.category === 'family') {
           return x
         }
-      })
-      json = populateFamily(family, json)
+      });
+      json = populateFamily(family, json);
       const finances = payload.map((x) => {
         if (x !== undefined  && x.category === 'finances') {
-          return x
+          return x;
         }
-      })
-      json.finances = populateFinance(finances, json.finances)
-      console.log('ASJKDOEIOWEUROIUWE(*#@$',json)
-      return { ...state, jsonSkeleton: json }
-      break;
+      });
+      json.finances = populateFinance(finances, json.finances);
+      return { ...state, jsonSkeleton: json };
+
     case actionTypes.SET_EXPENSE:
-  
-      return { ...state, expense: action.payload}
-      break;
+
+      return { ...state, expense: action.payload};
+
 
     case actionTypes.SET_COVERAGE_JSON:
-      return { ...state, coverageJson: action.payload} 
-      break;
+      return { ...state, coverageJson: action.payload};
+
     case actionTypes.SET_QUOTE:
-      return { ...state, quote: action.payload} 
-      break;
+      return { ...state, quote: action.payload};
+
+      case 'UPDATE_QUESTION':
+        return { ...state, allQuestions: action.question, questionUpdated: true };
+
+      case 'UPDATE_QUESTION_UPDATED_VALUE':
+        return { ...state, questionUpdated: false };
     default:
       return state;
   }

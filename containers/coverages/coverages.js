@@ -78,10 +78,10 @@ export class Navy extends Component {
             }
         } else {
             if (term > this.state.min) {
-                user.term = coverageJson.user.term -1  
-            } 
+                user.term = coverageJson.user.term -1
+            }
         }
-        
+
         this.setState({coverageJson}, ()=>console.log(coverageJson.user.term))
     }
     validated = () => {
@@ -95,7 +95,7 @@ export class Navy extends Component {
         let existing;
         if (coverageJson && Object.keys(coverageJson).length) {
             addtl = coverageJson.user.addtl
-            existing = coverageJson.user.existing            
+            existing = coverageJson.user.existing
         }
     const { lifeStyle, transition, own, isLoading } = this.state;
         return (
@@ -128,47 +128,49 @@ export class Navy extends Component {
                     <div className={cn('columns', styles.recommendedPolicies)}>
                         <div className={cn('column', styles.recommendedPolicyBox)}>
                             <div onClick={()=>this.getBoxCLass('lifeStyle')} className={lifeStyle ? styles.selectedPolicyBox : styles.policyBox}>
-                                <p className={'app-texts headings ' + (lifeStyle ? 'invert' : '' )}>LifeStyle Protection</p>
+                                <p className={'app-texts headings ' + (lifeStyle ? '' : '' )}>LifeStyle Protection</p>
                                 <br/>
-                                <p className={'app-texts sub-text ' + (lifeStyle ? 'invert' : '' )}>
+                                <p className={'app-texts sub-text ' + (lifeStyle ? '' : '' )}>
                                     Choose this option if you want your family to be
                                     able to maintain their life style if you are no longer around.</p>
-                                <p className={styles.quoteMessage}> $ {coverageJson.options[0].amt}</p>
-                                <p className={styles.quoteMessage}>$ {coverageJson.options[0].premiums} / month</p>
+
+                                <br/>
+                                <p className={'app-texts headings ' + (lifeStyle ? '' : '' )}>$1,000,000 coverage</p>
+                                <p className={'app-texts headings ' + (lifeStyle ? '' : '' )}>$70 - $80 / month</p>
                             </div>
                             <a className={styles.questionText} onClick={this.openModal}>
-                                <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
+                                <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '-1rem'}}>
                                     why should i pick this option?
                                 </p>
-                                <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}}
+                                <img style={{height: '24px', marginTop:'-1rem', marginLeft: '10px'}}
                                      src="/static/images/questions/question.svg"  onClick={this.openModal} />
                             </a>
                         </div>
 
                         <div className={cn('column',styles.recommendedPolicyBox)}>
                             <div onClick={()=>this.getBoxCLass('transition')} className={transition ? styles.selectedPolicyBox : styles.policyBox} >
-                                <p className={'app-texts headings ' + (transition ? 'invert' : '' )}>Transition Protection</p>
+                                <p className={'app-texts headings ' + (transition ? '' : '' )}>Transition Protection</p>
                                 <br/>
-                                <p className={'app-texts sub-text ' + (transition ? 'invert' : '' )}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
+                                <p className={'app-texts sub-text ' + (transition ? '' : '' )}>Choose this option if you think your family will be able to adjust to your lost income after a few years.</p>
                                 <br/>
-                                <p className={'app-texts headings '+ (transition ? 'invert' : '' )}>$500,000 coverage</p>
-                                <p className={'app-texts headings ' + (transition ? 'invert' : '' )}>$35 - $40 / month</p>
+                                <p className={'app-texts headings '+ (transition ? '' : '' )}>$500,000 coverage</p>
+                                <p className={'app-texts headings ' + (transition ? '' : '' )}>$35 - $40 / month</p>
                             </div>
                             <a className={styles.questionText} onClick={this.openModal}>
-                                <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '2rem'}}>
+                                <p style={{textAlign:'right', fontSize: '0.8rem', width: '100%', marginTop: '-1rem'}}>
                                     why should i pick this option?
                                 </p>
-                                <img style={{height: '24px', marginTop:'2rem', marginLeft: '10px'}}
+                                <img style={{height: '24px', marginTop:'-1rem', marginLeft: '10px'}}
                                      src="/static/images/questions/question.svg"  onClick={this.openModal} />
                             </a>
                         </div>
                         <div className={cn('column',styles.recommendedPolicyBox)}>
                             <div onClick={()=>this.getBoxCLass('own')} className={own ? styles.selectedPolicyBox : styles.policyBox} >
-                                <p className={'app-texts headings ' + (own ? 'invert' : '' )}>Choose Your Own</p>
+                                <p className={'app-texts headings ' + (own ? '' : '' )}>Choose Your Own</p>
                                 <br/>
-                                <p className={'app-texts sub-text ' + (own ? 'invert' : '' )}>Choose this option if you'd like to customize your coverage.</p>
+                                <p className={'app-texts sub-text ' + (own ? '' : '' )}>Choose this option if you'd like to customize your coverage.</p>
                                 <br/>
-                                <p className={'app-texts headings ' + (own ? 'invert' : '' )}>Coverage</p>
+                                <p className={'app-texts headings ' + (own ? '' : '' )}>Coverage</p>
                                 <input
                                     className={styles.input}
                                     value={coverageJson.options[1].amt}

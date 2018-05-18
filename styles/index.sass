@@ -11,7 +11,7 @@
 @import '~bulma/sass/components/navbar'
 @import '~bulma/sass/layout/_all'
 @import '~bulma/sass/grid/columns'
-
+@import "theme"
 @import 'utilities/typography'
 
 @import '../components/Button/index'
@@ -23,6 +23,9 @@
 
 .undefined
   border: 1px solid red !important
+
+.border-radius
+  border-radius: 0.25rem
 
 html
   height: 100%
@@ -126,11 +129,12 @@ input[type=number]::-webkit-outer-spin-button
     width: 95%
 
 .selectedButton
-  background-color: #1bb0db
+  background-color: rgba(27, 176, 219, 0.2)
   width: 40%
   margin: 10px
-  color: white
+  color: #004f78
   height: 3.375rem
+  border: 1px solid #1bb0db
 
 .disabledButton
   background-color: rgba(27, 176, 219, 0.05)
@@ -143,7 +147,6 @@ input[type=number]::-webkit-outer-spin-button
 .mainBox
   text-align: center
   height: 100vh
-
 
 .backArrow
   cursor: pointer
@@ -185,6 +188,12 @@ input[type=number]::-webkit-outer-spin-button
       cursor: pointer
       font-weight: 600
       display: inline-block
+
+.question-title-text
+  font-size: 1.375rem
+  font-family: 'Karma', sans-serif !important
+  font-weight: 600
+  color: #004f78
 
 .inputBorderContainer
   border-top: solid 1px #eaeaea
@@ -420,7 +429,6 @@ input[type=number]::-webkit-outer-spin-button
 .recommendedPolicyBox
   padding: 0
 
-
 .questionButtonContainer
   padding: 1rem
   button
@@ -449,7 +457,6 @@ input[type=number]::-webkit-outer-spin-button
       &.ninth
         height: auto
 
-
 @media screen and (max-width: 865px)
   .home-wrapper
     .row-about-us
@@ -462,7 +469,6 @@ input[type=number]::-webkit-outer-spin-button
         height: auto
       &.ninth
         height: auto
-
 
 @media screen and (max-width: 768px)
   body
@@ -640,7 +646,6 @@ input[type=number]::-webkit-outer-spin-button
         .copyright-links
           text-align: left
 
-
 @media screen and (max-width: 567px)
   .home-wrapper
     .row-about-us
@@ -660,7 +665,9 @@ input[type=number]::-webkit-outer-spin-button
   .alignInputsInOneLine
     button
       width: 50%
-
+  .questionButtonContainer
+    width: 300px
+    margin: auto
   .questionContainer
     width: 300px
     margin: auto
@@ -674,7 +681,7 @@ input[type=number]::-webkit-outer-spin-button
     width: 100%
 
   .popupContainer input, .popupContainer textarea, .popupContainer button
-      width: 90%
+    width: 90%
 
   .inputsContainer
     display: flex
@@ -698,7 +705,6 @@ input[type=number]::-webkit-outer-spin-button
     .nextDisabled
       width: 300px
 
-
   .nextEnabled
     width: 300px
 
@@ -713,7 +719,6 @@ input[type=number]::-webkit-outer-spin-button
     .selectedButton
       width: 300px
 
-
 @media screen and (max-width: 360px)
   .home-wrapper
     .row-about-us
@@ -724,8 +729,6 @@ input[type=number]::-webkit-outer-spin-button
         .image-column
           #image-3-background
             height: 13.33rem
-
-
 
 .addOnBtn
   display: flex
@@ -744,6 +747,7 @@ input[type=number]::-webkit-outer-spin-button
   height: 2.3rem
   outline: none
   cursor: pointer
+  border-radius: 0.25rem
 
 .questionText
   width: 100%
@@ -796,7 +800,6 @@ input[type=number]::-webkit-outer-spin-button
   display: flex
   justify-content: space-between
 
-
 @media screen and (max-width: 360px)
   .quoteButtonContainer
     .disabledButton
@@ -830,6 +833,7 @@ input[type=number]::-webkit-outer-spin-button
 .selectedQuote
   background: #28b0db
   color: white
+
 .quoteContainer
   .questionBox
     margin-bottom: 3rem
@@ -839,10 +843,13 @@ input[type=number]::-webkit-outer-spin-button
     margin-bottom: 3rem
 
 .selectedPolicyBox
-  background-color: #1bb0db
+  background-color: rgba(27, 176, 219, 0.2)
+  border: solid 1px #1bb0db
   padding: 1rem
   cursor: pointer
+  color: #004f78
   min-height: 11.125rem
+  border-radius: 0.25rem
 
 .policyBox
   background-color: rgba(27, 176, 219, 0.05)
@@ -851,7 +858,7 @@ input[type=number]::-webkit-outer-spin-button
   cursor: pointer
   color: #004f78
   min-height: 11.125rem
-
+  border-radius: 0.25rem
 
 .recommendedPolicies
   display: flex
@@ -866,6 +873,7 @@ input[type=number]::-webkit-outer-spin-button
 
 .policyText
   color: #004f78
+
 .otherCoverages
   background-color: rgba(27, 176, 219, 0.05)
   padding: 1rem
@@ -884,7 +892,6 @@ input[type=number]::-webkit-outer-spin-button
 .otherCoverageBox
   display: flex
   flex-direction: column
-
 
 @media screen and (min-width: 768px)
   .recommendedPolicies
@@ -914,7 +921,7 @@ input[type=number]::-webkit-outer-spin-button
     justify-content: space-evenly
     input
       height: 30px
-      //margin-top: 10px
+  //margin-top: 10px
 
   .existingCoverageContainer
     .policyBox
@@ -959,6 +966,7 @@ input[type=number]::-webkit-outer-spin-button
     text-align: center
     margin: auto
     margin-top: 1rem
+
 .termLengthBox
   display: flex
   flex-direction: row
@@ -968,6 +976,7 @@ input[type=number]::-webkit-outer-spin-button
   margin: auto
   .policyText
     margin: auto
+
 .termLengthInc
   background-color: #1bb0db
   color: white
@@ -985,12 +994,3 @@ input[type=number]::-webkit-outer-spin-button
     height: 20px
     cursor: pointer
 
-
-
-
-
-
-
-
-
-@import "theme"

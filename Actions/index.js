@@ -6,7 +6,7 @@ export function addQuestion(payload) {
   return {
       type: actionTypes.ADD_QUESTION,
       payload
-    }; 
+    };
 }
 export function setSessionId (payload) {
   return {
@@ -120,7 +120,7 @@ export function patchExpense (props,categories) {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
         'Access-Control-Request-Method': 'PATCH'
-        
+
       },
       body: JSON.stringify(newPayload)
     })
@@ -144,7 +144,7 @@ export function updateUserDetail (payload) {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/Json',
         'Access-Control-Request-Method': 'PUT'
-        
+
       },
       body: JSON.stringify(json)
     })
@@ -173,7 +173,7 @@ export function getCoverage (s_id) {
 export function patchCoverage (payload) {
   const s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
   // s_id = payload.s_id
-  
+
   return (dispatch) => {
     fetch(`${ENDPOINT}coverage/${s_id}`,
     {
@@ -182,7 +182,7 @@ export function patchCoverage (payload) {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
         'Access-Control-Request-Method': 'PATCH'
-        
+
       },
       body: JSON.stringify(payload.coverageJson)
     })
@@ -195,7 +195,7 @@ export function patchCoverage (payload) {
 }
 
 export function getQuotes (payload) {
-  
+
 const { age, gender, use_tobacco } = payload.user.family.user
 const amt = payload.coverageJson.options[0].selected ? payload.coverageJson.options[0].amt : payload.coverageJson.options[1].amt
 const term = payload.coverageJson.user.term
@@ -224,7 +224,7 @@ export function patchQuote (payload) {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
         'Access-Control-Request-Method': 'PATCH'
-        
+
       },
       body: JSON.stringify(quotes)
     })
@@ -235,3 +235,20 @@ export function patchQuote (payload) {
       });
     }
 }
+
+// export function updateQuestion(question) {
+//  return (dispatch) => {
+//     dispatch({
+//         type: 'UPDATE_QUESTION',
+//         question,
+//     })
+//   }
+// }
+
+export const updateQuestion = (question)=> dispatch=>{
+    dispatch({
+        type: 'UPDATE_QUESTION',
+        question,
+    });
+    return Promise.resolve()
+};
