@@ -20,7 +20,7 @@ export default class Nav extends Component {
         this.setState({modalIsOpen: false});
     };
     parseInt(num) {
-        return parseInt(num);
+        return parseInt(num) > 0 ? parseInt(num) + ' %' : '';
     }
     render() {
         const renderProgressbar = renderIf(this.props.progressBar !== undefined);
@@ -43,7 +43,7 @@ export default class Nav extends Component {
                 )}
                 {renderProgressbar(
                     <div style={{ width: `${this.props.progressBar}%` , border: '1px solid #1bb0db', transition: '.5s', position: 'absolute', bottom: '0' }} >
-                        <div style={{position: 'absolute', right: '-15px', fontSize: '14px', paddingTop: '2px', color: '#1bb0db'}}>{this.parseInt(this.props.progressBar)}%</div>
+                        <div style={{position: 'absolute', right: '-15px', fontSize: '14px', paddingTop: '2px', color: '#1bb0db'}}>{this.parseInt(this.props.progressBar)}</div>
                     </div>
                 )}
             </nav>
