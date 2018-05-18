@@ -4,6 +4,7 @@ import Router from 'next/router';
 import Nav from "../../components/Nav";
 import Button from "../../components/Button";
 import styles from './index.sass'
+import  '../../styles/index.sass';
 import renderIf from "render-if";
 import Loader from 'components/FullScreenLoader';
 

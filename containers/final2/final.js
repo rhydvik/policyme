@@ -108,7 +108,7 @@ class Final extends Component {
                             </textarea>
                         </div>
                         <div className={styles.buttonContainer}>
-                            <Button onClick={this.showCoverages} label="NEXT" />
+                            <Button onClick={() => Router.push('/')} label="NEXT" />
                         </div>
                     </div>
                 </div>

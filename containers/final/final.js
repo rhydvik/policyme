@@ -30,13 +30,13 @@ class Final extends Component {
     }
 
 
-    submitUserDetails = () => {
-        this.props.updateUserDetail({
-                user: this.state.user,
-                json: this.props.jsonSkeleton
-            }
-        )
-    };
+    // submitUserDetails = () => {
+    //     this.props.updateUserDetail({
+    //             user: this.state.user,
+    //             json: this.props.jsonSkeleton
+    //         }
+    //     )
+    // };
 
     handleInput = (e)  => {
         const {user} = this.state;
@@ -44,11 +44,11 @@ class Final extends Component {
         this.setState({user})
     };
 
-    componentDidMount () {
-        this.props.setAdvice()
-    }
+    // componentDidMount () {
+    //     this.props.setAdvice()
+    // }
     changePage = () => {
-        this.submitUserDetails();
+        // this.submitUserDetails();
         this.setState({ isLoading: true })
         Router.push('/final2');
     };
