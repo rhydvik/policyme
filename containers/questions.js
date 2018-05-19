@@ -256,7 +256,7 @@ class Questions extends Component {
         if(currentQuestion.addOn && currentQuestion.subQuestion.length ) {
             const subQuestion = currentQuestion.subQuestion;
                  return subQuestion.map(x=>
-                     <div style={{ maxWidth: '300px', margin: 'auto' }}>
+                     <div style={{ maxWidth: '350px', margin: 'auto' }}>
                          {x.question}
                          {this.getInputOptions(x)}
                     </div>)
