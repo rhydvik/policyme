@@ -57,11 +57,11 @@ class Final extends Component {
                     <div className={styles.final2Container}>
                         <div className={styles.textBox}>
                             <img src="../../static/images/alex.jpg" />
-                            <p>
+                            <p style='font-weight: 600;font-size: 1.125rem;line-height: 2rem;color: #004f78;'>
                                 Great! <br />
                                 We'll be in touch soon.
                             </p>
-                            <p>
+                            <p style='font-weight: 400;'>
                                 In the meantime, let us know how your feel about the advice you've just received.
                             </p>
                         </div>
