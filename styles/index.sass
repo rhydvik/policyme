@@ -166,6 +166,7 @@ input[type=number]::-webkit-outer-spin-button
   background-color: #dcdcdc
   color: white
   width: 95%
+  max-width: 18.75rem
   height: 3.375rem
 
 .nextEnabled
@@ -678,10 +679,8 @@ input[type=number]::-webkit-outer-spin-button
     margin: auto
     .nextDisabled
       width: 300px
-
   .nextEnabled
-    width: 300px
-
+    max-width: 300px
   .inputBorderContainer
     width: 100%
 
@@ -709,7 +708,8 @@ input[type=number]::-webkit-outer-spin-button
     margin: auto
     .nextDisabled
       width: 300px
-
+  .nextDisabled
+    width: 300px
   .nextEnabled
     width: 300px
 
@@ -1000,9 +1000,9 @@ input[type=number]::-webkit-outer-spin-button
     cursor: pointer
 
 .polic-yme-loader
-  border: 16px solid #f3f3f3
+  border: 12px solid #1bb0db
   border-radius: 50%
-  border-top: 16px solid #3498db
+  border-top: 12px solid #f3f3f3
   width: 120px
   height: 120px
   -webkit-animation: spin 2s linear infinite
@@ -1019,3 +1019,14 @@ input[type=number]::-webkit-outer-spin-button
     transform: rotate(0deg)
   100%
     transform: rotate(360deg)
+
+.final2Container
+  max-width: 31.25rem
+  margin: auto
+
+.finalContainer
+  max-width: 31.25rem
+  margin: auto
+
+.smiley
+  border-radius: 0.25rem
