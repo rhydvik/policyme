@@ -3,32 +3,25 @@ import Router from 'next/router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-
-
+import renderIf from 'render-if';
+import Loader from "../../components/FullScreenLoader";
 import Nav from '../../components/Nav/index'
 import styles from './index.sass';
 import Button from '../../components/Button/index';
 import { connect } from 'react-redux';
 import {
-    updateUserDetail,
-    setAdvice
+    feedback
 } from '../../Actions/index'
 
 class Final extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: {
-                hearedFrom: '',
-                message: '',
-                feel: null
-            }
-
+            isLoading: false,
         };
     }
 
     handleChange = (event, index, value) => {
-        console.log('value', value);
         this.setState({ hearedFrom: value });
     };
 
@@ -37,11 +30,23 @@ class Final extends Component {
     };
 
     handleSmileyChange = (item) => {
-        this.setState({ feel: item })
+        this.setState({ feel: parseInt(item) })
+    };
+
+    handleFinalScreen = () => {
+        const { feel, hearedFrom, message } = this.state;
+        const payload = {
+            rating: feel,
+            source: hearedFrom,
+            message: message,
+        };
+        this.props.feedback(payload);
+        this.setState({ isLoading: true });
+        Router.push('/');
     };
 
     render() {
-        const { feel } = this.state;
+        const { feel, isLoading } = this.state;
         return (
             <MuiThemeProvider>
                 <div>
@@ -54,6 +59,8 @@ class Final extends Component {
                     >
                         <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                     </Nav>
+                    {renderIf(isLoading)(<Loader />)}
+
                     <div className={styles.final2Container}>
                         <div className={styles.textBox}>
                             <img src="../../static/images/alex.jpg" />
@@ -66,21 +73,21 @@ class Final extends Component {
                             </p>
                         </div>
                         <div className={styles.inputContainer}>
-                            <div className={styles.smileys} onClick={()=> this.handleSmileyChange('Great')}>
-                                <div className={feel === 'Great' ? styles.selectedSmiley : styles.smiley}>
-                                    <img src={feel === 'Great' ? '../../static/images/questions/greatWhite.svg' : '../../static/images/questions/great.svg'} />
+                            <div className={styles.smileys} onClick={()=> this.handleSmileyChange('5')}>
+                                <div className={feel === 5 ? styles.selectedSmiley : styles.smiley}>
+                                    <img src={feel === 5 ? '../../static/images/questions/greatWhite.svg' : '../../static/images/questions/great.svg'} />
                                 </div>
                                 Great
                             </div>
-                            <div className={styles.smileys} onClick={()=> this.handleSmileyChange('Okay')}>
-                                <div className={feel === 'Okay' ? styles.selectedSmiley : styles.smiley}>
-                                    <img src={feel === 'Okay' ? '../../static/images/questions/okayWhite.svg' : '../../static/images/questions/okay.svg'} />
+                            <div className={styles.smileys} onClick={()=> this.handleSmileyChange('3')}>
+                                <div className={feel === 3 ? styles.selectedSmiley : styles.smiley}>
+                                    <img src={feel === 3 ? '../../static/images/questions/okayWhite.svg' : '../../static/images/questions/okay.svg'} />
                                 </div>
                                 okay
                             </div>
-                            <div className={styles.smileys} onClick={()=> this.handleSmileyChange('Disappointed')}>
-                                <div className={feel === 'Disappointed' ? styles.selectedSmiley : styles.smiley}>
-                                    <img src={feel === 'Disappointed' ? '../../static/images/questions/disappointedWhite.svg' : '../../static/images/questions/disappointed.svg'} />
+                            <div className={styles.smileys} onClick={()=> this.handleSmileyChange('1')}>
+                                <div className={feel === 1 ? styles.selectedSmiley : styles.smiley}>
+                                    <img src={feel === 1 ? '../../static/images/questions/disappointedWhite.svg' : '../../static/images/questions/disappointed.svg'} />
                                 </div>
                                 Disappointed
                             </div>
@@ -108,7 +115,7 @@ class Final extends Component {
                             </textarea>
                         </div>
                         <div className={styles.buttonContainer}>
-                            <Button onClick={() => Router.push('/')} label="NEXT" />
+                            <Button onClick={this.handleFinalScreen} label="NEXT" />
                         </div>
                     </div>
                 </div>
@@ -119,8 +126,7 @@ class Final extends Component {
 
 
 const mapDispatchToProps = {
-    updateUserDetail,
-    setAdvice
+    feedback,
 };
 
 const mapStateToProps = state => state.questionReducer;

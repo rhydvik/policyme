@@ -93,6 +93,60 @@ export function sendPopulatedJson (payload) {
   };
 }
 
+export function followUp (payload) {
+    const s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+    console.log('payload', payload);
+    return (dispatch) => {
+        dispatch({
+            type: actionTypes.FOLLOW_UP_REQUESTED
+        });
+        fetch(`${ENDPOINT}followup/${s_id}`,
+            {
+                method: 'PUT' ,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then((fetchedData) => {
+                dispatch({
+                    type: actionTypes.FOLLOW_UP_UPDATED,
+                });
+                console.log("POPULATED JSON", fetchedData)
+                // dispatch(setSkeletonJson(fetchedData))
+            });
+    };
+}
+
+export function feedback (payload) {
+    const s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+    console.log('payload', payload);
+    return (dispatch) => {
+        dispatch({
+            type: actionTypes.FOLLOW_UP_REQUESTED
+        });
+        fetch(`${ENDPOINT}feedback/${s_id}`,
+            {
+                method: 'PUT' ,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then((fetchedData) => {
+                dispatch({
+                    type: actionTypes.FOLLOW_UP_UPDATED,
+                });
+                console.log("POPULATED JSON", fetchedData)
+                // dispatch(setSkeletonJson(fetchedData))
+            });
+    };
+}
+
 export function getExpenses (s_id) {
   return (dispatch) => {
     fetch(`${ENDPOINT}expenses/${s_id}`)

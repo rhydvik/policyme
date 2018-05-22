@@ -11,6 +11,8 @@ const initialState = {
     allQuestions: questionsFromConstants,
     fixedQuestions: questionsFromConstants,
     questionUpdated: false,
+    followUp: false,
+    finalScreenLoading: false,
 };
 
 
@@ -163,11 +165,17 @@ export default (state = initialState, action) => {
     case actionTypes.SET_QUOTE:
       return { ...state, quote: action.payload};
 
-      case 'UPDATE_QUESTION':
-        return { ...state, allQuestions: action.question, questionUpdated: true };
+    case actionTypes.FOLLOW_UP_REQUESTED:
+    return { ...state, finalScreenLoading: true};
 
-      case 'UPDATE_QUESTION_UPDATED_VALUE':
-        return { ...state, questionUpdated: false };
+    case actionTypes.FOLLOW_UP_UPDATED:
+        return { ...state, finalScreenLoading: false, followUp: true};
+
+    case 'UPDATE_QUESTION':
+      return { ...state, allQuestions: action.question, questionUpdated: true };
+
+    case 'UPDATE_QUESTION_UPDATED_VALUE':
+      return { ...state, questionUpdated: false };
     default:
       return state;
   }

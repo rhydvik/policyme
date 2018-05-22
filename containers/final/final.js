@@ -10,8 +10,7 @@ import Button from '../../components/Button/index';
 import { connect } from 'react-redux';
 import Loader from 'components/FullScreenLoader';
 import {
-    updateUserDetail,
-    setAdvice
+    followUp,
 } from '../../Actions/index'
 import renderIf from "render-if";
 
@@ -20,45 +19,56 @@ class Final extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            user: {
-                email: '',
-                first_name: '',
-                last_name: ''
-            }
-
         };
     }
 
 
-    // submitUserDetails = () => {
-    //     this.props.updateUserDetail({
-    //             user: this.state.user,
-    //             json: this.props.jsonSkeleton
-    //         }
-    //     )
-    // };
+    componentWillReceiveProps(nextProps, nextContext) {
+        if(nextProps.followUp) Router.push('/final2');
+    }
+
 
     handleInput = (e)  => {
-        const {user} = this.state;
-        user[e.target.name] = e.target.value;
-        this.setState({user})
+        this.setState({phone: e.target.value });
     };
 
-    // componentDidMount () {
-    //     this.props.setAdvice()
-    // }
+
+    handleDateChange = (event, date) => {
+        this.setState({ date })
+    };
+
+    handleTimeChange = (event, time) => {
+        this.setState({ time })
+    };
+
+    combineDateAndTime = (date, time) => {
+        console.log(date, time);
+        let timeString = time.getHours() + ':' + time.getMinutes() + ':00';
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1; // Jan is 0, dec is 11
+        let day = date.getDate();
+        let dateString = '' + year + '-' + month + '-' + day;
+        let combined  = new Date(dateString + ' ' + timeString);
+
+        return combined;
+    };
+
     changePage = () => {
-        // this.submitUserDetails();
-        this.setState({ isLoading: true })
-        Router.push('/final2');
+        const { time, date, phone } = this.state;
+        const timeStamp = this.combineDateAndTime(date, time);
+        const payload = {
+            phone,
+            timeStamp
+        }
+        this.props.followUp(payload);
     };
 
     render() {
-        const { isLoading }= this.state;
+        const { finalScreenLoading }= this.props;
         return (
             <MuiThemeProvider>
                 <div>
-                    {renderIf(isLoading)(<Loader />)}
+                    {renderIf(finalScreenLoading)(<Loader />)}
                     <Nav
                         usedFor="questions"
                         showQuestionMark={true}
@@ -80,14 +90,16 @@ class Final extends Component {
                             </p>
                         </div>
                         <div className={styles.inputContainer}>
-                            <input placeholder="First Name" name="first_name" onChange={this.handleInput}/>
+                            <input placeholder="Phone Number" name="phone" onChange={this.handleInput}/>
                             <DatePicker
                                 hintText="&#x25BE; Select Date"
                                 className={styles.datePicker}
+                                onChange={this.handleDateChange}
                             />
                             <TimePicker
                                hintText="&#x25BE; Time Slot"
                                className={styles.datePicker}
+                               onChange={this.handleTimeChange}
                             />
                         </div>
                         <div className={styles.buttonContainer}>
@@ -114,9 +126,9 @@ class Final extends Component {
 
 
 const mapDispatchToProps = {
-    updateUserDetail,
-    setAdvice
+    followUp,
 };
 
 const mapStateToProps = state => state.questionReducer;
+
 export default connect(mapStateToProps, mapDispatchToProps)(Final);
