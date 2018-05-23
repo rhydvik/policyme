@@ -33,12 +33,23 @@ class Questions extends Component {
         };
     }
     componentWillMount() {
-        const { allQuestions } = this.props;
-        this.props.addQuestion({qi:this.state.questionIndex, question: allQuestions[this.state.questionIndex]});
-        this.setState({
-            currentQuestion: allQuestions[this.state.questionIndex],
-            validated: true
-        })
+        if(this.props.id !== undefined){
+            const { allQuestions } = this.props;
+            this.props.addQuestion({qi:this.state.questionIndex, question: allQuestions[1]});
+            this.setState({
+                currentQuestion: allQuestions[1],
+                validated: true,
+                questionIndex: 1,
+            })
+        } else{
+            const { allQuestions } = this.props;
+            this.props.addQuestion({qi:this.state.questionIndex, question: allQuestions[this.state.questionIndex]});
+            this.setState({
+                currentQuestion: allQuestions[this.state.questionIndex],
+                validated: true
+            })
+        }
+
     }
     componentDidMount() {
         this.props.setAdvice();
@@ -112,7 +123,7 @@ class Questions extends Component {
     };
 
     next = () => {
-        const { allQuestions } = this.props;
+        const { allQuestions, id } = this.props;
         const qi = this.state.questionIndex;
         const  { currentQuestion } = this.state;
 
@@ -154,7 +165,7 @@ class Questions extends Component {
             if (this.state.currentQuestion.last) {
                 this.props.populateJson(this.props.questions);
                 this.props.sendPopulatedJson({payload: this.props.jsonSkeleton, s_id: this.props.s_id });
-                Router.push('/expenses');
+                Router.push(id !== undefined ? `/expenses?id=${id}` : '/expenses');
                 this.setState({ isLoading: true });
             }
         }

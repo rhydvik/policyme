@@ -11,10 +11,11 @@ class UserDetails extends Component {
     }
 
     render() {
+        const id = this.props.url.query;
         return (
             <Provider store={store}>
               <MuiThemeProvider>
-                <AskUserDetails />
+                <AskUserDetails id={id} />
               </MuiThemeProvider>
             </Provider>
         )

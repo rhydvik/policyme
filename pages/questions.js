@@ -17,10 +17,11 @@ class QuestionsBox extends Component {
 
 
     render() {
+        const id = this.props.url.query.id;
         return (
             <Provider store={store}>
                 <MuiThemeProvider>
-                   <Questions />
+                   <Questions id={id} />
                 </MuiThemeProvider>
             </Provider>
         )

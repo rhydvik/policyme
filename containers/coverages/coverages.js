@@ -24,6 +24,12 @@ export class Navy extends Component {
         }
     }
 
+    componentWillMount () {
+        if(this.props.id !== undefined){
+            console.log('id is here');
+        }
+    }
+
     goToQuotes = () => {
         this.setState({isLoading:true})
         this.props.patchCoverage({
@@ -98,7 +104,8 @@ export class Navy extends Component {
             addtl = coverageJson.user.addtl
             existing = coverageJson.user.existing
         }
-    const { lifeStyle, transition, own, isLoading } = this.state;
+        const { lifeStyle, transition, own, isLoading } = this.state;
+        const { id } = this.props;
         return (
             <div className={styles.mainBox}>
                 {renderIf(isLoading)(<Loader />)}
@@ -115,7 +122,7 @@ export class Navy extends Component {
                     <img
                         className={styles.backArrow}
                         src='../../static/images/questions/backarrow.svg'
-                        onClick={() => Router.push('/expenses')} />
+                        onClick={() => Router.push(id === undefined ? '/expenses' : `/expenses?id=${id}`)} />
 
                     <div className={cn('app-container no-p',styles.questionBox)}>
                         <img src="../static/images/alex.jpg" />

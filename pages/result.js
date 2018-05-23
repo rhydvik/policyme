@@ -16,10 +16,11 @@ class Result extends Component {
 
 
     render() {
+        const id = this.props.url.query.id;
         return (
             <Provider store={store}>
                 <MuiThemeProvider>
-                  <Results />
+                  <Results id={id} />
                 </MuiThemeProvider>
             </Provider>
 

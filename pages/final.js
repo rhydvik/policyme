@@ -12,10 +12,11 @@ class Expense extends Component {
 
 
     render() {
+        const id = this.props.url.query;
         return (
             <Provider store={store}>
                <MuiThemeProvider>
-                 <Final />
+                 <Final id={id} />
                </MuiThemeProvider>
             </Provider>
         )

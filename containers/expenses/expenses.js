@@ -16,18 +16,25 @@ class About extends Component {
         }
     }
 
+    componentWillMount(){
+        console.log('this.pros', this.props.id);
+    }
+
     looksGood = () => {
+        const { id } = this.props;
         this.setState({ isLoading: true });
-        Router.push('/askUserDetails');
+        Router.push(id !== undefined ? `/askUserDetails?id=${id}` : '/askUserDetails');
     };
 
     seeBreakDown = () => {
+        const { id } = this.props;
         this.setState({ isLoading: true });
-        Router.push('/result');
+        Router.push(id !== undefined ? `/result?id=${id}`: '/result');
     };
 
     render() {
         const { isLoading } = this.state;
+        const { id } = this.props;
         return (
             <div>
                 {renderIf(isLoading)(<Loader />)}
@@ -38,9 +45,13 @@ class About extends Component {
                     openModal={this.openModal}
                     progressBar="40"
                 >
-                    <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
+                <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                 </Nav>
                 <div className={styles.container}>
+                    <img
+                        className={styles.backArrow}
+                        src='../../static/images/questions/backarrow.svg'
+                        onClick={() => Router.push(id === undefined ? '/questions' : `/questions?id=${id}`)} />
                     <div className={styles.textBox}>
                         <img src="../../static/images/alex.jpg" />
                         <p>
