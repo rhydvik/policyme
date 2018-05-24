@@ -299,6 +299,19 @@ export function patchQuote (payload) {
 //   }
 // }
 
+export const populateQuestion = (s_id, allQuestions) => dispatch => {
+    fetch(`${ENDPOINT}inputs/${s_id}`)
+        .then(res => res.json())
+        .then((fetchedData) => {
+            console.log('fetchedData', fetchedData, allQuestions);
+            const populatedQuestion = convertToLocalJson(fetchedData, allQuestions);
+            dispatch({
+                type: 'UPDATE_POPULATED_QUESTION',
+                data: populatedQuestion,
+            })
+        });
+  };
+
 export const updateQuestion = (question)=> dispatch=>{
     dispatch({
         type: 'UPDATE_QUESTION',
@@ -306,3 +319,102 @@ export const updateQuestion = (question)=> dispatch=>{
     });
     return Promise.resolve()
 };
+
+
+function convertToLocalJson(d, questions) {
+    var result = {};
+    if (d.family && d.family.user) { //users age
+        questions[1].inputs[0].value = d.family.user.age;
+    }
+
+
+    if (d.family && d.family.user) { //users gender
+        if (d.family.user.gender === 'Male') {
+            questions[2].inputs[0].value = true;
+        }
+        if (d.family.user.gender === 'Female') {
+            questions[2].inputs[1].value = true;
+        }
+        if (d.family.user.use_tobacco) {
+            questions[6].inputs[0].value = true;
+        } else {
+            questions[6].inputs[1].value = true;
+        }
+        if (d.family.user.health_issues) {
+            questions[7].inputs[0].value = true;
+        } else {
+            questions[7].inputs[1].value = true;
+        }
+    }
+
+
+    if (d.family && d.family.spouse && d.family.spouse.age) { //users gender
+        if (d.family && d.family.children && d.family.children.length) {
+            questions[3].inputs[3].value = true;
+            var temp = [];
+            for (var i in d.family.children) {
+                temp.push({age: d.family.children[i]['age']});
+            }
+            questions[5].inputs = temp;
+        } else {
+            questions[3].inputs[2].value = true;
+        }
+        questions[4].inputs[0].value = d.family.spouse.age;
+        if (d.family.spouse.gender === 'Male') {
+            questions[4].subQuestion[0].inputs[0].value = true;
+        }
+        if (d.family.spouse.gender === 'Female') {
+            questions[4].subQuestion[0].inputs[1].value = true;
+        }
+    } else if (d.family && d.family.children && d.family.children.length) {
+        questions[3].inputs[1].value = true;
+        var temp = [];
+        for (var i in d.family.children) {
+            temp.push({age: d.family.children[i]['age']});
+        }
+        questions[5].inputs = temp;
+    } else {
+        questions[3].inputs[0].value = true;
+    }
+
+    if (d.finances && d.finances.user) {
+        questions[8].inputs[0].value = d.finances.user.income;
+        questions[9].inputs[0].value = d.finances.user.income;
+    }
+    if (d.finances && d.finances.spouse) {
+        questions[9].inputs[1].value = d.finances.spouse.income;
+    }
+
+    if (d.finances && d.finances.shared) {
+        if (d.finances.shared.expenses && d.finances.shared.expenses.housing && d.finances.shared.expenses.housing.mortgage && d.finances.shared.expenses.housing.mortgage.monthly_payment) {
+            questions[10].inputs[1].value = true;
+            questions[10].subQuestion[1].inputs[1].value = d.finances.shared.expenses.housing.mortgage.monthly_payment;
+            if (d.finances && d.finances.shared.debts) {
+                questions[10].subQuestion[1].inputs[0].value = d.finances.shared.debts.mortgage;
+            }
+
+        }
+        if (d.finances.shared.assets && (d.finances.shared.assets.non_retirement || d.finances.shared.assets.retirement)) {
+            questions[11].inputs[0].value = true;
+            questions[11].subQuestion[0].inputs[0].value = d.finances.shared.assets.retirement;
+            questions[11].subQuestion[0].inputs[1].value = d.finances.shared.assets.non_retirement;
+        } else {
+            questions[11].inputs[1].value = true;
+        }
+
+        if (d.finances.shared.debts && (d.finances.shared.debts.credit_cards || d.finances.shared.debts.credit_line || d.finances.shared.debts.home_equity_loans || d.finances.shared.debts.student_loans || (d.finances.shared.debts.other && d.finances.shared.debts.other.length))) {
+            questions[12].inputs[0].value = true;
+            questions[12].subQuestion[0].inputs[0].value = d.finances.shared.debts.credit_cards;
+            questions[12].subQuestion[0].inputs[1].value = d.finances.shared.debts.student_loans;
+            questions[12].subQuestion[0].inputs[2].value = d.finances.shared.debts.home_equity_loans;
+            questions[12].subQuestion[0].inputs[3].value = d.finances.shared.debts.credit_line;
+            if (d.finances.shared.debts.other && d.finances.shared.debts.other.length) {
+                questions[12].subQuestion[0].inputs[4].value = d.finances.shared.debts.other[0];
+            }
+        } else {
+            questions[12].inputs[2].value = true;
+        }
+    }
+    // console.log(questions[1]);
+    return questions;
+}

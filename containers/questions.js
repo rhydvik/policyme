@@ -17,6 +17,7 @@ import {
     populateJson,
     sendPopulatedJson,
     updateQuestion,
+    populateQuestion,
 } from '../Actions'
 
 
@@ -33,15 +34,7 @@ class Questions extends Component {
         };
     }
     componentWillMount() {
-        if(this.props.id !== undefined){
-            const { allQuestions } = this.props;
-            this.props.addQuestion({qi:this.state.questionIndex, question: allQuestions[1]});
-            this.setState({
-                currentQuestion: allQuestions[1],
-                validated: true,
-                questionIndex: 1,
-            })
-        } else{
+        if(this.props.id === undefined){
             const { allQuestions } = this.props;
             this.props.addQuestion({qi:this.state.questionIndex, question: allQuestions[this.state.questionIndex]});
             this.setState({
@@ -55,19 +48,28 @@ class Questions extends Component {
         this.props.setAdvice();
         this.setState({
             isMobile: window.innerWidth <= 700
-        })
+        });
+        if(this.props.id !== undefined) {
+            const {allQuestions} = this.props;
+            this.props.populateQuestion(this.props.id, allQuestions);
+            this.setState({isLoading: true})
+        }
     }
 
-    // componentWillReceiveProps(np){
-    //     debugger;
-    //     const { allQuestions } = this.props;
-    //     const { qi } = this.state;
-    //     if(np.questionUpdated !== this.props.questionUpdated){
-    //         debugger;
-    //         this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1], validated: false});
-    //         this.props.removeQuestionUpdated()
-    //     }
-    // }
+    componentWillReceiveProps(np){
+        debugger;
+        if(np.questionPopulated){
+            this.props.addQuestion({qi:1, question: np.allQuestions[1]});
+            debugger;
+            this.setState({
+                currentQuestion: np.allQuestions[1],
+                isLoading: false,
+                questionIndex: 1,
+            },() => {
+                this.validateQuestion();
+            } );
+        }
+    }
 
     handleButtonChange = (i) => {
         const { allQuestions } = this.props;
@@ -138,7 +140,9 @@ class Questions extends Component {
                         temp.splice(7,1);
                         console.log('temp', temp);
                         this.props.updateQuestion(temp);
-                        this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1], validated: false})
+                        this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1] }, () => {
+                            this.validateQuestion();
+                        })
                     } else if (currentQuestion.inputs[1].value !== null) {
                         let temp = [];
                         temp = this.props.fixedQuestions.slice(0);
@@ -146,20 +150,28 @@ class Questions extends Component {
                         temp.splice(4, 1);
                         temp.splice(8, 1);
                         this.props.updateQuestion(temp);
-                        this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1], validated: false })
+                        this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1]}, () => {
+                            this.validateQuestion();
+                        })
                     } else if (currentQuestion.inputs[2].value !== null) {
                         let temp = [];
                         temp = this.props.fixedQuestions.slice(0);
                         console.log('temp', temp);
                         temp.splice(5, 1);
                         this.props.updateQuestion(temp);
-                        this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1], validated: false })
+                        this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1]}, () => {
+                            this.validateQuestion();
+                        })
                     } else if (currentQuestion.inputs[3].value !== null) {
-                        this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1], validated: false});
+                        this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1]}, () => {
+                            this.validateQuestion();
+                        })
                     }
 
                     } else if(qi < allQuestions.length -1) {
-                    this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1], validated: false});
+                    this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1]}, () => {
+                        this.validateQuestion();
+                    })
                 }
             this.props.addQuestion({qi, question: allQuestions[qi + 1]});
             if (this.state.currentQuestion.last) {
@@ -295,6 +307,7 @@ class Questions extends Component {
 
     validateQuestion = () => {
         const { currentQuestion } = this.state;
+        console.log('currentQuestion', currentQuestion);
         if (currentQuestion.overrideValidation !== undefined) {
             this.setState({ validated: true });
             return true
@@ -468,6 +481,7 @@ class Questions extends Component {
     render() {
         const { questionIndex, currentQuestion, validated, isLoading } = this.state;
         console.log(this.props);
+        // this.validateQuestion();
         return (
             <div className={styles.mainBox}>
                 {renderIf(isLoading)(<Loader />)}
@@ -503,6 +517,7 @@ const mapDispatchToProps = {
     populateJson,
     sendPopulatedJson,
     updateQuestion,
+    populateQuestion,
 };
 
 

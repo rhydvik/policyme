@@ -13,6 +13,7 @@ const initialState = {
     questionUpdated: false,
     followUp: false,
     finalScreenLoading: false,
+    questionPopulated: false,
 };
 
 
@@ -124,10 +125,11 @@ function makeSavings (inputs) {
 }
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_QUESTION:
+      case actionTypes.ADD_QUESTION:
     const { qi, question } = action.payload;
       state.questions[qi] = question;
       state.questionUpdated = false;
+      state.questionPopulated = false;
       return { ...state };
 
     case actionTypes.SET_SESSION_ID:
@@ -176,6 +178,10 @@ export default (state = initialState, action) => {
 
     case 'UPDATE_QUESTION_UPDATED_VALUE':
       return { ...state, questionUpdated: false };
+
+      case 'UPDATE_POPULATED_QUESTION':
+        return { ...state, allQuestions: action.data, questionPopulated: true }
+
     default:
       return state;
   }

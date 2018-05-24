@@ -73,8 +73,8 @@ class About extends Component {
                             Would you like to see a breakdown of your estimate?
                         </p>
                     </div>
-                    <Button onClick={this.looksGood} label="YES" />
-                    <Button onClick={this.seeBreakDown} label="NO, PROCEED WITH ESTIMATE"  />
+                    <Button onClick={this.seeBreakDown} label="YES" />
+                    <Button onClick={this.looksGood} label="NO, PROCEED WITH ESTIMATE"  />
                 </div>
             </div>
         )

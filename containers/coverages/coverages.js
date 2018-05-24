@@ -11,7 +11,8 @@ import renderIf from 'render-if';
 import {
     getCoverage,
     setAdvice,
-    patchCoverage
+    patchCoverage,
+    getExpenses
 } from '../../Actions/index'
 
 export class Navy extends Component {
@@ -24,11 +25,7 @@ export class Navy extends Component {
         }
     }
 
-    componentWillMount () {
-        if(this.props.id !== undefined){
-            console.log('id is here');
-        }
-    }
+
 
     goToQuotes = () => {
         this.setState({isLoading:true})
@@ -55,9 +52,14 @@ export class Navy extends Component {
     };
 
      async componentDidMount () {
-        const id = this.props.s_id;
-        await this.props.getCoverage(id);
-        this.setState({coverageJson:this.props.coverageJson})
+         // if(this.props.id !== undefined) {
+         //     this.props.getExpenses(this.props.id);
+         // }
+         const id  = this.props.s_id
+         await this.props.getCoverage(id);
+         this.setState({coverageJson:this.props.coverageJson})
+
+
     }
 
 
@@ -96,6 +98,12 @@ export class Navy extends Component {
         return  lifeStyle || own
     }
 
+    handlePageChange = () =>{
+        const { id } = this.props;
+        this.setState({ isLoading: true });
+        Router.push(id === undefined ? '/expenses' : `/questions?id=${id}`)
+    }
+
     render() {
         const coverageJson = this.state.coverageJson || null
         let addtl;
@@ -122,7 +130,7 @@ export class Navy extends Component {
                     <img
                         className={styles.backArrow}
                         src='../../static/images/questions/backarrow.svg'
-                        onClick={() => Router.push(id === undefined ? '/expenses' : `/expenses?id=${id}`)} />
+                        onClick={this.handlePageChange} />
 
                     <div className={cn('app-container no-p',styles.questionBox)}>
                         <img src="../static/images/alex.jpg" />
@@ -307,7 +315,8 @@ export class Navy extends Component {
 const mapDispatchToProps = {
     getCoverage,
     setAdvice,
-    patchCoverage
+    patchCoverage,
+    getExpenses
 };
 
 const mapStateToProps = state => state.questionReducer;
