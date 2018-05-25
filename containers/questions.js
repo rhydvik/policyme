@@ -57,7 +57,7 @@ class Questions extends Component {
     }
 
     componentWillReceiveProps(np){
-        debugger;
+        // debugger;
         if(np.questionPopulated){
             this.props.addQuestion({qi:1, question: np.allQuestions[1]});
             debugger;
@@ -320,13 +320,17 @@ class Questions extends Component {
                 }
             }
         }
-        if (currentQuestion.subQuestion && currentQuestion.subQuestion[0].addon !== undefined) {
+        if (currentQuestion.addOn!== undefined) {
+            // if (currentQuestion.subQuestion && currentQuestion.subQuestion[0].addon !== undefined) {
             let validAddon = 0
-            currentQuestion.subQuestion[0].inputs.map((x) =>{
-                if (!x.value || typeof x.value !== 'number' || x.value < x.validationRules.minimum || x.value > x.validationRules.maximum) {
-                    validAddon ++
-                }
-            })
+            if(currentQuestion.subQuestion.length) {
+                currentQuestion.subQuestion[0].inputs.map((x) =>{
+                    if (!x.value || typeof x.value !== 'number' || x.value < x.validationRules.minimum || x.value > x.validationRules.maximum) {
+                        validAddon ++
+                    }
+                })
+            }
+
             if (!validAddon) { this.setState({ validated: true }); }
             else { this.setState({validated: false})}
             return true
