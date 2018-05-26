@@ -304,7 +304,7 @@ const questions = [
         questionText: 'What if my savings are in my corporation?',
         subQuestion: [
             {
-                question: 'What is your rent?',
+                question: 'Your Savings?',
                 type: 'INPUT',
                 name: 'income',
                 inputs: [
