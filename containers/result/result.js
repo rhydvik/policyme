@@ -31,12 +31,14 @@ class Results extends Component {
 
         };
     }
+
 componentDidMount () {
     if(this.props.expense.default) {
         const categories = this.props.expense.default.expenses.categories
         this.setState ({ categories})
     }
 }
+
 handleInput = (e, i) => {
     let {categories} = this.state
         if (e.target.name === 'housing') {
@@ -48,13 +50,15 @@ handleInput = (e, i) => {
         }
 
     this.setState({categories})
-}
+};
+
 addCategory = () => {
     let {categories} = this.state
     const { other } = categories
     categories.other.push({type:`category ${other.length + 1}`, amount: 0})
     this.setState({categories})
-}
+};
+
 monthlyExpense = (categories) => {
     let sum = 0;
     if(categories) {
@@ -74,7 +78,8 @@ monthlyExpense = (categories) => {
     }, 0)
     return sum;
 }
-}
+};
+
 deleteCategory = (i) => {
     const { categories } = this.state
     categories.other.splice(i,1)
@@ -83,27 +88,37 @@ deleteCategory = (i) => {
     } )
     this.setState({categories})
 
-}
+};
+
+delimitNumbers = (str) => {
+    return (str + "").replace(/\b(\d+)((\.\d+)*)\b/g, function(a, b, c) {
+        return (b.charAt(0) > 0 && !(c || ".").lastIndexOf(".") ? b.replace(/(\d)(?=(\d{3})+$)/g, "$1,") : b) + c;
+    });
+};
+
 next = () => {
     this.setState({isLoading:true})
     this.props.patchExpense(this.props, this.state.categories);
-    Router.push('/askUserDetails')
+    Router.push(this.props.id !== undefined ? `/askUserDetails?id=${this.props.id}` : '/askUserDetails')
 };
+
 ifHousingCategory = (x) => {
         return <div className={styles.rightAlignedInputContainer}>
-                              <span>
-                                {CATEGORY[x] || x }
-                              </span>
-                                <input type ="text"
-                                className="input"
-                                value={this.state.categories[x].rent.monthly_payment}
-                                name={x}
-                                onChange={this.handleInput}/>
-                          </div>
-}
+                  <span>
+                    {CATEGORY[x] || x }
+                  </span>
+                    <input type ="text"
+                    className="input"
+                    value={this.delimitNumbers(this.state.categories[x].rent.monthly_payment)}
+                    name={x}
+                    onChange={this.handleInput}/>
+                </div>
+      };
+
     render() {
-        const categories = this.state.categories || null
-        const { isLoading } = this.state
+        const categories = this.state.categories || null;
+        const { isLoading } = this.state;
+        console.log('this.state', this.state, this.props);
         return (
         <div>
             {renderIf(isLoading)(<Loader />)}
@@ -120,6 +135,10 @@ ifHousingCategory = (x) => {
             {categories ?
             <div>
                 <div className={styles.container}>
+                    <img
+                        className="backArrow"
+                        src='../../static/images/questions/backarrow.svg'
+                        onClick={this.handlePageChange} />
                     <div className={styles.textBox}>
                         <img src="../../static/images/alex.jpg" onClick={() => Router.push('/coverages')} />
                         <p>
@@ -139,7 +158,7 @@ ifHousingCategory = (x) => {
                               </span>
                                 <input type ="text"
                                 className="input"
-                                value={categories[x]}
+                                value={this.delimitNumbers(categories[x])}
                                 name={x}
                                 onChange={(e) => this.handleInput(e)}/>
                           </div>
@@ -150,12 +169,12 @@ ifHousingCategory = (x) => {
                          {categories.other && categories.other.length ?                         <div>
                             {categories.other.map((y,i) => <div className={styles.rightAlignedInputContainer}>
                               <span>
-                                <button onClick={()=>this.deleteCategory(i)}  className="negative">-</button> 
+                                <button onClick={()=>this.deleteCategory(i)}  className="negative">-</button>
                                 {y.type}
                               </span>
                                 <input type ="text"
                                 className="input"
-                                value={y.amount}
+                                value={this.delimitNumbers(y.amount)}
                                 name='other'
                                 onChange={(e)=>this.handleInput(e, i)}/>
                           </div>)}

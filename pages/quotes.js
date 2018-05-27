@@ -11,10 +11,11 @@ class Quote extends Component {
     }
 
     render() {
+        const id = this.props.url.query.id;
         return (
             <Provider store={store}>
                 <MuiThemeProvider>
-                <Quotes />
+                <Quotes id={id} />
                 </MuiThemeProvider>
             </Provider>
         )

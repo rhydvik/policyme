@@ -45,6 +45,12 @@ class Final extends Component {
         Router.push('/');
     };
 
+    goBack = () => {
+        const { id } = this.props;
+        this.setState({ isLoading: true });
+        Router.push(id ? `/final?id=${id}` : '/final')
+    };
+
     render() {
         const { feel, isLoading } = this.state;
         return (
@@ -62,6 +68,10 @@ class Final extends Component {
                     {renderIf(isLoading)(<Loader />)}
 
                     <div className={styles.final2Container}>
+                        <img
+                            className="backArrow"
+                            src='../../static/images/questions/backarrow.svg'
+                            onClick={this.goBack} />
                         <div className={styles.textBox}>
                             <img src="../../static/images/alex.jpg" />
                             <p style={{fontWeight: 600, fontSize: '1.125rem', lineHeight: '2rem', color: '#004f78'}}>

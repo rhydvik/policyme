@@ -26,16 +26,30 @@ export class Navy extends Component {
         }
     }
 
+    // componentWillMount(){
+    //     const { id } = this.props;
+    //     if(id !== undefined){
+    //         this.setState({ isLoading: true })
+    //         this.props.getCoverage(id, (data) => {
+    //             console.log(data)
+    //             this.setState({
+    //                 isLoading: false,
+    //             })
+    //         })
+    //     }
+    // }
 
 
     goToQuotes = () => {
+        const { id } = this.props;
         this.setState({isLoading:true})
         this.props.patchCoverage({
             s_id: this.props.s_id || this.props.id,
             coverageJson: this.state.coverageJson,
         });
-        Router.push('/quotes');
+        Router.push(id ? `/quotes?id=${id}` : '/quotes');
     };
+
     handleInput = (e) => {
         const { coverageJson } = this.state;
         const val = parseInt(e.target.value)
@@ -61,12 +75,22 @@ export class Navy extends Component {
          }
          const id  = this.props.s_id
          await this.props.getCoverage(id);
-         this.setState({coverageJson:this.props.coverageJson})
+         const { options } = this.props.coverageJson
+         this.setState({
+             coverageJson:this.props.coverageJson,
+             lifeStyle: options[0].selected,
+             transition: options[1].selected,
+             own: options[2].selected,
+         })
 
 
     }
 
-
+    delimitNumbers = (str) => {
+        return (str + "").replace(/\b(\d+)((\.\d+)*)\b/g, function(a, b, c) {
+            return (b.charAt(0) > 0 && !(c || ".").lastIndexOf(".") ? b.replace(/(\d)(?=(\d{3})+$)/g, "$1,") : b) + c;
+        });
+    };
 
     getBoxCLass = (str) => {
         const { coverageJson } = this.state
@@ -80,6 +104,7 @@ export class Navy extends Component {
         }
         this.setState({[str]: true, coverageJson});
     };
+
     handleTerm = (inc) => {
         const { coverageJson } = this.state
         const { user } = this.state.coverageJson
@@ -96,17 +121,18 @@ export class Navy extends Component {
         }
 
         this.setState({coverageJson}, ()=>console.log(coverageJson.user.term))
-    }
+    };
+
     validated = () => {
         const {transition, lifeStyle, own} = this.state
         return  lifeStyle || own
-    }
+    };
 
     handlePageChange = () =>{
         const { id } = this.props;
         this.setState({ isLoading: true });
         Router.push(id === undefined ? '/expenses' : `/questions?id=${id}`)
-    }
+    };
 
     render() {
         const coverageJson = this.state.coverageJson || null
@@ -117,7 +143,7 @@ export class Navy extends Component {
             existing = coverageJson.user.existing
         }
         const { lifeStyle, transition, own, isLoading } = this.state;
-        const { id } = this.props;
+
         return (
             <div className={styles.mainBox}>
                 {renderIf(isLoading)(<Loader />)}
@@ -193,7 +219,7 @@ export class Navy extends Component {
                                 <p className={'app-texts headings ' + (own ? '' : '' )}>Coverage</p>
                                 <input
                                     className={styles.input}
-                                    value={coverageJson.options[1].amt}
+                                    value={this.delimitNumbers(coverageJson.options[1].amt)}
                                     name="custom"
                                     onChange={this.handleInput } />
                             </div>
@@ -213,7 +239,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="other_deps"
-                                    value={addtl.other_deps}
+                                    value={this.delimitNumbers(addtl.other_deps)}
                                     onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
@@ -226,7 +252,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="funeral"
-                                    value={addtl.funeral}
+                                    value={this.delimitNumbers(addtl.funeral)}
                                     onChange={this.handleInput} />
                             </div>
                         </div>
@@ -241,7 +267,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="education"
-                                    value={addtl.education}
+                                    value={this.delimitNumbers(addtl.education)}
                                     onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
@@ -253,7 +279,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="other"
-                                    value={addtl.other}
+                                    value={this.delimitNumbers(addtl.other)}
                                     onChange={this.handleInput} />
                             </div>
                         </div>
@@ -271,7 +297,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="group"
-                                    value={existing.user.group}
+                                    value={this.delimitNumbers(existing.user.group)}
                                     onChange={this.handleInput} />
                             </div>
                             <div className={styles.policyBox} >
@@ -281,7 +307,7 @@ export class Navy extends Component {
                                     className={styles.input}
                                     placeholder="$10,000"
                                     name="individual"
-                                    value={existing.user.individual}
+                                    value={this.delimitNumbers(existing.user.individual)}
                                     onChange={this.handleInput} />
                             </div>
                         </div>

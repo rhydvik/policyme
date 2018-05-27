@@ -94,7 +94,7 @@ export function sendPopulatedJson (payload) {
 }
 
 export function followUp (payload) {
-    const s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+    const s_id = '4b3ba278-443a-11e8-842f-0ed5f89f718b'
     console.log('payload', payload);
     return (dispatch) => {
         dispatch({
@@ -121,7 +121,7 @@ export function followUp (payload) {
 }
 
 export function feedback (payload) {
-    const s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+    const s_id = '4b3ba278-443a-11e8-842f-0ed5f89f718b';
     console.log('payload', payload);
     return (dispatch) => {
         dispatch({
@@ -161,9 +161,9 @@ export function getExpenses (s_id) {
 
 export function patchExpense (props,categories) {
   console.log("EXPENSESSSSSSS")
-  let newPayload = props.expense
-  const s_id = props.s_id
-  newPayload.user.expenses.categories = categories
+  let newPayload = props.expense;
+  const s_id = '4b3ba278-443a-11e8-842f-0ed5f89f718b';
+  newPayload.user.expenses.categories = categories;
   return (dispatch) => {
 
     fetch(`${ENDPOINT}expenses/${s_id}`,
@@ -212,7 +212,7 @@ export function updateUserDetail (payload) {
 
 
 export function getCoverage (s_id) {
-  s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+  s_id = '4b3ba278-443a-11e8-842f-0ed5f89f718b'
   return async (dispatch) => {
     await fetch(`${ENDPOINT}coverage/${s_id}`)
       .then(res => res.json())
@@ -225,7 +225,7 @@ export function getCoverage (s_id) {
 }
 
 export function patchCoverage (payload) {
-  const s_id = '3325f70a-443b-11e8-842f-0ed5f89f718b'
+  const s_id = '4b3ba278-443a-11e8-842f-0ed5f89f718b'
   // s_id = payload.s_id
 
   return (dispatch) => {
@@ -268,10 +268,10 @@ const term = payload.coverageJson.user.term
 }
 
 export function patchQuote (payload) {
-  let {s_id, quotes } = payload
-  s_id = '9761e4a5-d83e-441f-a2c1-97f5280f8870'
+  let {s_id, quotes } = payload;
+   s_id = '4b3ba278-443a-11e8-842f-0ed5f89f718b'
   return (dispatch) => {
-    fetch(`${ENDPOINT}quotes/${payload.s_id}`,
+    fetch(`${ENDPOINT}quotes/${s_id}`,
     {
       method: 'PATCH' ,
       headers: {
@@ -304,11 +304,15 @@ export const populateQuestion = (s_id, allQuestions) => dispatch => {
         .then(res => res.json())
         .then((fetchedData) => {
             console.log('fetchedData', fetchedData, allQuestions);
-            const populatedQuestion = convertToLocalJson(fetchedData, allQuestions);
-            dispatch({
-                type: 'UPDATE_POPULATED_QUESTION',
-                data: populatedQuestion,
-            })
+            fetch(`${ENDPOINT}expenses/${s_id}`)
+                .then(res => res.json())
+                .then((expenses) => {
+                    const populatedQuestion = convertToLocalJson(fetchedData,expenses, allQuestions);
+                    dispatch({
+                        type: 'UPDATE_POPULATED_QUESTION',
+                        data: populatedQuestion,
+                    })
+                });
         });
   };
 
@@ -321,7 +325,9 @@ export const updateQuestion = (question)=> dispatch=>{
 };
 
 
-function convertToLocalJson(d, questions) {
+
+function convertToLocalJson(d,expenseObject, questions) {
+    console.log('****', d, expenseObject, questions);
     var result = {};
     if (d.family && d.family.user) { //users age
         questions[1].inputs[0].value = d.family.user.age;
@@ -386,14 +392,22 @@ function convertToLocalJson(d, questions) {
     }
 
     if (d.finances && d.finances.shared) {
-        if (d.finances.shared.expenses && d.finances.shared.expenses.housing && d.finances.shared.expenses.housing.mortgage && d.finances.shared.expenses.housing.mortgage.monthly_payment) {
-            questions[10].inputs[1].value = true;
-            questions[10].subQuestion[1].inputs[1].value = d.finances.shared.expenses.housing.mortgage.monthly_payment;
-            if (d.finances && d.finances.shared.debts) {
-                questions[10].subQuestion[1].inputs[0].value = d.finances.shared.debts.mortgage;
-            }
+        // if (d.finances.shared.expenses && d.finances.shared.expenses.housing && d.finances.shared.expenses.housing.mortgage && d.finances.shared.expenses.housing.mortgage.monthly_payment) {
+        //     questions[10].inputs[1].value = true;
+        //     questions[10].subQuestion[1].inputs[1].value = d.finances.shared.expenses.housing.mortgage.monthly_payment;
+        //     if (d.finances && d.finances.shared.debts) {
+        //         questions[10].subQuestion[1].inputs[0].value = d.finances.shared.debts.mortgage;
+        //     }
 
-        }
+        // }
+        // if (d.finances.shared.expenses && d.finances.shared.expenses.housing && d.finances.shared.expenses.housing.mortgage && d.finances.shared.expenses.housing.mortgage.monthly_payment) {
+        //     questions[10].inputs[1].value = true;
+        //     questions[10].subQuestion[1].inputs[1].value = d.finances.shared.expenses.housing.mortgage.monthly_payment;
+        //     if (d.finances && d.finances.shared.debts) {
+        //         questions[10].subQuestion[1].inputs[0].value = d.finances.shared.debts.mortgage;
+        //     }
+
+        // }
         if (d.finances.shared.assets && (d.finances.shared.assets.non_retirement || d.finances.shared.assets.retirement)) {
             questions[11].inputs[0].value = true;
             questions[11].subQuestion[0].inputs[0].value = d.finances.shared.assets.retirement;
@@ -414,7 +428,21 @@ function convertToLocalJson(d, questions) {
         } else {
             questions[12].inputs[2].value = true;
         }
+        if (d.finances.shared.debts && d.finances.shared.debts.mortgage) {
+            questions[10].subQuestion[1].inputs[0].value = d.finances.shared.debts.mortgage;
+        }
     }
-    // console.log(questions[1]);
+
+    if (expenseObject && expenseObject.user &&  expenseObject.user.expenses && expenseObject.user.expenses.categories && expenseObject.user.expenses.categories.housing) {
+        var categories = expenseObject.user.expenses.categories.housing;
+        if (categories.rent) {
+            questions[10].inputs[0].value = true;
+            questions[10].subQuestion[0].inputs[0].value = categories.rent.monthly_payment;
+
+        } else if (categories.mortgage) {
+            questions[10].subQuestion[1].inputs[0].value = categories.mortgage.monthly_payment;
+        }
+    }
+    console.log(questions[10])
     return questions;
 }

@@ -11,10 +11,11 @@ class Container extends Component {
     }
 
     render() {
+        const id = this.props.url.query.id;
         return (
             <Provider store={store}>
                <MuiThemeProvider>
-                 <Coverages />
+                 <Coverages id={id} />
                </MuiThemeProvider>
             </Provider>
         )

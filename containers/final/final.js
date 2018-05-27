@@ -4,6 +4,8 @@ import DatePicker from 'material-ui/DatePicker';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import TimePicker from 'material-ui/TimePicker';
 
+import '../../styles/index.sass';
+
 import Nav from '../../components/Nav/index'
 import styles from './index.sass';
 import Button from '../../components/Button/index';
@@ -29,16 +31,16 @@ class Final extends Component {
 
 
     handleInput = (e)  => {
-        this.setState({phone: e.target.value });
+        this.setState({phone: e.target.value, error: '' });
     };
 
 
     handleDateChange = (event, date) => {
-        this.setState({ date })
+        this.setState({ date, error: '' })
     };
 
     handleTimeChange = (event, time) => {
-        this.setState({ time })
+        this.setState({ time , error: '' })
     };
 
     combineDateAndTime = (date, time) => {
@@ -53,23 +55,36 @@ class Final extends Component {
         return combined;
     };
 
+    goBack = () => {
+        const { id } = this.props;
+        this.setState({ isLoading: true });
+        Router.push(id ? `/quotes?id=${id}` : '/quotes')
+    };
+
     changePage = () => {
         const { time, date, phone } = this.state;
-        const timeStamp = this.combineDateAndTime(date, time);
-        const payload = {
-            phone,
-            timeStamp
+        const { id } = this.props;
+        if(time && date && phone) {
+            this.setState({ isLoading: true })
+            const timeStamp = this.combineDateAndTime(date, time);
+            const payload = {
+                phone,
+                timeStamp
+            }
+            this.props.followUp(payload);
+            Router.push(id ? `/final2?id=${id}` : '/final2');
+        } else {
+            this.setState({ error: 'Please fill all the details.' })
         }
-        this.props.followUp(payload);
     };
 
     render() {
         const { finalScreenLoading }= this.props;
-        console.log(this.props.jsonSkeleton)
+        const { error } = this.state;
         return (
             <MuiThemeProvider>
                 <div>
-                    {renderIf(finalScreenLoading)(<Loader />)}
+                    {renderIf(finalScreenLoading || this.state.isLoading)(<Loader />)}
                     <Nav
                         usedFor="questions"
                         showQuestionMark={true}
@@ -80,6 +95,11 @@ class Final extends Component {
                         <img src="/static/images/questions/question.svg"  onClick={this.openModal} />
                     </Nav>
                     <div className={styles.finalContainer}>
+                        <img
+                            className="backArrow"
+                            src='../../static/images/questions/backarrow.svg'
+                            onClick={this.goBack} />
+
                         <div className={styles.textBox}>
                             <img src="../../static/images/alex.jpg" />
                             <p>
@@ -91,6 +111,7 @@ class Final extends Component {
                             </p>
                         </div>
                         <div className={styles.inputContainer}>
+                            <p style={{ color: 'red', textAlign: 'left' }}>{error}</p>
                             <input placeholder="Phone Number" name="phone" onChange={this.handleInput}/>
                             <DatePicker
                                 hintText="&#x25BE; Select Date"

@@ -22,15 +22,23 @@ export class Navy extends Component {
             quote: []
         }
     }
+
+
     async componentDidMount () {
         await this.props.getQuotes({
             user: this.props.jsonSkeleton,
             coverageJson: this.props.coverageJson,
             s_id: this.props.s_id
         });
-        this.setState({quote: this.props.quote})
-        console.log(this.props)
+        this.setState({quote: this.props.quote});
+        console.log('quotes recieved', this.props);
     }
+
+    delimitNumbers = (str) => {
+        return (str + "").replace(/\b(\d+)((\.\d+)*)\b/g, function(a, b, c) {
+            return (b.charAt(0) > 0 && !(c || ".").lastIndexOf(".") ? b.replace(/(\d)(?=(\d{3})+$)/g, "$1,") : b) + c;
+        });
+    };
 
     selectQuote = (company) => {
         const { quote } = this.state;
@@ -42,26 +50,32 @@ export class Navy extends Component {
         });
         this.setState({selectedQuote: company, quote})
     };
+
+
     sendQuote = () => {
+        const { id } =this.props;
         this.setState({isLoading:true})
         this.props.patchQuote({
             quotes: this.state.quote,
             s_id: this.props.s_id
         });
         this.setState({ isLoading: true });
-        Router.push('/final');
+        Router.push(id ? `/final?id=${id}`: '/final');
     };
 
     goBack = () => {
-        Router.push('/coverages');
+        this.setState({ isLoading: true })
+        const { id } = this.props;
+        Router.push(id ? `/coverages?id=${id}`: '/coverages');
     };
+
     validated = () => { return this.state.selectedQuote };
 
     render() {
         const {selectedQuote, isLoading} = this.state;
-        const ifHaveCoverage =  Object.keys(this.props.coverageJson).length
-        const term = ifHaveCoverage ? this.props.coverageJson.user.term : null
-        const coverage = ifHaveCoverage ? this.props.coverageJson.options[0].selected ? this.props.coverageJson.options[0].amt : this.props.coverageJson.options[1].amt : null
+        const ifHaveCoverage =  Object.keys(this.props.coverageJson).length;
+        const term = ifHaveCoverage ? this.props.coverageJson.user.term : null;
+        const coverage = ifHaveCoverage ? this.props.coverageJson.options[0].selected ? this.props.coverageJson.options[0].amt : this.props.coverageJson.options[1].amt : null;
         const { quote } = this.state;
         return (
             <div className={styles.mainBox}>
@@ -74,10 +88,10 @@ export class Navy extends Component {
                     <img src="/static/images/questions/question.svg" onClick={this.openModal}/>
                 </Nav>
                 <div className='app-container'>
-                    <img className={styles.backArrow} src='../static/images/questions/backarrow.svg'
-                         onClick={this.goBack}/>
-
                     <div className={styles.questionBox}>
+                        <img className="backArrow" src='../static/images/questions/backarrow.svg'
+                             onClick={this.goBack}/>
+
                         <img src="../static/images/alex.jpg"/>
                         <p className='app-texts headings karma-family bold'>Here are your quotes</p>
                         <br/>
@@ -103,7 +117,7 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$1000"
-                                    value={`${coverage}`}
+                                    value={this.delimitNumbers(`${coverage}`)}
                                     onChange={this.handleInput}/>
                             </div>
                         </div>
@@ -117,7 +131,7 @@ export class Navy extends Component {
                                 <input
                                     className={styles.input}
                                     placeholder="$1000"
-                                    value={`${term}`}
+                                    value={this.delimitNumbers(`${term}`)}
                                     onChange={this.handleInput}/>
                             </div>
                         </div>

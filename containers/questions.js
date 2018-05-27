@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import Tooltip from 'components/Tooltip/Tooltip';
 import SmallTooltip from 'components/Tooltip/TooltipForSmall';
 import Loader from 'components/FullScreenLoader';
+import QuestionText from 'components/QuestionText';
 
 import Router from 'next/router';
 import {
@@ -60,7 +61,6 @@ class Questions extends Component {
         // debugger;
         if(np.questionPopulated){
             this.props.addQuestion({qi:1, question: np.allQuestions[1]});
-            debugger;
             this.setState({
                 currentQuestion: np.allQuestions[1],
                 isLoading: false,
@@ -70,6 +70,12 @@ class Questions extends Component {
             } );
         }
     }
+
+     delimitNumbers = (str) => {
+        return (str + "").replace(/\b(\d+)((\.\d+)*)\b/g, function(a, b, c) {
+            return (b.charAt(0) > 0 && !(c || ".").lastIndexOf(".") ? b.replace(/(\d)(?=(\d{3})+$)/g, "$1,") : b) + c;
+        });
+    };
 
     handleButtonChange = (i) => {
         const { allQuestions } = this.props;
@@ -141,7 +147,7 @@ class Questions extends Component {
                         console.log('temp', temp);
                         this.props.updateQuestion(temp);
                         this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1] }, () => {
-                            this.validateQuestion();
+                            this.props.id !== undefined ? this.validateQuestion() : this.setState({ validated: false })
                         })
                     } else if (currentQuestion.inputs[1].value !== null) {
                         let temp = [];
@@ -151,7 +157,7 @@ class Questions extends Component {
                         temp.splice(8, 1);
                         this.props.updateQuestion(temp);
                         this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1]}, () => {
-                            this.validateQuestion();
+                            this.props.id !== undefined ? this.validateQuestion() : this.setState({ validated: false })
                         })
                     } else if (currentQuestion.inputs[2].value !== null) {
                         let temp = [];
@@ -160,17 +166,17 @@ class Questions extends Component {
                         temp.splice(5, 1);
                         this.props.updateQuestion(temp);
                         this.setState({questionIndex: qi + 1, currentQuestion: temp[qi + 1]}, () => {
-                            this.validateQuestion();
+                            this.props.id !== undefined ? this.validateQuestion() : this.setState({ validated: false })
                         })
                     } else if (currentQuestion.inputs[3].value !== null) {
                         this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1]}, () => {
-                            this.validateQuestion();
+                            this.props.id !== undefined ? this.validateQuestion() : this.setState({ validated: false })
                         })
                     }
 
                     } else if(qi < allQuestions.length -1) {
                     this.setState({questionIndex: qi + 1, currentQuestion: allQuestions[qi + 1]}, () => {
-                        this.validateQuestion();
+                        this.props.id !== undefined ? this.validateQuestion() : this.setState({ validated: false })
                     })
                 }
             this.props.addQuestion({qi, question: allQuestions[qi + 1]});
@@ -232,7 +238,7 @@ class Questions extends Component {
                                     className={styles.input}
                                     type={input.type}
                                     placeholder={input.placeholder}
-                                    value={input.value}
+                                    value={this.delimitNumbers(input.value)}
                                     id={i}
                                     onChange={(e) => data.isSubQuestion !== undefined ? this.handleSubQuestionInputChange(e,input) : this.handleInputChange(i, e)} />
                             </div>
@@ -274,7 +280,10 @@ class Questions extends Component {
     };
 
     getSubQuestion = (question) => {
+        console.log('question', question);
         if (question.subQuestion === undefined) return;
+        if ( question.subQuestion.length === 0) return;
+
         const { currentQuestion } = this.state;
         if(currentQuestion.addOn && currentQuestion.subQuestion.length ) {
             const subQuestion = currentQuestion.subQuestion;
@@ -485,6 +494,7 @@ class Questions extends Component {
     render() {
         const { questionIndex, currentQuestion, validated, isLoading } = this.state;
         console.log(this.props);
+        console.log('*****', this.delimitNumbers('32'), this.state);
         // this.validateQuestion();
         return (
             <div className={styles.mainBox}>
@@ -505,9 +515,7 @@ class Questions extends Component {
                 <div className={styles.questionButtonContainer}>
                     <Button label={questionIndex === 0 ? "Get started" : "Next" } buttonStyle={validated ? styles.nextEnabled : styles.nextDisabled}  onClick={validated ? this.next : () => {}} />
                     {renderIf(currentQuestion.questionText !== undefined)(
-                        <a className={styles.questionText} onClick={this.openModal}>
-                            {currentQuestion.questionText}
-                        </a>
+                       <QuestionText label={currentQuestion.questionText || '' } textStyle={styles.questionText} />
                     )}
                 </div>
             </div>
