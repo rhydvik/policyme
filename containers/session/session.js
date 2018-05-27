@@ -26,6 +26,7 @@ class Session extends Component {
 
     render() {
         const { finalScreenLoading }= this.props;
+        console.log(this.props)
         return (
             <MuiThemeProvider>
                   <Coverages />

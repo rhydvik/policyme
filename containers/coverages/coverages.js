@@ -12,7 +12,8 @@ import {
     getCoverage,
     setAdvice,
     patchCoverage,
-    getExpenses
+    getExpenses,
+    getSkeletonJson
 } from '../../Actions/index'
 
 export class Navy extends Component {
@@ -30,7 +31,7 @@ export class Navy extends Component {
     goToQuotes = () => {
         this.setState({isLoading:true})
         this.props.patchCoverage({
-            s_id: this.props.s_id,
+            s_id: this.props.s_id || this.props.id,
             coverageJson: this.state.coverageJson,
         });
         Router.push('/quotes');
@@ -55,6 +56,9 @@ export class Navy extends Component {
          // if(this.props.id !== undefined) {
          //     this.props.getExpenses(this.props.id);
          // }
+         if(!Object.keys(this.props.jsonSkeleton).length) {
+             this.props.getSkeletonJson(this.props.id)
+         }
          const id  = this.props.s_id
          await this.props.getCoverage(id);
          this.setState({coverageJson:this.props.coverageJson})
@@ -316,7 +320,8 @@ const mapDispatchToProps = {
     getCoverage,
     setAdvice,
     patchCoverage,
-    getExpenses
+    getExpenses,
+    getSkeletonJson
 };
 
 const mapStateToProps = state => state.questionReducer;
