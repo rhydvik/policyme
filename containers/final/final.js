@@ -65,6 +65,7 @@ class Final extends Component {
 
     render() {
         const { finalScreenLoading }= this.props;
+        console.log(this.props.jsonSkeleton)
         return (
             <MuiThemeProvider>
                 <div>

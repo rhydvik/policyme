@@ -29,6 +29,7 @@ export class Navy extends Component {
             s_id: this.props.s_id
         });
         this.setState({quote: this.props.quote})
+        console.log(this.props)
     }
 
     selectQuote = (company) => {
